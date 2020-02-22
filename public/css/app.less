@@ -1,0 +1,68 @@
+/*
+ * @Author: kermit.yu 
+ * @Date: 2020-02-22 22:51:09 
+ * @Last Modified by: kermit.yu
+ * @Last Modified time: 2020-02-22 23:18:23
+ */
+
+html,body{
+    width:100%;
+    height:100%;
+}
+
+#header{
+    padding:0.5em 1em;
+    color:#fff;
+    text-align:center;
+    background-color:#07c160;
+}
+
+#footer{
+    padding:0.5em 1em;
+    font-size:12px;
+    text-align:center;
+    color:#999;
+    background-color:#ebedf0;
+    a{
+        color:#666;
+        &:hover{
+            color:#333;
+        }
+    }
+}
+
+#app{
+    width:100%;
+    height:100%;
+    display:flex;
+    flex-direction:column;
+    overflow-y:scroll;
+    -webkit-overflow-scrolling: touch;
+    .container,.page{
+        flex:1;
+        display:flex;
+        flex-direction:column;
+        justify-content:center;
+        align-items:center;
+        padding:1em;
+    }
+    .page{
+        width:100%;
+        height:100%;
+        flex:1;
+        display:flex;
+        flex-direction:column;
+        justify-content:center;
+        align-items:center;
+        padding:1em;
+    }
+}
+
+// 首页样式
+#index{
+    .van-button{
+        + .van-button{
+            margin-top:1em;
+        }
+    }
+}
