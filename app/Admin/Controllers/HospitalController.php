@@ -29,8 +29,10 @@ class HospitalController extends AdminController
         $grid->column('id', __('Id'));
         $grid->column('hospital_name', __('医院名称'));
         $grid->column('region.region_name', __('地区'));
-        $grid->column('create_date', __('Create date'));
-
+        $grid->column('create_date', __('创建时间'));
+        $grid->actions(function ($actions) {
+            $actions->disableDelete();
+        });
         return $grid;
     }
 
@@ -45,11 +47,11 @@ class HospitalController extends AdminController
         $show = new Show(Hospital::findOrFail($id));
 
         $show->field('id', __('Id'));
-        $show->field('hospital_name', __('Hospital name'));
+        $show->field('hospital_name', __('医院名称'));
         $show->field('region_id', __('地区'))->as(function () {
             return isset($this->region)?$this->region->region_name:'';
         });
-        $show->field('create_date', __('Create date'));
+        $show->field('create_date', __('创建时间'));
 
         return $show;
     }
@@ -63,9 +65,9 @@ class HospitalController extends AdminController
     {
         $form = new Form(new Hospital());
 
-        $form->text('hospital_name', __('Hospital name'));
-        $form->number('region_id', __('Region id'));
-        $form->datetime('create_date', __('Create date'))->default(date('Y-m-d H:i:s'));
+        $form->text('hospital_name', __('医院名称'));
+        $form->number('region_id', __('地区'));
+        $form->datetime('create_date', __('创建时间'))->default(date('Y-m-d H:i:s'));
 
         return $form;
     }

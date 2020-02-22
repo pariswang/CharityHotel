@@ -139,6 +139,7 @@ return [
             'auth/login',
             'auth/logout',
             '_handle_action_',
+            'auth/register'
         ],
     ],
 

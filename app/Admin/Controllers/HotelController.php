@@ -15,7 +15,7 @@ class HotelController extends AdminController
      *
      * @var string
      */
-    protected $title = 'App\Model\Hotel';
+    protected $title = '酒店管理';
 
     /**
      * Make a grid builder.
@@ -26,29 +26,71 @@ class HotelController extends AdminController
     {
         $grid = new Grid(new Hotel());
 
-        $grid->column('id', __('Id'));
-        $grid->column('user_id', __('User id'));
-        $grid->column('phone', __('Phone'));
-        $grid->column('pwd', __('Pwd'));
-        $grid->column('region_id', __('Region id'));
-        $grid->column('hotel_name', __('Hotel name'));
-        $grid->column('simple_name', __('Simple name'));
-        $grid->column('classify', __('Classify'));
-        $grid->column('meal', __('Meal'));
-        $grid->column('address', __('Address'));
-        $grid->column('uname', __('Uname'));
-        $grid->column('wechat', __('Wechat'));
-        $grid->column('room_count', __('Room count'));
-        $grid->column('use_room_count', __('Use room count'));
-        $grid->column('medical_staff_free', __('Medical staff free'));
-        $grid->column('expropriation', __('Expropriation'));
-        $grid->column('discount_price', __('Discount price'));
-        $grid->column('reception', __('Reception'));
-        $grid->column('cleaning', __('Cleaning'));
-        $grid->column('collocation_description', __('Collocation description'));
-        $grid->column('description', __('Description'));
-        $grid->column('create_date', __('Create date'));
-
+        $grid->column('id', __('ID'));
+        // $grid->column('user_id', __('关联用户'));
+        // $grid->column('phone', __('Phone'));
+        // $grid->column('pwd', __('Pwd'));
+        $grid->column('region_id', __('区域'));
+        // $grid->column('hotel_name', __('酒店名称'));
+        // $grid->column('simple_name', __('简称'));
+        // $grid->column('classify', __('类型'));
+        // $grid->column('address', __('地址'));
+        // $grid->column('uname', __('联系人'));
+        // $grid->column('wechat', __('微信'));
+        $grid->column('基本信息')->display(function(){
+            $fieldArr = [
+                'hotel_name'=>'酒店名称',
+                'simple_name'=>'简称',
+                'classify'=>'类型',
+                'address'=>'地址',
+                'uname'=>'联系人',
+                'wechat'=>'微信',
+                'user_id'=>'关联用户',
+            ];
+            $html = "";
+            $cursor = 0;
+            foreach ($fieldArr as $key => $value) {
+                if(isset($this->$key)){
+                    $html .= "<p>".$value.":<strong>".$this->$key."</strong></p>";
+                }
+            }
+            return $html;
+        });
+        $grid->column('详细信息')->display(function(){
+            $fieldArr = [
+                'meal'=>'早中晚餐饮',
+                'room_count'=>'可安排房间数',
+                'use_room_count'=>'已使用房间数',
+                'discount_price'=>'优惠房价',
+                'medical_staff_free'=>'医务人员是否免费',
+                'expropriation'=>'是否愿意被征用',
+                'reception'=>'是否有接待',
+                'cleaning'=>'是否有清洁',
+            ];
+            $html = "";
+            $cursor = 0;
+            foreach ($fieldArr as $key => $value) {
+                if(isset($this->$key)){
+                    $html .= "<p>".$value.":<strong>".($cursor>3?($this->$key?'是':'否'):$this->$key)."</strong></p>";
+                }
+                $cursor++;
+            }
+            return $html;
+        });
+        // $grid->column('meal', __('早中晚餐饮'));
+        // $grid->column('room_count', __('可安排房间数'));
+        // $grid->column('use_room_count', __('已使用房间数'));
+        // $grid->column('medical_staff_free', __('医务人员是否免费'));
+        // $grid->column('expropriation', __('是否愿意被征用'));
+        // $grid->column('discount_price', __('优惠房价'));
+        // $grid->column('reception', __('是否有接待'));
+        // $grid->column('cleaning', __('是否有清洁'));
+        $grid->column('collocation_description', __('房间搭配说明'));
+        $grid->column('description', __('酒店说明'));
+        $grid->column('create_date', __('创建日期'));
+        $grid->actions(function ($actions) {
+            $actions->disableDelete();
+        });
         return $grid;
     }
 
@@ -61,29 +103,28 @@ class HotelController extends AdminController
     protected function detail($id)
     {
         $show = new Show(Hotel::findOrFail($id));
-
-        $show->field('id', __('Id'));
-        $show->field('user_id', __('User id'));
-        $show->field('phone', __('Phone'));
-        $show->field('pwd', __('Pwd'));
-        $show->field('region_id', __('Region id'));
-        $show->field('hotel_name', __('Hotel name'));
-        $show->field('simple_name', __('Simple name'));
-        $show->field('classify', __('Classify'));
-        $show->field('meal', __('Meal'));
-        $show->field('address', __('Address'));
-        $show->field('uname', __('Uname'));
-        $show->field('wechat', __('Wechat'));
-        $show->field('room_count', __('Room count'));
-        $show->field('use_room_count', __('Use room count'));
-        $show->field('medical_staff_free', __('Medical staff free'));
-        $show->field('expropriation', __('Expropriation'));
-        $show->field('discount_price', __('Discount price'));
-        $show->field('reception', __('Reception'));
-        $show->field('cleaning', __('Cleaning'));
-        $show->field('collocation_description', __('Collocation description'));
-        $show->field('description', __('Description'));
-        $show->field('create_date', __('Create date'));
+        $show->field('id', __('ID'));
+        $show->field('user_id', __('关联用户'));
+        // $show->field('phone', __('Phone'));
+        // $show->field('pwd', __('Pwd'));
+        $show->field('region_id', __('区域'));
+        $show->field('hotel_name', __('酒店名称'));
+        $show->field('simple_name', __('简称'));
+        $show->field('classify', __('类型'));
+        $show->field('meal', __('早中晚餐饮'));
+        $show->field('address', __('地址'));
+        $show->field('uname', __('联系人'));
+        $show->field('wechat', __('微信'));
+        $show->field('room_count', __('可安排房间数'));
+        $show->field('use_room_count', __('已使用房间数'));
+        $show->field('medical_staff_free', __('医务人员是否免费'));
+        $show->field('expropriation', __('是否愿意被征用'));
+        $show->field('discount_price', __('优惠房价'));
+        $show->field('reception', __('是否有接待'));
+        $show->field('cleaning', __('是否有清洁'));
+        $show->field('collocation_description', __('房间搭配说明'));
+        $show->field('description', __('酒店说明'));
+        $show->field('create_date', __('创建日期'));
 
         return $show;
     }
@@ -97,27 +138,27 @@ class HotelController extends AdminController
     {
         $form = new Form(new Hotel());
 
-        $form->number('user_id', __('User id'));
-        $form->mobile('phone', __('Phone'));
-        $form->password('pwd', __('Pwd'));
-        $form->number('region_id', __('Region id'));
-        $form->text('hotel_name', __('Hotel name'));
-        $form->text('simple_name', __('Simple name'));
-        $form->text('classify', __('Classify'));
-        $form->text('meal', __('Meal'));
-        $form->text('address', __('Address'));
-        $form->text('uname', __('Uname'));
-        $form->text('wechat', __('Wechat'));
-        $form->number('room_count', __('Room count'));
-        $form->number('use_room_count', __('Use room count'));
-        $form->switch('medical_staff_free', __('Medical staff free'));
-        $form->switch('expropriation', __('Expropriation'));
-        $form->decimal('discount_price', __('Discount price'));
-        $form->switch('reception', __('Reception'));
-        $form->switch('cleaning', __('Cleaning'));
-        $form->text('collocation_description', __('Collocation description'));
-        $form->text('description', __('Description'));
-        $form->datetime('create_date', __('Create date'))->default(date('Y-m-d H:i:s'));
+        // $form->number('user_id', __('User id'));
+        // $form->mobile('phone', __('Phone'));
+        // $form->password('pwd', __('Pwd'));
+        $form->number('region_id', __('区域'));
+        $form->text('hotel_name', __('酒店名称'));
+        $form->text('simple_name', __('简称'));
+        $form->text('classify', __('类型'));
+        $form->text('meal', __('早中晚餐饮'));
+        $form->text('address', __('地址'));
+        $form->text('uname', __('联系人'));
+        $form->text('wechat', __('微信'));
+        $form->number('room_count', __('可安排房间数'));
+        $form->number('use_room_count', __('已使用房间数'));
+        $form->switch('medical_staff_free', __('医务人员是否免费'));
+        $form->switch('expropriation', __('是否愿意被征用'));
+        $form->decimal('discount_price', __('优惠房价'));
+        $form->switch('reception', __('是否有接待'));
+        $form->switch('cleaning', __('是否有清洁'));
+        $form->text('collocation_description', __('房间搭配说明'));
+        $form->text('description', __('酒店说明'));
+        $form->datetime('create_date', __('创建日期'))->default(date('Y-m-d H:i:s'));
 
         return $form;
     }
