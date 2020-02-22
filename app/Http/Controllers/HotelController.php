@@ -8,11 +8,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Model\Hotel;
+use Illuminate\Http\Request;
 
 class HotelController extends Controller
 {
-    public function list()
+    public function list(Request $request)
     {
-        echo 'hotel list';
+        $hotels = Hotel::all();
+        return view('hotel.list', compact('hotels'));
     }
 }
