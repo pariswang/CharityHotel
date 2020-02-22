@@ -58,7 +58,7 @@
         </div>
         <button class="loginBtn" type="submit">登录</button>
     </form>
-    <button class="loginBtn" type="submit">注册</button>
+    <a class="loginBtn" href="/register" style="margin-top:20px;">注册</a>
 </div>
 </body>
 </html>

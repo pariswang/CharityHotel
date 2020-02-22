@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Model\User;
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
@@ -72,5 +73,21 @@ class RegisterController extends Controller
             'position' => $data['position'],
             'company' => $data['company'],
         ]);
+    }
+
+    /**
+     * The user has been registered.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  mixed  $user
+     * @return mixed
+     */
+    protected function registered(Request $request, $user)
+    {
+        $url = session('url.intended');
+        if($url){
+            session()->forget('url.intended');
+            return response()->redirectTo($url);
+        }
     }
 }
