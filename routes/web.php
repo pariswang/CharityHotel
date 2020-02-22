@@ -36,7 +36,3 @@ Route::group(['middleware' => 'auth'], function (){
     // 无对应酒店的申请
     Route::get('apply', 'ApplyController@apply');
 });
-
-Route::get('/home', function () {
-    return view('index');
-});
