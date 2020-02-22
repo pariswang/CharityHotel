@@ -11,7 +11,7 @@ namespace App\Http\Controllers;
 
 class HotelController extends Controller
 {
-    public function index()
+    public function list()
     {
         echo 'hotel list';
     }
