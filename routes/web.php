@@ -12,7 +12,7 @@
 */
 
 // 首页
-
+Route::get('/', 'IndexController@index');
 
 // 查找房源（酒店列表）
 Route::get('hotel_list', 'HotelController@list');
