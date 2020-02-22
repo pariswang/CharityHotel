@@ -1,0 +1,27 @@
+@charset "utf-8";
+
+/* **** 住宿申请详情 **** */
+.applyDetailBox {
+    margin-top: 0.6rem;
+}
+.applyDetailTitle {
+    margin: 0 0 0.6rem;
+    font-size: 0.28rem;
+    line-height: 0.4rem;
+    text-align: center;
+}
+.applyDetailItem {
+    margin-bottom: 0.2rem;
+    font-size: 0px;
+}
+.detailLabel, .detailDesc {
+    display: inline-block;
+    vertical-align: middle;
+    font-size: 0.28rem;
+}
+.detailLabel {
+    width: 100px;
+}
+.detailDesc {
+    width: calc(100% - 100px);
+}

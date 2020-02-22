@@ -3,7 +3,7 @@
  * Created by PhpStorm.
  * User: pariswang
  * Date: 2020/2/22
- * Time: 8:35 PM
+ * Time: 9:09 PM
  */
 
 namespace App\Http\Controllers;
@@ -11,10 +11,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class IndexController extends Controller
+class UserController extends Controller
 {
-    public function index(Request $request)
+    public function register(Request $request)
     {
-        return view('index');
+        echo 'user register';
     }
 }

@@ -1,0 +1,99 @@
+@charset "utf-8";
+
+:root {
+    --themeColor: #2BA245;
+    --fontColor: #2d2d2d;
+}
+
+html, body, header, section, aside, footer, div, p, h1, h2, h3, h4, h5, h6, ul, ol, li {
+    margin: 0;
+    padding: 0;
+}
+html, body {
+    font-family: "Helvetica Neue", Helvetica, Arial, "PingFang SC", "Hiragino Sans GB", "Heiti SC", "Microsoft YaHei", "WenQuanYi Micro Hei", sans-serif;
+}
+a {
+    display: block;
+    text-decoration: none;
+}
+img {
+    display: block;
+    border: none;
+}
+ul, ol, li {
+    list-style: none;
+}
+input, button, textarea, select {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    outline: 0;
+    border: 0;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+}
+input, textarea, select {
+    border: 1px solid #BFBFBF;    
+}
+/* select::-ms-expand {
+    display: none;
+} */
+input:read-only {
+    background-color: #F6F6F6;
+    color: #767676;
+    cursor: not-allowed;
+}
+button:disabled, input:disabled, select:disabled {
+    background: #999;
+    cursor: not-allowed;
+}
+.lt {
+    float: left;
+}
+.rt {
+    float: right;
+}
+.clear::after {
+    display: block;
+    content: "";
+    clear: both;
+}
+.hide {
+    display: none;
+}
+.formGroup {
+    position: relative;
+    font-size: 0;
+}
+.formTip {
+    font-size: 0.24rem;
+    line-height: 0.4rem;
+    color: red;
+    display: none;
+}
+.formInput, .formSelect {
+    width: 100%;
+    height: 0.8rem;
+    padding: 0 0.2rem;
+    border-radius: 0;
+}
+.formSelect {
+    background: url(img/select-caret.png) right 10px center no-repeat;
+}
+
+/* **** 公共头部 **** */
+.nav {
+    font-size: 0.32rem;
+    font-weight: bold;
+    line-height: 0.8rem;
+    text-align: center;
+    background-color: var(--themeColor);
+    color: #F6F6F6;
+}
+
+
+/* **** 共同容器 **** */
+.wrap {
+    width: 95%;
+    margin: 0 auto;
+}

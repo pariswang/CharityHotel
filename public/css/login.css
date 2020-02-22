@@ -1,0 +1,25 @@
+@charset "utf-8";
+
+.formGroup {
+    height: 1.2rem;
+}
+
+/* **** 登录页 **** */
+.formTitle {
+    margin: 0.6rem 0 0.4rem;
+    font-size: 0.28rem;
+    line-height: 0.4rem;
+    text-align: center;
+    color: var(--fontColor);
+}
+.loginForm {
+    font-size: 0px;
+}
+.loginBtn {
+    width: 100%;
+    font-size: 0.28rem;
+    line-height: 0.8rem;
+    text-align: center;
+    background-color: var(--themeColor);
+    color: #ffffff;
+}
