@@ -7,14 +7,14 @@
 5 => 已接单 -->
 
 @extends('layouts.app')
-@section('title', '酒店列表')
+@section('title', '申请列表')
 @section('content')
 <div class="page" id="applylList">
     <div class="list-hd">
         <div class="pickers">
-            <van-button type="default" icon="arrow-down" round block size="small" plain :text="area" @click="showAreas=true"></van-button>
-            <!-- <van-button type="default" icon="arrow-down" round block size="small" plain :text="hospital" @click="showHospitals=true"></van-button> -->
-            <van-button type="default" icon="arrow-down" round block size="small" plain :text="statu" @click="showStatus=true"></van-button>
+            <van-button type="default" icon="arrow-down" round block size="small" plain :text="area !== '' ? area : '请选择区域'" @click="showAreas=true"></van-button>
+            <!-- <van-button type="default" icon="arrow-down" round block size="small" plain :text="hospital !== '' ? hospital : '请选择医院'" @click="showHospitals=true"></van-button> -->
+            <van-button type="default" icon="arrow-down" round block size="small" plain :text="statu !== '' ? statu : '请选择状态'" @click="showStatus=true"></van-button>
         </div>
         <van-field v-model="keyword" placeholder="地址关键词">
             <van-button slot="button" type="primary" round size="small" @click="onSearch">查询</van-button>
