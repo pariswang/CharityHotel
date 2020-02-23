@@ -112,10 +112,14 @@ class SubscribeController extends AdminController
                 'has_letter'=>['是否有介绍信','boolean'],
             ],$this);
         });
-        $grid->column('checked', __('是否核实'));
+        $grid->column('checked', __('是否核实'))->display(function () {
+            return $this->checked?'已核实':'未核实';
+        });
         if(Admin::user()->id == '1'){
-            $grid->column('status', __('接单状态'));
-            $grid->column('hotel_id', __('接单酒店'));
+            $grid->column('status', __('接单状态'))->display(function () {
+                return $this->status==5?'已接单':'未接单';
+            });
+            $grid->column('hotel.hotel_name', __('接单酒店'));
         }else{
             $grid->column('接单操作')->display(function(){
                 return '<a href="/'.Request::capture()->path().'/taking/'.$this->id.'" class="btn btn-sm btn-success" title="我要接单"><i class="fa fa-plus"></i><span class="hidden-xs">我要接单</span></a>';
@@ -143,6 +147,12 @@ class SubscribeController extends AdminController
         // $grid->column('hotel_id', __('接单酒店'));
 
         $grid->disableCreateButton();
+        $grid->disableActions();
+        $grid->filter(function($filter){
+            // 去掉默认的id过滤器
+            $filter->disableIdFilter();
+            $filter->equal('region_id','地区')->select(\App\Model\Region::pluck('region_name', 'id')->all());
+        });
         $grid->actions(function ($actions) {
             $actions->disableDelete();
             $actions->disableView();

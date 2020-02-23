@@ -47,6 +47,7 @@ class HotelController extends AdminController
                 'classify'=>['类型'],
                 'address'=>['地址'],
                 'uname'=>['联系人'],
+                'phone'=>['联系人电话'],
                 'wechat'=>['微信'],
                 'user_id'=>['关联用户'],
 
@@ -100,9 +101,11 @@ class HotelController extends AdminController
         $show = new Show(Hotel::findOrFail($id));
         $show->field('id', __('ID'));
         $show->field('user_id', __('关联用户'));
-        // $show->field('phone', __('Phone'));
+        $show->field('phone', __('Phone'));
         // $show->field('pwd', __('Pwd'));
-        $show->field('region_id', __('区域'));
+        $show->field('region_id', __('区域'))->as(function () {
+            return isset($this->region)?$this->region->region_name:'';
+        });
         $show->field('hotel_name', __('酒店名称'));
         $show->field('simple_name', __('简称'));
         $show->field('classify', __('类型'));
@@ -135,13 +138,13 @@ class HotelController extends AdminController
         // $form->number('user_id', __('User id'));
         // $form->mobile('phone', __('Phone'));
         // $form->password('pwd', __('Pwd'));
-        $form->select('region_id', __('区域'))->options(Region::pluck('region_name', 'id')->all())->required();
         $form->text('hotel_name', __('酒店名称'))->required();;
         $form->text('simple_name', __('简称'));
+        $form->select('region_id', __('区域'))->options(Region::pluck('region_name', 'id')->all())->required();
         $form->text('classify', __('类型'));
-        $form->text('address', __('地址'))->required();;
-        $form->text('uname', __('联系人'))->required();;
-        $form->text('wechat', __('微信'));
+        $form->text('address', __('地址'))->required();
+        $form->text('uname', __('联系人'))->required();
+        $form->text('phone', __('联系人电话'))->required();
         $form->number('room_count', __('可安排房间数'))->min(1)->max(1000)->help('请设置小于1000的整数');
         $form->number('use_room_count', __('已使用房间数'))->min(1)->max(1000)->help('请设置小于1000的整数');
         $form->text('meal', __('早中晚餐饮'));
