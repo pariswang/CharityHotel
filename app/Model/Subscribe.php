@@ -14,18 +14,18 @@ class Subscribe extends Model
 
     public $timestamps = false;
 
-    public function region()
-    {
-        return $this->belongsTo(Region::class);
-    }
-
-    public function user()
-    {
-        return $this->belongsTo(User::class);
-    }
-
     public function hotel()
     {
         return $this->belongsTo(Hotel::class);
+    }
+
+	public function region()
+    {
+        return $this->belongsTo(Region::class, 'region_id');
+    }
+
+	public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
     }
 }
