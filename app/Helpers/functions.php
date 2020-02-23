@@ -4,7 +4,7 @@
  * @Author: Simon Zhao
  * @Date:   2020-02-23 01:08:19
  * @Last Modified by:   Simon Zhao
- * @Last Modified time: 2020-02-23 12:06:21
+ * @Last Modified time: 2020-02-23 16:30:56
  */
 
 /**
@@ -28,4 +28,14 @@ function createHoteler($data){
 		}
     }
     return $user;
+}
+
+function htmlInOneField($fieldArr,$obj){
+	$html = "";
+	foreach ($fieldArr as $key => $value) {
+	    if(isset($obj->$key)&&$value[0]){
+	        $html .= "<p>".$value[0].":<strong>".(isset($value[1])&&$value[1]=='boolean'?($obj->$key?'是':'否'):$obj->$key)."</strong></p>";
+	    }
+	}
+	return $html;
 }
