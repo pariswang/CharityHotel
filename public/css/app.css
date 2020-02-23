@@ -2,7 +2,7 @@
  * @Author: kermit.yu 
  * @Date: 2020-02-22 22:51:09 
  * @Last Modified by: kermit.yu
- * @Last Modified time: 2020-02-23 19:48:29
+ * @Last Modified time: 2020-02-23 21:17:27
  */
 * {
   box-sizing: border-box;
@@ -71,6 +71,10 @@ body {
 }
 .page .van-cell-group .__cell__value {
   padding-left: 1em;
+}
+.page .van-cell-group .van-field__body.--text-left {
+  align-items: flex-start;
+  text-align: left;
 }
 .page .van-cell-group .van-field__body.--space-between {
   display: flex;
