@@ -1,5 +1,10 @@
 @extends('layouts.app')
 @section('title', '')
+@section('css')
+<style>
+html,body,#app{ height:100%;}
+</style>
+@endsection
 @section('content')
 <div class="page" id="index">
     <van-button type="primary" round block url="/apply_list">查看申请</van-button>

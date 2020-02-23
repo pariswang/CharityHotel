@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('title', '申请住宿')
 @section('content')
-<div class="page page--start" id="index">
+<div class="page page--start">
     <h1 class="page-title">申请住宿</h1>
     @csrf
     <van-cell-group>
