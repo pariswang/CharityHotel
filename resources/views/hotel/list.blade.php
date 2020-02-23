@@ -18,22 +18,25 @@
         closeable
         round
         position="bottom"
+        close-icon="{{asset('/imgs/confirm_btn.png')}}"
         :style="{ height: '30%' }">
-        <van-picker :columns="areas" @change="areaOnChange"/>
+        <van-picker :columns="areas" :default-index="areaIndex || 0" @change="areaOnChange"/>
     </van-popup>
     <van-popup
         v-model="showHospitals"
         closeable
         round
         position="bottom"
+        close-icon="{{asset('/imgs/confirm_btn.png')}}"
         :style="{ height: '30%' }">
-        <van-picker :columns="hospitals" @change="hospitalOnChange"/>
+        <van-picker :columns="hospitals" :default-index="hospitalIndex || 0" @change="hospitalOnChange"/>
     </van-popup>
     <van-popup
         v-model="showStatus"
         closeable
         round
         position="bottom"
+        close-icon="{{asset('/imgs/confirm_btn.png')}}"
         :style="{ height: '30%' }">
         <van-picker :columns="status" @change="statuOnChange"/>
     </van-popup>
@@ -57,7 +60,7 @@
             联系人:{{$hotel->uname}}
         </div>
         <div class="item-ft">
-            <van-button type="default" size="small" round plain url="#">已申请xxx酒店</van-button>
+            {{--<van-button type="default" size="small" round plain url="#"></van-button>--}}
             <van-button type="primary" size="small" round plain url="/hotel_detail?id={{$hotel->id}}">查看详情</van-button>
             <van-button type="primary" size="small" round url="/apply_hotel?id={{$hotel->id}}">我要申请</van-button>
         </div>
@@ -75,5 +78,5 @@
     console.log('REGIONS', REGIONS);
     console.log('HOSPITALS', HOSPITALS);
 </script>
-<script src="{{asset('/js/hotelList.js')}}"></script>
+<script src="{{asset('/js/hotelList.js').'?'.time()}}"></script>
 @endsection

@@ -1,5 +1,10 @@
 @extends('layouts.app')
 @section('title', '登录')
+@section('css')
+<style>
+html,body,#app{ height:100%;}
+</style>
+@endsection
 @section('content')
 <div class="page" id="login">
     @csrf

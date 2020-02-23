@@ -26,14 +26,16 @@
         closeable
         round
         position="bottom"
+        close-icon="{{asset('/imgs/confirm_btn.png')}}"
         :style="{ height: '30%' }">
-        <van-picker :columns="areas" @change="areaOnChange"/>
+        <van-picker :columns="areas" :default-index="areaIndex || 0" @change="areaOnChange"/>
     </van-popup>
     <van-popup
         v-model="showHospitals"
         closeable
         round
         position="bottom"
+        close-icon="{{asset('/imgs/confirm_btn.png')}}"
         :style="{ height: '30%' }">
         <van-picker :columns="hospitals" @change="hospitalOnChange"/>
     </van-popup>
@@ -42,8 +44,9 @@
         closeable
         round
         position="bottom"
+        close-icon="{{asset('/imgs/confirm_btn.png')}}"
         :style="{ height: '30%' }">
-        <van-picker :columns="status" @change="statuOnChange"/>
+        <van-picker :columns="status" :default-index="statuIndex || 0" @change="statuOnChange"/>
     </van-popup>
     <!--
     参数说明
@@ -53,17 +56,13 @@
     <div class="item">
         <div class="item-hd">
             <span>{{$apply->date_begin}}</span>
-            <span class="item__value">
-                @if ($apply->status==1)
-                    已申请
-                @elseif ($apply->status==5)
-                    已接单
-                @endif
+            <span class="item__value" style="color:#07c160">
+                {{$apply->region ? $apply->region->region_name : ''}}
             </span>
         </div>
         <div class="item-bd">
             @if ($apply->region_id)
-                {{$apply->region->region_name}} ，
+                {{$apply->region->region_name}}{{$apply->hope_addr ?? ''}} ，
             @elseif ($apply->hotel_id)
                 {{$apply->hotel->region->region_name}}{{$apply->hotel->address}}附近，
             @else
@@ -104,5 +103,5 @@
     console.log('REGIONS', REGIONS);
     console.log('HOSPITALS', HOSPITALS);
 </script>
-<script src="{{asset('/js/apply_list.js')}}"></script>
+<script src="{{asset('/js/apply_list.js').'?'.time()}}"></script>
 @endsection

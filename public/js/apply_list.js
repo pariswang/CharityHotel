@@ -2,8 +2,16 @@
  * @Author: kermit.yu 
  * @Date: 2020-02-22 22:13:41 
  * @Last Modified by: kermit.yu
- * @Last Modified time: 2020-02-23 16:00:33
+ * @Last Modified time: 2020-02-23 23:06:49
  */
+REGIONS.unshift({
+    id: '',
+    region_name: "全部区域"
+})
+STATUS.unshift({
+    id: '',
+    statu_name: "全部申请"
+})
 var area_index = _.findIndex(REGIONS, function (item) {return item.id == ppo.getUrlParam('distinct')});
 var statu_index = _.findIndex(STATUS, function (item) {return item.id == ppo.getUrlParam('status')});
 console.log('area_index', area_index);

@@ -2,7 +2,7 @@
  * @Author: kermit.yu 
  * @Date: 2020-02-22 22:51:09 
  * @Last Modified by: kermit.yu
- * @Last Modified time: 2020-02-23 17:51:11
+ * @Last Modified time: 2020-02-23 22:51:57
  */
 * {
   box-sizing: border-box;
@@ -10,10 +10,19 @@
 html,
 body {
   width: 100%;
-  height: 100%;
   background-color: #f7f8fa;
 }
+body {
+  padding-top: 38px;
+  overflow-y: scroll;
+  -webkit-overflow-scrolling: touch;
+}
 #header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 999;
   color: #fff;
   text-align: center;
   background-color: #07c160;
@@ -37,30 +46,27 @@ body {
   color: #333;
 }
 #app {
-  width: 100%;
-  height: 100%;
   display: flex;
   flex-direction: column;
   overflow-y: scroll;
   -webkit-overflow-scrolling: touch;
 }
-.container {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  padding: 1em;
+#app .van-popup .van-icon {
+  z-index: 3;
+}
+#app .van-popup .van-icon .van-icon__image {
+  width: 42px;
+  height: 28px;
 }
 .page {
-  width: 100%;
-  height: 100%;
-  flex: 1;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  overflow-y: scroll;
   -webkit-overflow-scrolling: touch;
+  padding: 1em;
+  padding-bottom: 40px;
 }
 .page.page--start {
   justify-content: flex-start;
@@ -72,6 +78,10 @@ body {
 }
 .page .van-cell-group .__cell__value {
   padding-left: 1em;
+}
+.page .van-cell-group .van-field__body.--text-left {
+  align-items: flex-start;
+  text-align: left;
 }
 .page .van-cell-group .van-field__body.--space-between {
   display: flex;
@@ -96,6 +106,10 @@ body {
 }
 .text-right {
   text-align: right;
+}
+#index {
+  width: 100%;
+  height: 100%;
 }
 #index .van-button + .van-button {
   margin-top: 1em;
@@ -122,12 +136,16 @@ body {
 #register .login-btn {
   margin-top: 2em;
 }
+#login {
+  width: 100%;
+  height: 100%;
+}
 #hotelList,
 #applylList {
   align-items: flex-start;
   justify-content: flex-start;
   padding-top: 100px;
-  padding-bottom: 60px;
+  padding-bottom: 80px;
 }
 #hotelList .list-hd,
 #applylList .list-hd {
@@ -139,6 +157,7 @@ body {
   background-color: #fff;
   display: flex;
   flex-direction: column;
+  z-index: 999;
 }
 #hotelList .list-hd .pickers,
 #applylList .list-hd .pickers {
@@ -219,19 +238,9 @@ body {
 #applylList .item .item-ft .van-button + .van-button {
   margin-left: 0.5em;
 }
-#hotelList .item + .item::before,
-#applylList .item + .item::before {
-  position: absolute;
-  box-sizing: border-box;
-  content: ' ';
-  pointer-events: none;
-  top: -50%;
-  right: -50%;
-  bottom: -50%;
-  left: -50%;
-  border-bottom: 1px solid #ebedf0;
-  -webkit-transform: scale(0.5);
-  transform: scale(0.5);
+#hotelList .item + .item,
+#applylList .item + .item {
+  border-top: 1px solid #ebedf0;
 }
 #hotelList .ft-cover,
 #applylList .ft-cover {

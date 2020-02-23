@@ -57,7 +57,17 @@ class ApplyController extends Controller
         }
 
         // 选项
-        $regions = Region::all();
+        $regions = Region::with('hospitals')->get();
+        $regions = $regions->map(function ($region){
+            $regionArr = $region->toArray();
+            $regionArr['hospitals'] = $region->hospitals->map(function ($hospital){
+                $hospital = $hospital->toArray();
+                $hospital['id'] = (string) $hospital['id'];
+                return $hospital;
+            })->toArray();
+            return $regionArr;
+        });
+
         $hospitals = Hospital::all();
         $hospitals = $hospitals->map(function ($hospital){
             $hospital = $hospital->toArray();
@@ -91,8 +101,11 @@ class ApplyController extends Controller
         $data['checked'] = 0;
         $data['createdate'] = date('Y-m-d H:i:s');
         $data['status'] = 1;
-        if($data['hotel_id'] && $hotel = \App\Model\Hotel::find($data['hotel_id'])){
+        if(isset($data['hotel_id']) && $hotel = \App\Model\Hotel::find($data['hotel_id'])){
             $data['admin_id'] = $hotel->user_id;
+            if(!isset($data['region_id'])){
+                $data['region_id'] = $hotel->region->id;
+            }
         }
         $sub = Subscribe::create($data);
         if($sub){
