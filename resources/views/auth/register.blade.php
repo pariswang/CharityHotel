@@ -57,7 +57,6 @@
     </van-cell-group>
     <p class="register-tip">请如实录入您真实信息，不要透漏个人隐私</p>
     <van-button class="login-btn" type="primary" round block :loading="submitLoading" loading-text="注册中..." @click="onSubmit">注册</van-button>
-    <van-button plain round block type="default" url="/login">登录</van-button>
 </div>
 <!-- @if ($errors->any())
     <div class="alert alert-danger">

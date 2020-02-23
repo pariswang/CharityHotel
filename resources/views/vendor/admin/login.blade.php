@@ -34,7 +34,7 @@
     </div>
     <!-- /.login-logo -->
     <div class="login-box-body">
-        <p class="login-box-msg">{{ trans('admin.login') }}</p>
+        <p class="login-box-msg">酒店人员登录</p>
 
         <form action="{{ admin_url('auth/login') }}" method="post">
             <div class="form-group has-feedback {!! !$errors->has('username') ?: 'has-error' !!}">
@@ -79,8 +79,6 @@
             </div>
         </form>
         <a href="/registerHotel">酒店用户注册入口</a>
-        <br/>
-        <a href="/register">医护人员注册入口</a>
     </div>
     <!-- /.login-box-body -->
 </div>
