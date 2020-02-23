@@ -122,7 +122,7 @@
             autosize
             rows="2"/>
     </van-cell-group>
-    <van-button class="submit-btn" type="primary" round block :loading="submitLoading" loading-text="取消发布中..." @click="onCancel">取消发布</van-button>
+    <van-button class="submit-btn" type="primary" round block :loading="submitLoading" loading-text="取消发布中..." url="/apply_hotel?id={{$hotel->id}}">申请</van-button>
 </div>
 @endsection
 @section('js')

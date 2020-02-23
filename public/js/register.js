@@ -66,7 +66,11 @@ new Vue({
                 },
                 success: function (res) {
                     console.log('res', res);
-                    window.location.href = '/hotel_list';
+                    if(res.data.url){
+                        window.location.href = res.data.url;
+                    }else{
+                        window.location.href = '/hotel_list';
+                    }
                 },
                 complete: function () {
                     _this.submitLoading = false;
