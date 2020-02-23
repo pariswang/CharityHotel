@@ -66,6 +66,10 @@
         </div>
     </div>
     @endforeach
+    <div class="item-empty">
+        <p><van-icon name="bulb-o" size="60"/></p>
+        <p>没有查询出符合条件的酒店信息, 换个条件试试~</p>
+    </div>
     <div class="ft-cover">
         <van-button type="primary" block round url="/apply">发布住宿申请</van-button>
     </div>
