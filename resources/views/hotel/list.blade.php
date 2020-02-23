@@ -64,7 +64,7 @@
     </div>
     @endforeach
     <div class="ft-cover">
-        <van-button type="primary" block round url="/apply">发布酒店信息</van-button>
+        <van-button type="primary" block round url="/admin/hotel/create">发布酒店信息</van-button>
     </div>
 </div>
 @endsection
