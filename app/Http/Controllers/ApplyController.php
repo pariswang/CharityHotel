@@ -23,6 +23,11 @@ class ApplyController extends Controller
         // 选项
         $regions = Region::all();
         $hospitals = Hospital::all();
+        $hospitals = $hospitals->map(function ($hospital){
+            $hospital = $hospital->toArray();
+            $hospital['id'] = (string) $hospital['id'];
+            return $hospital;
+        });
 
         return view('apply.list', compact('applies', 'regions', 'hospitals'));
     }
@@ -62,7 +67,8 @@ class ApplyController extends Controller
 
     public function apply(Request $request)
     {
+        $regions = Region::all();
         $user = $request->user();
-        return view('apply.open', compact('user'));
+        return view('apply.open', compact('user', 'regions'));
     }
 }
