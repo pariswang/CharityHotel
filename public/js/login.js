@@ -2,7 +2,7 @@
  * @Author: kermit.yu 
  * @Date: 2020-02-22 22:13:41 
  * @Last Modified by: kermit.yu
- * @Last Modified time: 2020-02-23 00:31:19
+ * @Last Modified time: 2020-02-23 11:05:01
  */
 
 new Vue({
@@ -39,6 +39,7 @@ new Vue({
                 },
                 success: function (res) {
                     console.log('res', res);
+                    window.location.href = '/hotel_list';
                 },
                 complete: function () {
                     _this.submitLoading = false;
