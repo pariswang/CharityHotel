@@ -91,7 +91,9 @@ class ApplyController extends Controller
         $data['checked'] = 0;
         $data['createdate'] = date('Y-m-d H:i:s');
         $data['status'] = 1;
-
+        if($data['hotel_id'] && $hotel = \App\Model\Hotel::find($data['hotel_id'])){
+            $data['admin_id'] = $hotel->user_id;
+        }
         $sub = Subscribe::create($data);
         if($sub){
             return [
