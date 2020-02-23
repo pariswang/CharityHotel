@@ -1,0 +1,41 @@
+@charset "utf-8";
+
+/* **** 我来接单页 **** */
+.receiveBox {
+    margin-top: 0.6rem;
+}
+.receiveTitle {
+    margin: 0 0 0.6rem;
+    font-size: 0.28rem;
+    line-height: 0.4rem;
+    text-align: center;
+}
+.receiveItem {
+    margin-bottom: 0.2rem;
+    font-size: 0px;
+}
+.receiveLabel, .receiveDesc {
+    display: inline-block;
+    vertical-align: middle;
+    font-size: 0.28rem;
+}
+.confirmReceiveBtn {
+    display: block;
+    width: 100%;
+    margin-top: 0.4rem;
+    font-size: 0.28rem;
+    line-height: 0.8rem;
+    text-align: center;
+    background-color: var(--themeColor);
+    color: #ffffff;
+}
+.receiveAttention {
+    position: absolute;
+    left: 0px;
+    bottom: 0.2rem;
+    width: 100%;
+    font-size: 0.24rem;
+    line-height: 0.4rem;
+    text-align: center;
+    color: #999999;
+}

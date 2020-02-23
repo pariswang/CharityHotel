@@ -1,0 +1,90 @@
+@charset "utf-8";
+
+html, body {
+    width: 100%;
+    height: 100%;
+}
+body {
+    position: relative;
+}
+/* **** 查看申请页 **** */
+.filterForm {
+    box-sizing: border-box;
+    display: flex;    
+    flex-wrap: wrap;
+    position: absolute;
+    width: 100%;
+    padding: 0.2rem 2%;
+    background-color: #ffffff;
+    z-index: 1000;
+}
+.formSelect {
+    width: 33.3%;
+    border-radius: 0px;
+}
+.hospitalSelect {
+    border-left: 0px;
+    border-right: 0px;
+}
+.formInput {
+    width: calc(100% - 1.4rem);
+    border-top: 0px;
+    border-right: 0px;
+}
+.filterBtn {
+    width: 1.4rem;
+    font-size: 0.28rem;
+    line-height: 0.8rem;
+    text-align: center;
+    border-radius: 0px;
+    background-color: var(--themeColor);
+    color: #ffffff;
+}
+.wrap {
+    box-sizing: border-box;
+    /* height: 100%; */
+    height: calc(100% - 0.8rem);
+    /* padding-top: 2rem; */
+    padding: 2rem 0 1.4rem;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    -webkit-overflow-scrolling: touch;
+}
+.applyItem {
+    padding: 0.3rem 0;
+    border-bottom: 1px solid #f0f1f2;
+}
+.applyItem:last-child {
+    border-bottom: 0px;
+}
+.applyDesc {
+    margin-bottom: 0.2rem;
+    font-size: 0.28rem;
+    line-height: 0.4rem;
+}
+.applyOperation {
+    font-size: 0px;
+    text-align: right;
+}
+.checkDetails, .receive, .alreadyApply, .alreadyReceive {
+    display: inline-block;
+    font-size: 0.28rem;
+    color: var(--fontColor);
+}
+.receive, .alreadyApply {
+    margin-left: 0.3rem;
+}
+.publishApply {
+    position: absolute;
+    width: 3rem;
+    height: 0.8rem;
+    left: 50%;
+    bottom: 0.4rem;
+    font-size: 0.32rem;
+    line-height: 0.8rem;
+    text-align: center;
+    border-radius: 0.4rem;
+    transform: translateX(-50%);
+    background-color: var(--themeColor);
+    color: #fff;
+}

@@ -1,0 +1,26 @@
+@charset "utf-8";
+
+.formGroup {
+    height: 1.2rem;
+}
+
+/* **** 申请住宿页 **** */
+.applyTitle {
+    margin: 0.6rem 0 0.4rem;
+    font-size: 0.28rem;
+    line-height: 0.4rem;
+    text-align: center;
+    color: var(--fontColor);
+}
+.applyForm {
+    font-size: 0px;
+}
+.submitApplyBtn {
+    width: 100%;
+    margin-bottom: 1rem;
+    font-size: 0.28rem;
+    line-height: 0.8rem;
+    text-align: center;
+    background-color: var(--themeColor);
+    color: #ffffff;
+}
