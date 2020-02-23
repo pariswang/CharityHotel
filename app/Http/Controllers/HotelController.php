@@ -59,4 +59,14 @@ class HotelController extends Controller
 
         return view('hotel.list', compact('hotels', 'regions', 'hospitals'));
     }
+
+    public function detail(Request $request)
+    {
+        $id = $request->input('id');
+        $hotel = Hotel::find($id);
+        if(!$hotel){
+            return response()->redirectTo('/');
+        }
+        return view('hotel.detail', compact('hotel'));
+    }
 }

@@ -16,6 +16,7 @@ Route::get('/', 'IndexController@index');
 
 // 查找房源（酒店列表）
 Route::get('hotel_list', 'HotelController@list');
+Route::get('hotel_detail', 'HotelController@detail');
 
 // 查看申请（没有指定酒店的申请单列表）
 Route::get('apply_list', 'ApplyController@list');

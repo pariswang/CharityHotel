@@ -54,7 +54,7 @@
                 @else
                 <span class="text--green">免费</span>。
             @endif
-            联系人:习大大, 联系人电话:<a class="tel" href="tel:13988887777">13988887777</a>
+            联系人:{{$hotel->uname}}
         </div>
         <div class="item-ft">
             <van-button type="default" size="small" round plain url="#">已申请xxx酒店</van-button>
