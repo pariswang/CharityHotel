@@ -96,6 +96,14 @@
             </div>
         </div>
     </van-cell-group>
+    <van-popup
+        v-model="showAreas"
+        closeable
+        round
+        position="bottom"
+        :style="{ height: '30%' }">
+        <van-picker :columns="areas" @change="areaOnChange"/>
+    </van-popup>
     <van-cell-group>
         <van-field
             v-model="hope_addr"
