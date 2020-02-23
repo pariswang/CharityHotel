@@ -28,7 +28,7 @@
         position="bottom"
         close-icon="{{asset('/imgs/confirm_btn.png')}}"
         :style="{ height: '30%' }">
-        <van-picker :columns="areas" @change="areaOnChange"/>
+        <van-picker :columns="areas" :default-index="areaIndex || 0" @change="areaOnChange"/>
     </van-popup>
     <van-popup
         v-model="showHospitals"
@@ -46,7 +46,7 @@
         position="bottom"
         close-icon="{{asset('/imgs/confirm_btn.png')}}"
         :style="{ height: '30%' }">
-        <van-picker :columns="status" @change="statuOnChange"/>
+        <van-picker :columns="status" :default-index="statuIndex || 0" @change="statuOnChange"/>
     </van-popup>
     <!--
     参数说明
