@@ -49,8 +49,6 @@ class HotelController extends AdminController
                 'uname'=>['联系人'],
                 'phone'=>['联系人电话'],
                 'wechat'=>['微信'],
-                'user_id'=>['关联用户'],
-
             ];
             return htmlInOneField($fieldArr,$this);
         });
