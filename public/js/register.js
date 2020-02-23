@@ -2,8 +2,23 @@
  * @Author: kermit.yu 
  * @Date: 2020-02-22 22:13:41 
  * @Last Modified by: kermit.yu
- * @Last Modified time: 2020-02-23 19:14:36
+ * @Last Modified time: 2020-02-23 22:07:00
  */
+
+ var ROLES = [
+    {
+        id: 2,
+        role_name: '医护人员'
+    },
+    {
+        id: 3,
+        role_name: '酒店人员'
+    },
+    {
+        id: 4,
+        role_name: '志愿者'
+    }
+ ]
 
 new Vue({
     el: '#app',
@@ -14,9 +29,22 @@ new Vue({
         uname: '',
         position: '',
         company: '',
+        role: '',
+        roleIndex: null,
+        roles: _.pluck(ROLES, 'role_name'),
+        showRoles: false,
         submitLoading: false
     },
+    created: function() {
+        var ishotel = parseInt($('input[name="ishotel"]').val());
+        this.roleIndex = 1;
+        this.role = ROLES[this.roleIndex].role_name;
+    },
     methods: {
+        rolesOnChange: function (picker, value, index) {
+            this.role = value;
+            this.roleIndex = index;
+        },
         onSubmit: function () {
             var _this = this;
             if(this.phone == ''){
@@ -60,6 +88,7 @@ new Vue({
                     uname: this.uname,
                     position: this.position,
                     company: this.company,
+                    role: ROLES[this.roleIndex].id,
                 },
                 beforeSend: function () {
                     _this.submitLoading = true;
