@@ -19,4 +19,9 @@ class Hotel extends Model
     {
         return $this->belongsToMany(Hospital::class, 'wh_hotel_hospital', 'hotel_id', 'hospital_id')->withPivot('distance');
     }
+
+    public function hospitals()
+    {
+        return $this->hasMany(HotelHospital::class, 'hotel_id');
+    }
 }

@@ -1,7 +1,6 @@
 <?php
 
 use Illuminate\Http\Request;
-
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -15,4 +14,11 @@ use Illuminate\Http\Request;
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
+});
+Route::get('/hospital_region', function (Request $request) {
+    return \App\Model\Hospital::where('region_id',$request->input('q'))->get(['id', 'hospital_name as text'])->map(function ($hospital){
+        $hospital = $hospital->toArray();
+        $hospital['id'] = (string) $hospital['id'];
+        return $hospital;
+    });
 });

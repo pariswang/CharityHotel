@@ -40,6 +40,13 @@ class HotelController extends AdminController
         // $grid->column('address', __('地址'));
         // $grid->column('uname', __('联系人'));
         // $grid->column('wechat', __('微信'));
+        $grid->column('附近医院')->display(function(){
+            $html = "";
+            foreach ($this->nearbyHospitals as $key => $value) {
+                $html .= "<p>".$value->hospital_name.",距离:<strong>".$value->pivot->distance."</strong>米</p>";
+            }
+            return $html;
+        });
         $grid->column('基本信息')->display(function(){
             $fieldArr = [
                 'hotel_name'=>['酒店名称'],
@@ -141,12 +148,18 @@ class HotelController extends AdminController
         $form->text('hotel_name', __('酒店名称'))->required();;
         $form->text('simple_name', __('简称'));
         $form->select('region_id', __('区域'))->options(Region::pluck('region_name', 'id')->all())->required();
+        $form->hasMany('hospitals','附近医院', function (Form\NestedForm $form) {
+            $form->select('region_id','地区')->options(Region::pluck('region_name', 'id')->all())->load('hospital_id', '/api/hospital_region');
+            $form->select('hospital_id','医院');
+            $form->number('distance','距离/米');
+        });
+        $form->divider('附近医院选择End');
         $form->text('classify', __('类型'));
         $form->text('address', __('地址'))->required();
         $form->text('uname', __('联系人'))->required();
         $form->text('phone', __('联系人电话'))->required();
-        $form->number('room_count', __('可安排房间数'))->min(1)->max(1000)->help('请设置小于1000的整数');
-        $form->number('use_room_count', __('已使用房间数'))->min(1)->max(1000)->help('请设置小于1000的整数');
+        $form->number('room_count', __('可安排房间数'))->min(1)->help('请设置数字');
+        $form->number('use_room_count', __('已使用房间数'))->min(0)->help('请设置数字');
         $form->text('meal', __('早中晚餐饮'));
         $form->switch('medical_staff_free', __('医务人员是否免费'));
         $form->switch('expropriation', __('是否愿意被征用'));
