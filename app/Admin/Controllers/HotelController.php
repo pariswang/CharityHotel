@@ -3,11 +3,12 @@
 namespace App\Admin\Controllers;
 
 use App\Model\Hotel;
+use App\Model\Region;
 use Encore\Admin\Controllers\AdminController;
 use Encore\Admin\Form;
 use Encore\Admin\Grid;
 use Encore\Admin\Show;
-
+use Encore\Admin\Facades\Admin;
 class HotelController extends AdminController
 {
     /**
@@ -25,12 +26,14 @@ class HotelController extends AdminController
     protected function grid()
     {
         $grid = new Grid(new Hotel());
-
+        if(Admin::user()->id != '1'){
+            $grid->model()->where('user_id', '=', Admin::user()->id);
+        }
         $grid->column('id', __('ID'));
         // $grid->column('user_id', __('关联用户'));
         // $grid->column('phone', __('Phone'));
         // $grid->column('pwd', __('Pwd'));
-        $grid->column('region_id', __('区域'));
+        $grid->column('region.region_name', __('区域'));
         // $grid->column('hotel_name', __('酒店名称'));
         // $grid->column('simple_name', __('简称'));
         // $grid->column('classify', __('类型'));
@@ -39,43 +42,29 @@ class HotelController extends AdminController
         // $grid->column('wechat', __('微信'));
         $grid->column('基本信息')->display(function(){
             $fieldArr = [
-                'hotel_name'=>'酒店名称',
-                'simple_name'=>'简称',
-                'classify'=>'类型',
-                'address'=>'地址',
-                'uname'=>'联系人',
-                'wechat'=>'微信',
-                'user_id'=>'关联用户',
+                'hotel_name'=>['酒店名称'],
+                'simple_name'=>['简称'],
+                'classify'=>['类型'],
+                'address'=>['地址'],
+                'uname'=>['联系人'],
+                'wechat'=>['微信'],
+                'user_id'=>['关联用户'],
+
             ];
-            $html = "";
-            $cursor = 0;
-            foreach ($fieldArr as $key => $value) {
-                if(isset($this->$key)){
-                    $html .= "<p>".$value.":<strong>".$this->$key."</strong></p>";
-                }
-            }
-            return $html;
+            return htmlInOneField($fieldArr,$this);
         });
         $grid->column('详细信息')->display(function(){
             $fieldArr = [
-                'meal'=>'早中晚餐饮',
-                'room_count'=>'可安排房间数',
-                'use_room_count'=>'已使用房间数',
-                'discount_price'=>'优惠房价',
-                'medical_staff_free'=>'医务人员是否免费',
-                'expropriation'=>'是否愿意被征用',
-                'reception'=>'是否有接待',
-                'cleaning'=>'是否有清洁',
+                'meal'=>['早中晚餐饮'],
+                'room_count'=>['可安排房间数'],
+                'use_room_count'=>['已使用房间数'],
+                'discount_price'=>['优惠房价'],
+                'medical_staff_free'=>['医务人员是否免费','boolean'],
+                'expropriation'=>['是否愿意被征用','boolean'],
+                'reception'=>['是否有接待','boolean'],
+                'cleaning'=>['是否有清洁','boolean'],
             ];
-            $html = "";
-            $cursor = 0;
-            foreach ($fieldArr as $key => $value) {
-                if(isset($this->$key)){
-                    $html .= "<p>".$value.":<strong>".($cursor>3?($this->$key?'是':'否'):$this->$key)."</strong></p>";
-                }
-                $cursor++;
-            }
-            return $html;
+            return htmlInOneField($fieldArr,$this);
         });
         // $grid->column('meal', __('早中晚餐饮'));
         // $grid->column('room_count', __('可安排房间数'));
@@ -90,6 +79,12 @@ class HotelController extends AdminController
         $grid->column('create_date', __('创建日期'));
         $grid->actions(function ($actions) {
             $actions->disableDelete();
+        });
+        $grid->filter(function($filter){
+            // 去掉默认的id过滤器
+            $filter->disableIdFilter();
+            $filter->equal('region_id','地区')->select(Region::pluck('region_name', 'id')->all());
+            $filter->like('hotel_name', '酒店名称');
         });
         return $grid;
     }
@@ -141,13 +136,13 @@ class HotelController extends AdminController
         // $form->number('user_id', __('User id'));
         // $form->mobile('phone', __('Phone'));
         // $form->password('pwd', __('Pwd'));
-        $form->number('region_id', __('区域'));
-        $form->text('hotel_name', __('酒店名称'));
+        $form->select('region_id', __('区域'))->options(Region::pluck('region_name', 'id')->all())->required();
+        $form->text('hotel_name', __('酒店名称'))->required();;
         $form->text('simple_name', __('简称'));
         $form->text('classify', __('类型'));
         $form->text('meal', __('早中晚餐饮'));
-        $form->text('address', __('地址'));
-        $form->text('uname', __('联系人'));
+        $form->text('address', __('地址'))->required();;
+        $form->text('uname', __('联系人'))->required();;
         $form->text('wechat', __('微信'));
         $form->number('room_count', __('可安排房间数'));
         $form->number('use_room_count', __('已使用房间数'));
@@ -156,10 +151,14 @@ class HotelController extends AdminController
         $form->decimal('discount_price', __('优惠房价'));
         $form->switch('reception', __('是否有接待'));
         $form->switch('cleaning', __('是否有清洁'));
-        $form->text('collocation_description', __('房间搭配说明'));
-        $form->text('description', __('酒店说明'));
+        $form->textarea('collocation_description', __('房间搭配说明'));
+        $form->textarea('description', __('酒店说明'));
         $form->datetime('create_date', __('创建日期'))->default(date('Y-m-d H:i:s'));
-
+        $form->hidden('user_id');
+        $form->saving(function (Form $form) {
+            $form->user_id = Admin::user()->id;
+            return $form;
+        });
         return $form;
     }
 }

@@ -114,14 +114,6 @@
             placeholder="请输入备注文字"/>
     </van-cell-group>
     <van-button class="submit-btn" type="primary" round block :loading="submitLoading" loading-text="申请中..." @click="onSubmit">申请</van-button>
-    <van-popup
-        v-model="showAreas"
-        closeable
-        round
-        position="bottom"
-        :style="{ height: '30%' }">
-        <van-picker :columns="areas" @change="areaOnChange"/>
-    </van-popup>
 </div>
 @endsection
 @section('js')
