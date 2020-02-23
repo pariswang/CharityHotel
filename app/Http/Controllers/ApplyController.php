@@ -44,6 +44,8 @@ class ApplyController extends Controller
     {
         $user = $request->user();
         $data = $request->only(['conn_person', 'conn_phone', 'conn_position', 'conn_company', 'checkin_num', 'room_count', 'date_begin', 'date_end', 'can_pay', 'has_letter', 'hotel_id','region_id', 'hope_addr', 'remark']);
+        $data['can_pay'] = $data['can_pay'] ? 1 : 0;
+        $data['has_letter'] = $data['has_letter'] ? 1 : 0;
         $data['user_id'] = $user->id;
         $data['checked'] = 0;
         $data['createdate'] = date('Y-m-d H:i:s');

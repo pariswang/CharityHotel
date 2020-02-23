@@ -2,7 +2,7 @@
  * @Author: kermit.yu 
  * @Date: 2020-02-22 22:13:41 
  * @Last Modified by: kermit.yu
- * @Last Modified time: 2020-02-23 01:03:48
+ * @Last Modified time: 2020-02-23 11:05:16
  */
 
 new Vue({
@@ -30,7 +30,7 @@ new Vue({
                 vant.Toast('密码不能为空');
                 return false;
             } else if (!/^[a-zA-Z0-9_-]{4,16}$/.test(this.password)){
-                vant.Toast('密码6-16位，包括至少1个大写字母，1个小写字母，1个数字，1个特殊字符');
+                vant.Toast('密码6-16位，必须包括大小写字母和数字');
                 return false;
             } else if (this.password !== this.password_f ){
                 vant.Toast('两次密码不一致');
@@ -56,6 +56,7 @@ new Vue({
                     ishotel: $('input[name="ishotel"]').val(),
                     phone: this.phone,
                     password: this.password,
+                    password_confirmation: this.password_f,
                     uname: this.uname,
                     position: this.position,
                     company: this.company,
@@ -65,6 +66,7 @@ new Vue({
                 },
                 success: function (res) {
                     console.log('res', res);
+                    window.location.href = '/hotel_list';
                 },
                 complete: function () {
                     _this.submitLoading = false;
