@@ -107,4 +107,15 @@ class ApplyController extends Controller
         $user = $request->user();
         return view('apply.open', compact('user', 'regions'));
     }
+
+    public function detail(Request $request)
+    {
+        $id = $request->input('id');
+        $apply = Subscribe::find($id);
+        if(empty($apply)){
+            return response()->redirectTo('/');
+        }
+
+        return view('apply.detail', compact('apply'));
+    }
 }
