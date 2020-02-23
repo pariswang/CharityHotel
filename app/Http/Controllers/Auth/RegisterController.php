@@ -98,14 +98,24 @@ class RegisterController extends Controller
      */
     protected function registered(Request $request, $user)
     {
+        // 默认去酒店列表，去申请
+        $defaultUrl = '/hotel_list';
+        if($user->role == 3){
+            $this->guard()->logout();
+            // 如果是酒店人员，去申请列表
+            $defaultUrl = '/apply_list';
+        }
+
+        // 如果之前有目的地
         $url = session('url.intended');
         if($url){
             session()->forget('url.intended');
-            return [
-                'success' => 1,
-                'data' => ['url' => $url],
-            ];
+            $defaultUrl = $url;
         }
+        return [
+            'success' => 1,
+            'data' => ['url' => $defaultUrl],
+        ];
     }
 
     public function showHotelRegistrationForm()
