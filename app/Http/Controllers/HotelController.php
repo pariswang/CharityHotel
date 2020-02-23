@@ -34,21 +34,39 @@ class HotelController extends Controller
         }
 
         if($hospitalId) {
-            $hospitalNearbyHotels = Hospital::find($hospitalId)->nearbyHotels()->get(['hotel_id']);
-            $ids = $hospitalNearbyHotels->map(function ($item){
-                return $item->hotel_id;
-            });
-            $priorities = $hotels->filter(function ($item) use($ids) {
-                return in_array($item->id, $ids->toArray());
-            });
-            $others = $hotels->diff($priorities);
-            $hotels = $priorities->merge($others);
+            $hospital = Hospital::find($hospitalId);
+            if($hospital) {
+                $hospitalNearbyHotels = $hospital->nearbyHotels()->get(['hotel_id']);
+                $ids = $hospitalNearbyHotels->map(function ($item) {
+                    return $item->hotel_id;
+                });
+                $priorities = $hotels->filter(function ($item) use ($ids) {
+                    return in_array($item->id, $ids->toArray());
+                });
+                $others = $hotels->diff($priorities);
+                $hotels = $priorities->merge($others);
+            }
         }
 
         // 选项
         $regions = Region::all();
         $hospitals = Hospital::all();
+        $hospitals = $hospitals->map(function ($hospital){
+            $hospital = $hospital->toArray();
+            $hospital['id'] = (string) $hospital['id'];
+            return $hospital;
+        });
 
         return view('hotel.list', compact('hotels', 'regions', 'hospitals'));
+    }
+
+    public function detail(Request $request)
+    {
+        $id = $request->input('id');
+        $hotel = Hotel::find($id);
+        if(!$hotel){
+            return response()->redirectTo('/');
+        }
+        return view('hotel.detail', compact('hotel'));
     }
 }

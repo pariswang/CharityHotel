@@ -19,7 +19,7 @@ class AddSubscribeFields extends Migration
             $table->integer('room_count')->nullable();
             $table->smallInteger('can_pay')->default(0);
             $table->smallInteger('has_letter')->default(0);
-            $table->integer('admin_id')->nullalbe(); // 接单人
+            $table->integer('admin_id')->nullable(); // 接单人
             $table->smallInteger('status')->nullable();// 状态：1已申请，5已接单
         });
     }
