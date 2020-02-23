@@ -101,6 +101,7 @@
         closeable
         round
         position="bottom"
+        close-icon="{{asset('/imgs/confirm_btn.png')}}"
         :style="{ height: '30%' }">
         <van-picker :columns="areas" @change="areaOnChange"/>
     </van-popup>

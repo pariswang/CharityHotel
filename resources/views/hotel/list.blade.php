@@ -18,6 +18,7 @@
         closeable
         round
         position="bottom"
+        close-icon="{{asset('/imgs/confirm_btn.png')}}"
         :style="{ height: '30%' }">
         <van-picker :columns="areas" @change="areaOnChange"/>
     </van-popup>
@@ -26,6 +27,7 @@
         closeable
         round
         position="bottom"
+        close-icon="{{asset('/imgs/confirm_btn.png')}}"
         :style="{ height: '30%' }">
         <van-picker :columns="hospitals" @change="hospitalOnChange"/>
     </van-popup>
@@ -34,6 +36,7 @@
         closeable
         round
         position="bottom"
+        close-icon="{{asset('/imgs/confirm_btn.png')}}"
         :style="{ height: '30%' }">
         <van-picker :columns="status" @change="statuOnChange"/>
     </van-popup>
