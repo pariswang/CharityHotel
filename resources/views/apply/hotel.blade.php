@@ -13,5 +13,5 @@
     <input name="has_letter"/><br/>
     <input type="submit" value="提交"/>
     <input name="hotel_id" type="hidden" value="{{$hotel->id}}"/>
-
+    @csrf
 </form>

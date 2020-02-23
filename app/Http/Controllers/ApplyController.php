@@ -9,6 +9,7 @@
 namespace App\Http\Controllers;
 
 use App\Model\Hotel;
+use App\Model\Subscribe;
 use Illuminate\Http\Request;
 
 class ApplyController extends Controller
@@ -39,6 +40,14 @@ class ApplyController extends Controller
         $data['checked'] = 0;
         $data['createdate'] = date('Y-m-d H:i:s');
         $data['status'] = 1;
+
+        $sub = Subscribe::create($data);
+        if($sub){
+            return [
+                'success' => 1,
+                'data' => [],
+            ];
+        }
     }
 
     public function apply(Request $request)
