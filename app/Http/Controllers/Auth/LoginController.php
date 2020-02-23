@@ -57,13 +57,20 @@ class LoginController extends Controller
      */
     protected function authenticated(Request $request, $user)
     {
+        $redirectUrl = '/hotel_list';
+        if($user->role == 3){
+            $redirectUrl = '/apply_list';
+        }
+
         $url = session('url.intended');
         if($url){
             session()->forget('url.intended');
-            return [
-                'success' => 1,
-                'data' => ['url' => $url],
-            ];
+            $redirectUrl = $url;
         }
+        
+        return [
+            'success' => 1,
+            'data' => ['url' => $redirectUrl],
+        ];
     }
 }
