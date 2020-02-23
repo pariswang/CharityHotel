@@ -60,6 +60,7 @@ class ApplyController extends Controller
 
     public function apply(Request $request)
     {
-        return view('apply.open');
+        $user = $request->user();
+        return view('apply.open', compact('user'));
     }
 }
