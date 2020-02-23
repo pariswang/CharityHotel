@@ -18,7 +18,43 @@ class ApplyController extends Controller
 {
     public function list(Request $request)
     {
-        $applies = Subscribe::all();
+        $search = $request->input('s');
+        $hospitalId = $request->input('hospital');
+        $regionId = $request->input('distinct');
+        $status = $request->input('status');
+
+        $where = [];
+        if($regionId){
+            $where['region_id'] = $regionId;
+        }
+        if($status){
+            $where['status'] = $status;
+        }
+        if($search){
+//            $where['hope_addr'] = $search;
+        }
+        if($hospitalId){
+//            $where['hospital_id'] = $hospitalId;
+        }
+
+        if(!empty($where)){
+            $applies = null;
+            foreach($where as $key => $value){
+                if(null == $applies){
+                    $applies = Subscribe::where($key, $value);
+                }else{
+                    $applies = $applies->where($key, $value);
+                }
+            }
+            if($search){
+                $applies = $applies->where('hope_addr', 'like', "%$search%");
+            }
+            $applies = $applies->get();
+        }elseif($search) {
+            $applies = Subscribe::where('hope_addr', 'like', "%$search%")->get();
+        }else{
+            $applies = Subscribe::all();
+        }
 
         // 选项
         $regions = Region::all();
