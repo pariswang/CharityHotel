@@ -8,6 +8,8 @@ class Hospital extends Model
 {
     protected $table = 'wh_hospital';
 
+    public $timestamps = false;
+
     public function region()
     {
         return $this->belongsTo(Region::class, 'region_id');

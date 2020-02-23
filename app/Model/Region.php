@@ -8,6 +8,8 @@ class Region extends Model
 {
     protected $table = 'wh_region';
 
+    public $timestamps = false;
+
     public function hotels()
     {
         return $this->hasMany(Hotel::class);
