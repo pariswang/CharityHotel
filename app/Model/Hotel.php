@@ -8,6 +8,8 @@ class Hotel extends Model
 {
     protected $table = 'wh_hotel';
 
+    public $timestamps = false;
+
     public function region()
     {
         return $this->belongsTo(Region::class, 'region_id');
