@@ -19,7 +19,7 @@ class HotelController extends Controller
     {
         $search = $request->input('s');
         $hospitalId = $request->input('hospital');
-        $regionId = $request->input('region');
+        $regionId = $request->input('distinct');
 
         if($search){
             $hotels = Hotel::where('address', 'like', "%$search%");
