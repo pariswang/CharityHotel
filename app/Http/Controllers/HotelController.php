@@ -17,7 +17,35 @@ class HotelController extends Controller
 {
     public function list(Request $request)
     {
-        $hotels = Hotel::all();
+        $search = $request->input('s');
+        $hospitalId = $request->input('hospital');
+        $regionId = $request->input('region');
+
+        if($search){
+            $hotels = Hotel::where('address', 'like', "%$search%");
+            if($regionId){
+                $hotels = $hotels->where('region_id', $regionId);
+            }
+            $hotels = $hotels->get();
+        }elseif($regionId){
+            $hotels = Hotel::where('region_id', $regionId)->get();
+        }else{
+            $hotels = Hotel::all();
+        }
+
+        if($hospitalId) {
+            $hospitalNearbyHotels = Hospital::find($hospitalId)->nearbyHotels()->get(['hotel_id']);
+            $ids = $hospitalNearbyHotels->map(function ($item){
+                return $item->hotel_id;
+            });
+            $priorities = $hotels->filter(function ($item) use($ids) {
+                return in_array($item->id, $ids->toArray());
+            });
+            $others = $hotels->diff($priorities);
+            $hotels = $priorities->merge($others);
+        }
+
+        // 选项
         $regions = Region::all();
         $hospitals = Hospital::all();
 
