@@ -2,7 +2,7 @@
  * @Author: kermit.yu 
  * @Date: 2020-02-22 22:13:41 
  * @Last Modified by: kermit.yu
- * @Last Modified time: 2020-02-23 18:46:31
+ * @Last Modified time: 2020-02-23 19:14:29
  */
 
 new Vue({
@@ -39,7 +39,7 @@ new Vue({
                 },
                 success: function (res) {
                     console.log('res', res);
-                    if(res.data.url){
+                    if(res && res.data && res.data.url){
                         window.location.href = res.data.url;
                     }else{
                         window.location.href = '/hotel_list';
