@@ -108,10 +108,16 @@ class HotelController extends AdminController
         $show = new Show(Hotel::findOrFail($id));
         $show->field('id', __('ID'));
         $show->field('user_id', __('关联用户'));
-        $show->field('phone', __('Phone'));
         // $show->field('pwd', __('Pwd'));
         $show->field('region_id', __('区域'))->as(function () {
             return isset($this->region)?$this->region->region_name:'';
+        });
+        $show->field('附近医院')->unescape()->as(function(){
+            $html = "";
+            foreach ($this->nearbyHospitals as $key => $value) {
+                $html .= "<p>".$value->hospital_name.",距离:<strong>".$value->pivot->distance."</strong>米</p>";
+            }
+            return $html;
         });
         $show->field('hotel_name', __('酒店名称'));
         $show->field('simple_name', __('简称'));
@@ -119,6 +125,7 @@ class HotelController extends AdminController
         $show->field('meal', __('早中晚餐饮'));
         $show->field('address', __('地址'));
         $show->field('uname', __('联系人'));
+        $show->field('phone', __('联系人电话'));
         $show->field('wechat', __('微信'));
         $show->field('room_count', __('可安排房间数'));
         $show->field('use_room_count', __('已使用房间数'));
