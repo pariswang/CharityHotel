@@ -13,7 +13,7 @@
     <div class="list-hd">
         <div class="pickers">
             <van-button type="default" icon="arrow-down" round block size="small" plain :text="area" @click="showAreas=true"></van-button>
-            <van-button type="default" icon="arrow-down" round block size="small" plain :text="hospital" @click="showHospitals=true"></van-button>
+            <!-- <van-button type="default" icon="arrow-down" round block size="small" plain :text="hospital" @click="showHospitals=true"></van-button> -->
             <van-button type="default" icon="arrow-down" round block size="small" plain :text="statu" @click="showStatus=true"></van-button>
         </div>
         <van-field v-model="keyword" placeholder="地址关键词">
@@ -50,26 +50,19 @@
     ?distinct={distinct_id}&hospital={hospital_id}&s={addr_str}
     -->
     @foreach ($applies as $apply)
-    {{$apply->date_begin}}
     <div class="item">
         <div class="item-hd">
             <span>{{$apply->date_begin}}</span>
-            <span class="item__value">{{$apply->date_begin}}</span>
+            <span class="item__value">已申请</span>
         </div>
-        <!-- <div class="item-bd">
-            {{$hotel->hotel_name}}可安排{{$hotel->room_count-$hotel->use_room_count}}间，
-            @if ($hotel->medical_staff_free)
-                医护人员免费，其他收费<span class="text--green">{{$hotel->discount_price}}/晚</span>。
-                @else
-                <span class="text--green">免费</span>。
-            @endif
-            联系人:习大大, 联系人电话:<a class="tel" href="tel:13988887777">13988887777</a>
+        <div class="item-bd">
+            武昌-光谷附近 ，同济医院光谷分院  3名 医护人员 急需酒店
         </div>
         <div class="item-ft">
-            <van-button type="default" size="small" round plain url="#">已申请xxx酒店</van-button>
+            <van-button type="default" size="small" round plain url="#">已拒绝</van-button>
             <van-button type="primary" size="small" round plain url="#">查看详情</van-button>
-            <van-button type="primary" size="small" round :url="'/apply_hotel?id='+{{$hotel->id}}">我要申请</van-button>
-        </div> -->
+            <van-button type="primary" size="small" round :url="'/apply_hotel'">接单</van-button>
+        </div>
     </div>
     @endforeach
 </div>

@@ -2,7 +2,7 @@
  * @Author: kermit.yu 
  * @Date: 2020-02-22 22:51:09 
  * @Last Modified by: kermit.yu
- * @Last Modified time: 2020-02-23 14:40:15
+ * @Last Modified time: 2020-02-23 15:21:59
  */
 * {
   box-sizing: border-box;
@@ -103,7 +103,7 @@ body {
 #login .register-titile,
 #register .register-titile {
   font-size: 16px;
-  color: #333;
+  color: #666;
   font-weight: normal;
 }
 #login .register-tip,
@@ -183,6 +183,7 @@ body {
 }
 #hotelList .item,
 #applylList .item {
+  width: 100%;
   padding: 10px 16px;
   background-color: #fff;
 }
