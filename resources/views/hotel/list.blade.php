@@ -20,7 +20,7 @@
         position="bottom"
         close-icon="{{asset('/imgs/confirm_btn.png')}}"
         :style="{ height: '30%' }">
-        <van-picker :columns="areas" @change="areaOnChange"/>
+        <van-picker :columns="areas" :default-index="areaIndex || 0" @change="areaOnChange"/>
     </van-popup>
     <van-popup
         v-model="showHospitals"
@@ -29,7 +29,7 @@
         position="bottom"
         close-icon="{{asset('/imgs/confirm_btn.png')}}"
         :style="{ height: '30%' }">
-        <van-picker :columns="hospitals" @change="hospitalOnChange"/>
+        <van-picker :columns="hospitals" :default-index="hospitalIndex || 0" @change="hospitalOnChange"/>
     </van-popup>
     <van-popup
         v-model="showStatus"
