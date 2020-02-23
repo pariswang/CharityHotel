@@ -22,7 +22,6 @@
         <div class="container">
             @yield('content')
         </div>
-        <footer id="footer">技术支持 <a href="https://dragontrail.cn/">龙途互动</a></footer>
     </div>
     <script src="{{asset('/vendor/ppo.min.js')}}"></script>
     <script src="{{asset('/vendor/underscore-min.js')}}"></script>
