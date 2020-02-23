@@ -57,11 +57,7 @@
         <div class="item-hd">
             <span>{{$apply->date_begin}}</span>
             <span class="item__value">
-                @if ($apply->status==1)
-                    已申请
-                @elseif ($apply->status==5)
-                    已接单
-                @endif
+                {{$apply->region ? $apply->region->region_name : ''}}
             </span>
         </div>
         <div class="item-bd">
