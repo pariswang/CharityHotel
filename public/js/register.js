@@ -2,7 +2,7 @@
  * @Author: kermit.yu 
  * @Date: 2020-02-22 22:13:41 
  * @Last Modified by: kermit.yu
- * @Last Modified time: 2020-02-23 22:07:00
+ * @Last Modified time: 2020-02-23 22:19:41
  */
 
  var ROLES = [
@@ -37,7 +37,7 @@ new Vue({
     },
     created: function() {
         var ishotel = parseInt($('input[name="ishotel"]').val());
-        this.roleIndex = 1;
+        this.roleIndex = ishotel ? 1 : 0;
         this.role = ROLES[this.roleIndex].role_name;
     },
     methods: {
