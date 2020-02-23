@@ -58,8 +58,8 @@
         </div>
         <div class="item-ft">
             <van-button type="default" size="small" round plain url="#">已申请xxx酒店</van-button>
-            <van-button type="primary" size="small" round plain url="#">查看详情</van-button>
-            <van-button type="primary" size="small" round :url="'/apply_hotel?id='+{{$hotel->id}}">我要申请</van-button>
+            <van-button type="primary" size="small" round plain url="/hotel_detail?id={{$hotel->id}}">查看详情</van-button>
+            <van-button type="primary" size="small" round url="/apply_hotel?id={{$hotel->id}}">我要申请</van-button>
         </div>
     </div>
     @endforeach
