@@ -15,24 +15,6 @@
     </van-cell-group>
     <van-cell-group>
         <van-field
-            v-model="conn_person"
-            required
-            type="tel"
-            maxlength="11"
-            label="联系人"
-            placeholder="请输入联系人"/>
-    </van-cell-group>
-    <van-cell-group>
-        <van-field
-            v-model="conn_person"
-            required
-            type="tel"
-            maxlength="11"
-            label="联系人"
-            placeholder="请输入联系人"/>
-    </van-cell-group>
-    <van-cell-group>
-        <van-field
             v-model="conn_phone"
             required
             type="tel"
