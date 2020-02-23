@@ -55,7 +55,7 @@ class RegisterController extends Controller
             'password' => 'required|string|min:6',
             'position' => 'required|string|max:150',
             'company' => 'required|string|max:150',
-            'ishotel' => 'boolean',
+            'role' => 'required|string',
         ]);
     }
 
@@ -67,10 +67,7 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        $role = 2; // 求助者
-        if($data['ishotel']){
-            $role = 3; // 酒店
-        }
+        // role: 2医护人员，3酒店人员，4志愿者
 
         $user = User::create([
             'uname' => $data['uname'],
@@ -78,10 +75,10 @@ class RegisterController extends Controller
             'password' => Hash::make($data['password']),
             'position' => $data['position'],
             'company' => $data['company'],
-            'role' => $role,
+            'role' => $data['role'],
         ]);
 
-        if(3 == $role){
+        if(3 == $data['role']){
             createHoteler([
                 'username' => $data['phone'],
                 'name' => $data['uname'],
