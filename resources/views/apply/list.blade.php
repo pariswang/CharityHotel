@@ -107,5 +107,5 @@
     console.log('REGIONS', REGIONS);
     console.log('HOSPITALS', HOSPITALS);
 </script>
-<script src="{{asset('/js/apply_list.js')}}"></script>
+<script src="{{asset('/js/apply_list.js').'?'.time()}}"></script>
 @endsection

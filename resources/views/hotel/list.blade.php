@@ -78,5 +78,5 @@
     console.log('REGIONS', REGIONS);
     console.log('HOSPITALS', HOSPITALS);
 </script>
-<script src="{{asset('/js/hotelList.js')}}"></script>
+<script src="{{asset('/js/hotelList.js').'?'.time()}}"></script>
 @endsection
