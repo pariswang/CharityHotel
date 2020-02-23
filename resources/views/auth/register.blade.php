@@ -24,7 +24,7 @@
             required
             type="password"
             label="密码"
-            placeholder="请输入密码"/>
+            placeholder="请输入密码，至少6位"/>
     </van-cell-group>
     <van-cell-group>
         <van-field
