@@ -2,7 +2,7 @@
  * @Author: kermit.yu 
  * @Date: 2020-02-22 22:51:09 
  * @Last Modified by: kermit.yu
- * @Last Modified time: 2020-02-23 21:17:27
+ * @Last Modified time: 2020-02-23 22:51:57
  */
 
 *{
@@ -55,6 +55,16 @@ body{
     flex-direction:column;
     overflow-y:scroll;
     -webkit-overflow-scrolling: touch;
+    // 修改vant中popup的关闭按钮
+    .van-popup{
+        .van-icon{
+            z-index: 3;
+            .van-icon__image{
+                width:42px;
+                height:28px;
+            }
+        }
+    }
 }
 
 .page{

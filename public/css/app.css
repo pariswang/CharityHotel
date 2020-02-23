@@ -2,7 +2,7 @@
  * @Author: kermit.yu 
  * @Date: 2020-02-22 22:51:09 
  * @Last Modified by: kermit.yu
- * @Last Modified time: 2020-02-23 21:17:27
+ * @Last Modified time: 2020-02-23 22:51:57
  */
 * {
   box-sizing: border-box;
@@ -50,6 +50,13 @@ body {
   flex-direction: column;
   overflow-y: scroll;
   -webkit-overflow-scrolling: touch;
+}
+#app .van-popup .van-icon {
+  z-index: 3;
+}
+#app .van-popup .van-icon .van-icon__image {
+  width: 42px;
+  height: 28px;
 }
 .page {
   display: flex;
