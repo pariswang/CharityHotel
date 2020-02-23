@@ -14,14 +14,14 @@
     <title>@yield('title')中国加油，武汉加油</title>
     <!-- 引入样式文件 -->
     <link rel="stylesheet" href="{{asset('/vendor/vant/index.css')}}">
-    <link rel="stylesheet" href="{{asset('/css/app.css')}}">
+    <link rel="stylesheet" href="{{asset('/css/app.css?v1.02')}}">
+    @section('css')
+    @show
 </head>
 <body>
     <div id="app">
         <header id="header"><a href="/">中国加油，武汉加油</a></header>
-        <div class="container">
-            @yield('content')
-        </div>
+        @yield('content')
     </div>
     <script src="{{asset('/vendor/ppo.min.js')}}"></script>
     <script src="{{asset('/vendor/underscore-min.js')}}"></script>

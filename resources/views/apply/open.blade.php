@@ -1,9 +1,27 @@
 @extends('layouts.app')
 @section('title', '申请住宿')
 @section('content')
-<div class="page page--start" id="index">
+<div class="page page--start">
     <h1 class="page-title">申请住宿</h1>
     @csrf
+    <van-cell-group>
+        <van-field
+            v-model="conn_person"
+            required
+            type="tel"
+            maxlength="11"
+            label="联系人"
+            placeholder="请输入联系人"/>
+    </van-cell-group>
+    <van-cell-group>
+        <van-field
+            v-model="conn_person"
+            required
+            type="tel"
+            maxlength="11"
+            label="联系人"
+            placeholder="请输入联系人"/>
+    </van-cell-group>
     <van-cell-group>
         <van-field
             v-model="conn_person"
