@@ -52,9 +52,10 @@ class RegisterController extends Controller
         return Validator::make($data, [
             'phone' => 'required|string|unique:wh_user|max:13',
             'uname' => 'required|string|max:20',
-            'password' => 'required|string|min:6|confirmed',
+            'password' => 'required|string|min:6',
             'position' => 'required|string|max:150',
             'company' => 'required|string|max:150',
+            'ishotel' => 'boolean',
         ]);
     }
 
@@ -66,13 +67,29 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
+        $role = 2; // 求助者
+        if($data['ishotel']){
+            $role = 3; // 酒店
+        }
+
+        $user = User::create([
             'uname' => $data['uname'],
             'phone' => $data['phone'],
             'password' => Hash::make($data['password']),
             'position' => $data['position'],
             'company' => $data['company'],
+            'role' => $role,
         ]);
+
+        if(3 == $role){
+            createHoteler([
+                'username' => $data['phone'],
+                'name' => $data['uname'],
+                'password' => Hash::make($data['password']),
+            ]);
+        }
+
+        return $user;
     }
 
     /**
@@ -92,5 +109,10 @@ class RegisterController extends Controller
                 'data' => ['url' => $url],
             ];
         }
+    }
+
+    public function showHotelRegistrationForm()
+    {
+        return view('auth.register',['hotel' => 1]);
     }
 }
