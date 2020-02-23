@@ -132,7 +132,6 @@ class HotelController extends AdminController
     protected function form()
     {
         $form = new Form(new Hotel());
-
         // $form->number('user_id', __('User id'));
         // $form->mobile('phone', __('Phone'));
         // $form->password('pwd', __('Pwd'));
@@ -140,12 +139,12 @@ class HotelController extends AdminController
         $form->text('hotel_name', __('酒店名称'))->required();;
         $form->text('simple_name', __('简称'));
         $form->text('classify', __('类型'));
-        $form->text('meal', __('早中晚餐饮'));
         $form->text('address', __('地址'))->required();;
         $form->text('uname', __('联系人'))->required();;
         $form->text('wechat', __('微信'));
-        $form->number('room_count', __('可安排房间数'));
-        $form->number('use_room_count', __('已使用房间数'));
+        $form->number('room_count', __('可安排房间数'))->min(1)->max(1000)->help('请设置小于1000的整数');
+        $form->number('use_room_count', __('已使用房间数'))->min(1)->max(1000)->help('请设置小于1000的整数');
+        $form->text('meal', __('早中晚餐饮'));
         $form->switch('medical_staff_free', __('医务人员是否免费'));
         $form->switch('expropriation', __('是否愿意被征用'));
         $form->decimal('discount_price', __('优惠房价'));
@@ -153,10 +152,24 @@ class HotelController extends AdminController
         $form->switch('cleaning', __('是否有清洁'));
         $form->textarea('collocation_description', __('房间搭配说明'));
         $form->textarea('description', __('酒店说明'));
-        $form->datetime('create_date', __('创建日期'))->default(date('Y-m-d H:i:s'));
+        $form->hidden('create_date');
         $form->hidden('user_id');
+        $form->footer(function ($footer) {
+            // 去掉`重置`按钮
+            // $footer->disableReset();
+            // 去掉`提交`按钮
+            // $footer->disableSubmit();
+            // 去掉`查看`checkbox
+            $footer->disableViewCheck();
+            // 去掉`继续编辑`checkbox
+            $footer->disableEditingCheck();
+            // 去掉`继续创建`checkbox
+            $footer->disableCreatingCheck();
+
+        });
         $form->saving(function (Form $form) {
             $form->user_id = Admin::user()->id;
+            $form->create_date = date('Y-m-d H:i:s');
             return $form;
         });
         return $form;
