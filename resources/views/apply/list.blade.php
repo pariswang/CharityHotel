@@ -62,7 +62,7 @@
         </div>
         <div class="item-bd">
             @if ($apply->region_id)
-                {{$apply->region->region_name}} ，
+                {{$apply->region->region_name}}{{$apply->hope_addr ?? ''}} ，
             @elseif ($apply->hotel_id)
                 {{$apply->hotel->region->region_name}}{{$apply->hotel->address}}附近，
             @else
