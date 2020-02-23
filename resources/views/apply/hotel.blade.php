@@ -57,7 +57,7 @@
         </div>
     </van-cell-group>
     <van-cell-group>
-        <div class="van-cell van-field" @click="showDatePicker = true">
+        <div class="van-cell van-cell--required van-field" @click="showDatePicker = true">
             <div class="van-cell__title van-field__label"><span>入住/离店时间</span></div>
             <div class="van-cell__value">
                 <div class="van-field__body"><span class="__cell__value" v-text="date_begin+'-'+date_end"></span></div>
