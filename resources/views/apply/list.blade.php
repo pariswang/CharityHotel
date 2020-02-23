@@ -56,7 +56,7 @@
     <div class="item">
         <div class="item-hd">
             <span>{{$apply->date_begin}}</span>
-            <span class="item__value">
+            <span class="item__value" style="color:#07c160">
                 {{$apply->region ? $apply->region->region_name : ''}}
             </span>
         </div>
