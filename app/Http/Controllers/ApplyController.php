@@ -15,7 +15,7 @@ class ApplyController extends Controller
 {
     public function list(Request $request)
     {
-        echo 'apply list';
+        return view('apply.list');
     }
 
     public function apply_hotel(Request $request)
