@@ -16,7 +16,13 @@ class ApplyController extends Controller
 {
     public function list(Request $request)
     {
-        return view('apply.list');
+        $applies = Subscribe::all();
+
+        // 选项
+        $regions = Region::all();
+        $hospitals = Hospital::all();
+
+        return view('apply.list', compact('applies', 'regions', 'hospitals'));
     }
 
     public function apply_hotel(Request $request)
