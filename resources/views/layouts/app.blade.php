@@ -24,6 +24,9 @@
         </div>
         <footer id="footer">技术支持 <a href="https://dragontrail.cn/">龙途互动</a></footer>
     </div>
+    <script src="{{asset('/vendor/ppo.min.js')}}"></script>
+    <script src="{{asset('/vendor/underscore-min.js')}}"></script>
+    <script src="{{asset('/vendor/moment.min.js')}}"></script>
     <script src="{{asset('/vendor/jquery3.2.1.min.js')}}"></script>
     <!-- 引入 Vue 和 Vant 的 JS 文件 -->
     <script src="{{asset('/vendor/vant/vue.min.js')}}"></script>

@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', '')
+@section('title', '酒店列表')
 @section('content')
 <div class="page" id="hotelList">
     <div class="list-hd">
@@ -59,14 +59,13 @@
         <div class="item-ft">
             <van-button type="default" size="small" round plain url="#">已申请xxx酒店</van-button>
             <van-button type="primary" size="small" round plain url="#">查看详情</van-button>
-            <van-button type="primary" size="small" round url="#">我来接单</van-button>
+            <van-button type="primary" size="small" round :url="'/apply_hotel?id='+{{$hotel->id}}">我要申请</van-button>
         </div>
     </div>
     @endforeach
 </div>
 @endsection
 @section('js')
-<script src="{{asset('/vendor/underscore-min.js')}}"></script>
 <script>
     var REGIONS = {!! $regions->toJson() !!};
     var HOSPITALS = {!! $hospitals->toJson() !!};

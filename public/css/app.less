@@ -2,7 +2,7 @@
  * @Author: kermit.yu 
  * @Date: 2020-02-22 22:51:09 
  * @Last Modified by: kermit.yu
- * @Last Modified time: 2020-02-23 10:39:17
+ * @Last Modified time: 2020-02-23 12:49:37
  */
 
 *{
@@ -67,9 +67,31 @@ html,body{
     justify-content:center;
     align-items:center;
     -webkit-overflow-scrolling: touch;
+    &.page--start{
+        justify-content:flex-start;
+        align-items:flex-start;
+    }
     .van-cell-group{
         width:100%;
         flex-direction:column;
+        .__cell__value{
+            padding-left:1em;
+        }
+        // .--flex-end{
+        //     display:flex;
+        //     justify-content:flex-end;
+        // }
+    }
+    .page-title{
+        width:100%;
+        text-align:center;
+        font-size:18px;
+        font-weight:normal;
+        padding-bottom:0.5em;
+        margin:0;
+    }
+    .submit-btn{
+        margin-top:1em;
     }
 }
 
@@ -79,6 +101,10 @@ html,body{
 
 .text--green{
     color:#07c160;
+}
+
+.text-right{
+    text-align:right;
 }
 
 // 首页样式
