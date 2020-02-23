@@ -22,6 +22,58 @@ class SubscribeController extends AdminController
      */
     protected $title = 'App\Model\Subscribe';
 
+    public function myTaking(Content $content) 
+    {
+        return $content
+            ->header('我的接单')
+            ->description('')
+            ->body($this->gridTaking());
+    }
+
+    protected function gridTaking()
+    {
+        $grid = new Grid(new Subscribe());
+        if(Admin::user()->id != '1'){
+            $grid->model()->where('admin_id', '=', Admin::user()->id);
+        }
+        $grid->column('id', __('ID'));
+
+        $grid->column('user.uname', __('用户'));
+        $grid->column('region.region_name', __('区域'));
+        $grid->column('基本信息1')->display(function(){
+            return htmlInOneField([
+                'conn_person'=>['联系人'],
+                'conn_phone'=>['联系电话'],
+                'conn_type'=>['身份信息'],
+                'checkin_num'=>['入住人数'],
+                'date_begin'=>['开始日期'],
+                'date_end'=>['结束日期'],
+                'hope_addr'=>['希望地点'],
+                'checkin_reson'=>['入住原因'],
+                'remark'=>['其他说明'],
+            ],$this);
+        });
+        $grid->column('基本信息2')->display(function(){
+            return htmlInOneField([
+                'conn_position'=>['联系人职位'],
+                'conn_company'=>['联系人公司'],
+                'room_count'=>['所需房间数'],
+                'checkin_num'=>['入住人数'],
+                'can_pay'=>['能否支付费用','boolean'],
+                'has_letter'=>['是否有介绍信','boolean'],
+            ],$this);
+        });
+        $grid->column('checked', __('是否核实'));
+            // $grid->column('status', __('接单状态'));
+            // $grid->column('hotel_id', __('接单酒店'));
+        
+        $grid->column('createdate', __('创建日期'));
+
+        $grid->disableActions();
+        $grid->disableFilter();
+        $grid->disableCreateButton();
+        return $grid;
+    }
     /**
      * Make a grid builder.
      *
@@ -199,5 +251,7 @@ class SubscribeController extends AdminController
         });
         return $form;
     }
+
+
 
 }
