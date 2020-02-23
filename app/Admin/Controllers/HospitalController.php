@@ -3,6 +3,7 @@
 namespace App\Admin\Controllers;
 
 use App\Model\Hospital;
+use App\Model\Region;
 use Encore\Admin\Controllers\AdminController;
 use Encore\Admin\Form;
 use Encore\Admin\Grid;
@@ -32,6 +33,12 @@ class HospitalController extends AdminController
         $grid->column('create_date', __('创建时间'));
         $grid->actions(function ($actions) {
             $actions->disableDelete();
+        });
+        $grid->filter(function($filter){
+            // 去掉默认的id过滤器
+            $filter->disableIdFilter();
+            $filter->equal('region_id','地区')->select(Region::pluck('region_name', 'id')->all());
+            $filter->like('hospital_name', '医院名称');
         });
         return $grid;
     }
@@ -65,9 +72,9 @@ class HospitalController extends AdminController
     {
         $form = new Form(new Hospital());
 
-        $form->text('hospital_name', __('医院名称'));
-        $form->number('region_id', __('地区'));
-        $form->datetime('create_date', __('创建时间'))->default(date('Y-m-d H:i:s'));
+        $form->text('hospital_name', __('医院名称'))->required();
+        $form->select('region_id', __('地区'))->options(Region::pluck('region_name', 'id')->all())->required();
+        $form->hidden('create_date', __('创建时间'))->default(date('Y-m-d H:i:s'));
 
         return $form;
     }

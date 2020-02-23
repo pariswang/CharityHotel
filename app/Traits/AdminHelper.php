@@ -4,20 +4,32 @@
  * @Author: Simon Zhao
  * @Date:   2020-02-23 01:08:19
  * @Last Modified by:   Simon Zhao
- * @Last Modified time: 2020-02-23 02:38:31
+ * @Last Modified time: 2020-02-23 11:47:51
  */
 namespace App\Traits;
 
 trait AdminHelper
 {
+	/**
+	 * [createHoteler 创建酒店管理人员]
+	 * @param  [type] $data [Array] ['usernmame,name,password']
+	 * @return [user object|string]       [用户模型或者错误描述]
+	 */
 	protected function createHoteler($data){
 		$userModel = config('admin.database.users_model');
-        $user = $userModel::create(['username'=>$data['username'],'name'=>$data['name'],'password'=>bcrypt($data['password'])]);
-        if($user){
+		try{
+	        $user = $userModel::create(collect($data)->only(['username','name','password'])->toArray());
         	$user->roles()->attach(2);
+		}catch (\Exception $e) {
+			switch ($e->getCode()) {
+				case '23000':
+					return "用户已存在";
+					break;
+				default:
+					return $e->getMessage();
+					break;
+			}
         }
         return $user;
 	}
-
-	
 }

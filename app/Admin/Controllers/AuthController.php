@@ -14,5 +14,7 @@ class AuthController extends BaseAuthController
 		$name = 'simon1';
 		$password = '123456';
 		$res = $this->createHoteler(compact("username","name","password"));
+		echo($res);
+		
 	}
 }
