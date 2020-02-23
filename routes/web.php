@@ -32,6 +32,7 @@ Route::post('register', 'Auth\RegisterController@register');
 Route::group(['middleware' => 'auth'], function (){
     // 有对应酒店的申请
     Route::get('apply_hotel', 'ApplyController@apply_hotel');
+    Route::post('apply_hotel', 'ApplyController@apply_hotel_submit');
 
     // 无对应酒店的申请
     Route::get('apply', 'ApplyController@apply');
