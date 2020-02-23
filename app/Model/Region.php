@@ -19,4 +19,9 @@ class Region extends Model
     {
         return $this->hasMany(Hospital::class);
     }
+
+    public function subscribes()
+    {
+        return $this->hasMany(Subscribe::class);
+    }
 }
