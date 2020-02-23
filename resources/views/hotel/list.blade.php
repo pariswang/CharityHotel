@@ -1,6 +1,6 @@
 <!--
 参数说明
-?distinct={distinct_id}&hospital={hospital_id}
+?distinct={distinct_id}&hospital={hospital_id}&s={addr_str}
 -->
 @foreach ($regions as $region)
     {{$region->id}} - {{$region->region_name}}<br/>
