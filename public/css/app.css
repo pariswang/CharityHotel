@@ -2,7 +2,7 @@
  * @Author: kermit.yu 
  * @Date: 2020-02-22 22:51:09 
  * @Last Modified by: kermit.yu
- * @Last Modified time: 2020-02-23 15:21:59
+ * @Last Modified time: 2020-02-23 17:51:11
  */
 * {
   box-sizing: border-box;
@@ -127,6 +127,7 @@ body {
   align-items: flex-start;
   justify-content: flex-start;
   padding-top: 100px;
+  padding-bottom: 60px;
 }
 #hotelList .list-hd,
 #applylList .list-hd {
@@ -231,6 +232,14 @@ body {
   border-bottom: 1px solid #ebedf0;
   -webkit-transform: scale(0.5);
   transform: scale(0.5);
+}
+#hotelList .ft-cover,
+#applylList .ft-cover {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 0 4em 1em 4em;
 }
 #applylList .list-hd .pickers .van-button .van-button__text {
   max-width: 5em;
