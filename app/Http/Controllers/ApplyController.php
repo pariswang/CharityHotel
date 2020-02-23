@@ -43,7 +43,7 @@ class ApplyController extends Controller
     public function apply_hotel_submit(Request $request)
     {
         $user = $request->user();
-        $data = $request->only(['conn_person', 'conn_phone', 'conn_position', 'conn_company', 'checkin_num', 'room_count', 'date_begin', 'date_end', 'can_pay', 'has_letter', 'hotel_id']);
+        $data = $request->only(['conn_person', 'conn_phone', 'conn_position', 'conn_company', 'checkin_num', 'room_count', 'date_begin', 'date_end', 'can_pay', 'has_letter', 'hotel_id','region_id', 'hope_addr', 'remark']);
         $data['user_id'] = $user->id;
         $data['checked'] = 0;
         $data['createdate'] = date('Y-m-d H:i:s');
