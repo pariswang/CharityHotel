@@ -18,7 +18,7 @@
 </head>
 <body>
     <div id="app">
-        <header id="header">中国加油，武汉加油</header>
+        <header id="header"><a href="/">中国加油，武汉加油</a></header>
         <div class="container">
             @yield('content')
         </div>
