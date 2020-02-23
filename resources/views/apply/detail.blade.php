@@ -4,14 +4,16 @@
 <div class="page page--start" id="index">
     <h1 class="page-title">申请详情</h1>
     @csrf
+    @if ($apply->hotel)
     <van-cell-group>
         <div class="van-cell van-field">
             <div class="van-cell__title van-field__label"><span>酒店名称</span></div>
             <div class="van-cell__value">
-                <div class="van-field__body --text-left">酒店名称</div>
+                <div class="van-field__body --text-left">{{$apply->hotel->hotel_name}}</div>
             </div>
         </div>
     </van-cell-group>
+    @endif
     <van-cell-group>
         <div class="van-cell van-field">
             <div class="van-cell__title van-field__label"><span>联系人</span></div>
@@ -72,7 +74,7 @@
         <div class="van-cell van-field">
             <div class="van-cell__title van-field__label"><span>是否原意付费</span></div>
             <div class="van-cell__value">
-                <div class="van-field__body --text-left">{{$apply->can_pay}}</div>
+                <div class="van-field__body --text-left">{{$apply->can_pay ? '是' : '否'}}</div>
             </div>
         </div>
     </van-cell-group>
@@ -80,34 +82,40 @@
         <div class="van-cell van-field">
             <div class="van-cell__title van-field__label"><span>是否有公函</span></div>
             <div class="van-cell__value">
-                <div class="van-field__body --text-left">{{$apply->has_letter}}</div>
+                <div class="van-field__body --text-left">{{$apply->has_letter ? '有' : '没有'}}</div>
             </div>
         </div>
     </van-cell-group>
+    @if ($apply->region)
     <van-cell-group>
         <div class="van-cell van-field">
-            <div class="van-cell__title van-field__label"><span>选择区域</span></div>
+            <div class="van-cell__title van-field__label"><span>区域</span></div>
             <div class="van-cell__value">
-                <div class="van-field__body --text-left">选择区域</div>
+                <div class="van-field__body --text-left">{{$apply->region ? $apply->region->region_name : ''}}</div>
             </div>
         </div>
     </van-cell-group>
+    @endif
+    @if ($apply->hope_addr)
     <van-cell-group>
         <div class="van-cell van-field">
             <div class="van-cell__title van-field__label"><span>期望地址</span></div>
             <div class="van-cell__value">
-                <div class="van-field__body --text-left">期望地址</div>
+                <div class="van-field__body --text-left">{{$apply->hope_addr}}</div>
             </div>
         </div>
     </van-cell-group>
+    @endif
+    @if ($apply->remark)
     <van-cell-group>
         <div class="van-cell van-field">
             <div class="van-cell__title van-field__label"><span>其他说明</span></div>
             <div class="van-cell__value">
-                <div class="van-field__body --text-left">其他说明其他说明其他说明其他说明其他说明其他说明其他说明其他说明其他说明其他说明其他说明其他说明其他说明其他说明</div>
+                <div class="van-field__body --text-left">{{$apply->remark}}</div>
             </div>
         </div>
     </van-cell-group>
+    @endif
     <van-button class="submit-btn" type="primary" round block url="/admin/subscribe/taking/{{$apply->id}}">我来接单</van-button>
 </div>
 @endsection
