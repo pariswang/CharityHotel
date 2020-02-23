@@ -2,30 +2,33 @@
  * @Author: kermit.yu 
  * @Date: 2020-02-22 22:13:41 
  * @Last Modified by: kermit.yu
- * @Last Modified time: 2020-02-23 15:02:00
+ * @Last Modified time: 2020-02-23 16:00:33
  */
+var area_index = _.findIndex(REGIONS, function (item) {return item.id == ppo.getUrlParam('distinct')});
+var statu_index = _.findIndex(STATUS, function (item) {return item.id == ppo.getUrlParam('status')});
+console.log('area_index', area_index);
+console.log('statu_index', statu_index);
 
 new Vue({
     el: '#app',
     data: {
         showAreas: false,
         area: '',
-        areaIndex: 0,
+        areaIndex: area_index > 0 ? area_index : null,
         areas: _.pluck(REGIONS, 'region_name'),
         showHospitals: false,
         hospital: '',
-        hospitalIndex: 0,
+        hospitalIndex: null,
         hospitals: _.pluck(HOSPITALS, 'hospital_name'),
         showStatus: false,
         statu: '',
-        statuIndex: 0,
+        statuIndex: statu_index > 0 ? statu_index : null,
         status: _.pluck(STATUS, 'statu_name'),
-        keyword: '',
+        keyword: ppo.getUrlParam('s') || '',
     },
     created: function() {
-        this.area = this.areas[this.areaIndex];
-        this.hospital = this.hospitals[this.hospitalIndex];
-        this.statu = this.status[this.statuIndex];
+        this.area = this.areaIndex !== null ? this.areas[this.areaIndex] : '';
+        this.statu = this.statuIndex !== null ? this.status[this.statuIndex] : '';
     },
     methods: {
         areaOnChange(picker, value, index) {
@@ -44,13 +47,15 @@ new Vue({
             this.statuIndex = index;
         },
         onSearch: function () {
-            console.log({
-                area: this.area,
-                hospital: this.hospital,
-                statu: this.statu,
-                keyword: this.keyword,
-            });
-            window.location.href = '/hotel_list?distinct=' + REGIONS[this.areaIndex].id + '&hospital=' + HOSPITALS[this.hospitalIndex].id + '&s=' + this.keyword + '&status=' + STATUS[this.statuIndex].id;
+            // console.log({
+            //     area: this.area,
+            //     hospital: this.hospital,
+            //     statu: this.statu,
+            //     keyword: this.keyword,
+            // });
+            var distinct_id = !this.areaIndex ? '' : REGIONS[this.areaIndex].id;
+            var statu_id = !this.statuIndex ? '' : STATUS[this.statuIndex].id;
+            window.location.href = '/apply_list?distinct=' + distinct_id + '&s=' + this.keyword + '&status=' + statu_id;
         }
     }
 });
