@@ -93,6 +93,9 @@ class ApplyController extends Controller
         $data['status'] = 1;
         if($data['hotel_id'] && $hotel = \App\Model\Hotel::find($data['hotel_id'])){
             $data['admin_id'] = $hotel->user_id;
+            if(!isset($data['region_id'])){
+                $data['region_id'] = $hotel->region->id;
+            }
         }
         $sub = Subscribe::create($data);
         if($sub){
