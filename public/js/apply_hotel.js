@@ -2,7 +2,7 @@
  * @Author: kermit.yu 
  * @Date: 2020-02-22 22:13:41 
  * @Last Modified by: kermit.yu
- * @Last Modified time: 2020-02-23 15:40:18
+ * @Last Modified time: 2020-02-23 18:47:58
  */
 
 new Vue({
@@ -79,6 +79,18 @@ new Vue({
                     setTimeout( function() {
                         window.location.href = '/hotel_list';
                     }, 1000);
+                },
+                error: function (res) {
+                    var errors = res.responseJSON.errors;
+                    console.log('errors', errors);
+                    var errors_text = '';
+                    for(var i in  errors) {
+                        var item = errors[i];
+                        item.forEach(function (_item) { 
+                            errors_text += _item;
+                        });
+                    }
+                    vant.Notify({ type: 'danger', message: errors_text !== '' ? errors_text : '发布错误，请重试'});
                 },
                 complete: function () {
                     _this.submitLoading = false;

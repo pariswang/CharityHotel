@@ -30,6 +30,8 @@
     <!-- 引入 Vue 和 Vant 的 JS 文件 -->
     <script src="{{asset('/vendor/vant/vue.min.js')}}"></script>
     <script src="{{asset('/vendor/vant/vant.min.js')}}"></script>
+    <script src="https://cdn.bootcss.com/vConsole/3.3.4/vconsole.min.js"></script>
+    <script>var vConsole = new VConsole();</script>
     @section('js')
     @show
 </body>
