@@ -53,15 +53,32 @@
     <div class="item">
         <div class="item-hd">
             <span>{{$apply->date_begin}}</span>
-            <span class="item__value">已申请</span>
+            <span class="item__value">
+                @if ($apply->status==1)
+                    已申请
+                @elseif ($apply->status==5)
+                    已接单
+                @endif
+            </span>
         </div>
         <div class="item-bd">
-            武昌-光谷附近 ，同济医院光谷分院  3名 医护人员 急需酒店
+            @if ($apply->region_id)
+                {{$apply->region->region_name}} ，
+            @elseif ($apply->hotel_id)
+                {{$apply->hotel->region->region_name}}{{$apply->hotel->address}}附近，
+            @else
+                &nbsp;
+            @endif
+            {{$apply->conn_company}} {{$apply->checkin_num}}名 {{$apply->conn_position}} 急需酒店。
+            联系人：{{$apply->conn_person}}
         </div>
         <div class="item-ft">
-            <van-button type="default" size="small" round plain url="#">已拒绝</van-button>
-            <van-button type="primary" size="small" round plain url="#">查看详情</van-button>
-            <van-button type="primary" size="small" round :url="'/apply_hotel'">接单</van-button>
+            {{--<van-button type="default" size="small" round plain url="#">已拒绝</van-button>--}}
+            @if ($apply->status==1)
+                <van-button type="primary" size="small" round url="/apply_detail?id={{$apply->id}}">我来接单</van-button>
+            @elseif ($apply->status==5)
+                <van-button type="primary" size="small" round plain url="/apply_detail?id={{$apply->id}}">查看详情</van-button>
+            @endif
         </div>
     </div>
     @endforeach
