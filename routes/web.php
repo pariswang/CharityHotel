@@ -27,6 +27,7 @@ Route::get('logout', 'Auth\LoginController@logout');
 
 // 用户注册
 Route::get('register', 'Auth\RegisterController@showRegistrationForm');
+Route::get('registerHotel', 'Auth\RegisterController@showHotelRegistrationForm');
 Route::post('register', 'Auth\RegisterController@register');
 
 Route::group(['middleware' => 'auth'], function (){

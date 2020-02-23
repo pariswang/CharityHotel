@@ -10,6 +10,8 @@ namespace App\Http\Controllers;
 
 use App\Model\Hotel;
 use App\Model\Subscribe;
+use App\Model\Region;
+use App\Model\Hospital;
 use Illuminate\Http\Request;
 
 class ApplyController extends Controller

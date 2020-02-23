@@ -53,6 +53,7 @@ new Vue({
                 url: '/register',
                 data: {
                     _token: $('input[name="_token"]').val(),
+                    ishotel: $('input[name="ishotel"]').val(),
                     phone: this.phone,
                     password: this.password,
                     uname: this.uname,
