@@ -2,7 +2,7 @@
  * @Author: kermit.yu 
  * @Date: 2020-02-22 22:51:09 
  * @Last Modified by: kermit.yu
- * @Last Modified time: 2020-02-23 14:11:02
+ * @Last Modified time: 2020-02-23 14:40:15
  */
 * {
   box-sizing: border-box;
@@ -122,12 +122,14 @@ body {
 #register .login-btn {
   margin-top: 2em;
 }
-#hotelList {
+#hotelList,
+#applylList {
   align-items: flex-start;
   justify-content: flex-start;
   padding-top: 100px;
 }
-#hotelList .list-hd {
+#hotelList .list-hd,
+#applylList .list-hd {
   position: fixed;
   top: 37px;
   left: 0;
@@ -137,30 +139,36 @@ body {
   display: flex;
   flex-direction: column;
 }
-#hotelList .list-hd .pickers {
+#hotelList .list-hd .pickers,
+#applylList .list-hd .pickers {
   width: 100%;
   display: flex;
   justify-content: space-between;
 }
-#hotelList .list-hd .pickers .van-button .van-button__text {
+#hotelList .list-hd .pickers .van-button .van-button__text,
+#applylList .list-hd .pickers .van-button .van-button__text {
   max-width: 10em;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
 }
-#hotelList .list-hd .pickers .van-button + .van-button {
+#hotelList .list-hd .pickers .van-button + .van-button,
+#applylList .list-hd .pickers .van-button + .van-button {
   margin-left: 5px;
 }
-#hotelList .list-hd .van-cell {
+#hotelList .list-hd .van-cell,
+#applylList .list-hd .van-cell {
   padding-left: 0;
   padding-right: 0;
   padding-bottom: 0;
 }
-#hotelList .list-hd .van-cell .van-field__control {
+#hotelList .list-hd .van-cell .van-field__control,
+#applylList .list-hd .van-cell .van-field__control {
   line-height: 30px;
   border-bottom: 1px solid #999;
 }
-#hotelList .list-hd::after {
+#hotelList .list-hd::after,
+#applylList .list-hd::after {
   position: absolute;
   box-sizing: border-box;
   content: ' ';
@@ -173,37 +181,44 @@ body {
   -webkit-transform: scale(0.5);
   transform: scale(0.5);
 }
-#hotelList .item {
+#hotelList .item,
+#applylList .item {
   padding: 10px 16px;
   background-color: #fff;
 }
-#hotelList .item .item-hd {
+#hotelList .item .item-hd,
+#applylList .item .item-hd {
   color: #323233;
   font-size: 14px;
   line-height: 24px;
   display: flex;
   justify-content: space-between;
 }
-#hotelList .item .item-hd .item__value {
+#hotelList .item .item-hd .item__value,
+#applylList .item .item-hd .item__value {
   color: #969799;
 }
-#hotelList .item .item-bd {
+#hotelList .item .item-bd,
+#applylList .item .item-bd {
   margin-top: 3px;
   color: #969799;
   font-size: 14px;
   line-height: 21px;
 }
-#hotelList .item .item-ft {
+#hotelList .item .item-ft,
+#applylList .item .item-ft {
   display: flex;
   flex-wrap: wrap;
   justify-content: flex-end;
   align-items: flex-start;
   padding-top: 0.5em;
 }
-#hotelList .item .item-ft .van-button + .van-button {
+#hotelList .item .item-ft .van-button + .van-button,
+#applylList .item .item-ft .van-button + .van-button {
   margin-left: 0.5em;
 }
-#hotelList .item + .item::before {
+#hotelList .item + .item::before,
+#applylList .item + .item::before {
   position: absolute;
   box-sizing: border-box;
   content: ' ';
@@ -215,4 +230,7 @@ body {
   border-bottom: 1px solid #ebedf0;
   -webkit-transform: scale(0.5);
   transform: scale(0.5);
+}
+#applylList .list-hd .pickers .van-button .van-button__text {
+  max-width: 5em;
 }
