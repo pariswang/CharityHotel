@@ -2,9 +2,16 @@
  * @Author: kermit.yu 
  * @Date: 2020-02-22 22:13:41 
  * @Last Modified by: kermit.yu
- * @Last Modified time: 2020-02-23 15:57:05
+ * @Last Modified time: 2020-02-23 23:07:04
  */
-
+REGIONS.unshift({
+    id: '',
+    region_name: "全部区域"
+})
+HOSPITALS.unshift({
+    id: '',
+    hospital_name: "全部医院"
+})
 var area_index = _.findIndex(REGIONS, function (item) {return item.id == ppo.getUrlParam('distinct')});
 var hospital_index = _.findIndex(HOSPITALS, function (item) {return item.id == ppo.getUrlParam('hospital')});
 console.log('area_index', area_index);
