@@ -8,7 +8,7 @@
     <h1 class="page-title">{{isset($hotel) ? '酒店人员注册' : ' 医护人员注册'}}</h1>
     <h3 class="register-titile" >本系统为不涉及捐赠等事情，如果发现有人涉嫌利用虚假信息进行诈骗等活动，请及时举报。</h3>
     @csrf
-    <input type="hidden" name="ishotel" value="{{isset($hotel)? $hotel : ''}}"/>
+    <input type="hidden" name="ishotel" value="{{isset($hotel)? $hotel : '0'}}"/>
     <van-cell-group>
         <van-field
             v-model="phone"
