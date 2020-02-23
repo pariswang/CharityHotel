@@ -20,7 +20,7 @@ class SubscribeController extends AdminController
      *
      * @var string
      */
-    protected $title = 'App\Model\Subscribe';
+    protected $title = '房源需求';
 
     public function myTaking(Content $content) 
     {

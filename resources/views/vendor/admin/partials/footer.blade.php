@@ -14,6 +14,9 @@
 
     </div>
     <!-- Default to the left -->
+    @if(0)
     <!-- <strong>Powered by <a href="https://github.com/z-song/laravel-admin" target="_blank">laravel-admin</a></strong> -->
-    <strong><a href="https://github.com/z-song/laravel-admin" target="_blank">中国加油，武汉加油</a></strong>
+    @endif
+
+    <strong><a href="/">中国加油，武汉加油</a></strong>
 </footer>
