@@ -87,7 +87,10 @@ class RegisterController extends Controller
         $url = session('url.intended');
         if($url){
             session()->forget('url.intended');
-            return response()->redirectTo($url);
+            return [
+                'success' => 1,
+                'data' => ['url' => $url],
+            ];
         }
     }
 }
