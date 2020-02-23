@@ -49,7 +49,17 @@ class HotelController extends Controller
         }
 
         // 选项
-        $regions = Region::all();
+        $regions = Region::with('hospitals')->get();
+        $regions = $regions->map(function ($region){
+            $regionArr = $region->toArray();
+            $regionArr['hospitals'] = $region->hospitals->map(function ($hospital){
+                $hospital = $hospital->toArray();
+                $hospital['id'] = (string) $hospital['id'];
+                return $hospital;
+            })->toArray();
+            return $regionArr;
+        });
+
         $hospitals = Hospital::all();
         $hospitals = $hospitals->map(function ($hospital){
             $hospital = $hospital->toArray();
