@@ -102,7 +102,9 @@ class HotelController extends AdminController
         $show->field('user_id', __('关联用户'));
         // $show->field('phone', __('Phone'));
         // $show->field('pwd', __('Pwd'));
-        $show->field('region_id', __('区域'));
+        $show->field('region_id', __('区域'))->as(function () {
+            return isset($this->region)?$this->region->region_name:'';
+        });
         $show->field('hotel_name', __('酒店名称'));
         $show->field('simple_name', __('简称'));
         $show->field('classify', __('类型'));
