@@ -19,6 +19,7 @@ Route::get('hotel_list', 'HotelController@list');
 
 // 查看申请（没有指定酒店的申请单列表）
 Route::get('apply_list', 'ApplyController@list');
+Route::get('apply_detail', 'ApplyController@detail');
 
 // 用户登录（医护、志愿者、后勤保障人员）
 Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');
