@@ -116,7 +116,9 @@
         </div>
     </van-cell-group>
     @endif
-    <van-button class="submit-btn" type="primary" round block url="/admin/subscribe/taking/{{$apply->id}}">我来接单</van-button>
+    @if ($apply->status == 1)
+        <van-button class="submit-btn" type="primary" round block url="/admin/subscribe/taking/{{$apply->id}}">我来接单</van-button>
+    @endif
 </div>
 @endsection
 @section('js')

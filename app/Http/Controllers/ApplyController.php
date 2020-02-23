@@ -67,7 +67,7 @@ class ApplyController extends Controller
             })->toArray();
             return $regionArr;
         });
-        
+
         $hospitals = Hospital::all();
         $hospitals = $hospitals->map(function ($hospital){
             $hospital = $hospital->toArray();
