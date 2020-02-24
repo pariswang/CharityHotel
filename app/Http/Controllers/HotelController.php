@@ -43,9 +43,10 @@ class HotelController extends Controller
 
     private function searchHotels($request)
     {
+        $regionId = $request->input('distinct');
         $search = $request->input('s');
         $hospitalId = $request->input('hospital');
-        if(empty($search) && empty($hospitalId)){
+        if(empty($search) && empty($hospitalId) && empty($regionId)){
             return Hotel::all();
         }
 
@@ -64,6 +65,11 @@ class HotelController extends Controller
                 }else{
                     $hotels = $hospitalHotels;
                 }
+            }
+        }elseif($regionId){
+            $region = Region::find($regionId);
+            if($region){
+                $hotels = $region->hospitals;
             }
         }
 
