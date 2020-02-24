@@ -25,8 +25,10 @@
 
                 {!! Admin::getNavbar()->render() !!}
 
+
                 <!-- User Account Menu -->
                 <li class="dropdown user user-menu">
+                    @if (Admin::user()->id == 1)
                     <!-- Menu Toggle Button -->
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                         <!-- The user image in the navbar-->
@@ -53,6 +55,9 @@
                             </div>
                         </li>
                     </ul>
+                    @else
+                    <a href="{{ admin_url('auth/logout') }}" class="btn btn-default btn-flat" style="background-color: darkcyan;">{{ trans('admin.logout') }}</a>
+                    @endif
                 </li>
                 <!-- Control Sidebar Toggle Button -->
                 {{--<li>--}}

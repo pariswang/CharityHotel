@@ -15,7 +15,8 @@ Route::group([
     $router->resource('hospital', HospitalController::class);
     $router->resource('hotel', HotelController::class);
     $router->resource('subscribe', SubscribeController::class);
-    $router->any('subscribe/taking/{id}', 'SubscribeController@taking');
+    $router->any('taking/{id}', 'SubscribeController@taking');
+    $router->any('my-apply', 'SubscribeController@myApply');
     $router->any('my-taking', 'SubscribeController@myTaking');
     $router->resource('user', UserController::class);
 
