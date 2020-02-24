@@ -9,43 +9,56 @@
     <van-panel title="我的申请单" style="margin-top:1em;">
         <van-tabs @click="changeTab" color="#07c160">
             <van-tab title="已发布">
-                <div class="item">
-                    <div class="item-hd">
-                        <span>2020/02/03</span>
-                        <span class="item__value" style="color:#07c160">已发布</span>
+                @forelse($publishes as $apply)
+                    <div class="item">
+                        <div class="item-hd">
+                            <span>{{$apply->date_begin}}</span>
+                            <span class="item__value" style="color:#999999">{{$apply->region ? $apply->region->region_name : ''}}</span>
+                        </div>
+                        <div class="item-bd">
+                            @if ($apply->region_id)
+                                {{$apply->region->region_name}}{{$apply->hope_addr ?? ''}} ，
+                            @elseif ($apply->hotel_id)
+                                {{$apply->hotel->region->region_name}}{{$apply->hotel->address}}附近，
+                            @else
+                                &nbsp;
+                            @endif
+                            {{$apply->conn_company}} {{$apply->checkin_num}}名 {{$apply->conn_position}} 急需酒店。
+                            联系人：{{$apply->conn_person}}
+                        </div>
                     </div>
-                    <div class="item-bd">
-                        雷神山医院附近，单位名称 2名 医护人员 急需酒店。联系人：小明
+                @empty
+                    <div class="item-empty">
+                        <p><van-icon name="bulb-o" size="60"/></p>
+                        <p>暂无申请信息~</p>
                     </div>
-                </div>
-                <div class="item">
-                    <div class="item-hd">
-                        <span>2020/02/03</span>
-                        <span class="item__value" style="color:#07c160">已发布</span>
-                    </div>
-                    <div class="item-bd">
-                        雷神山医院附近，单位名称 2名 医护人员 急需酒店。联系人：小明
-                    </div>
-                </div>
-                <div class="item-empty">
-                    <p><van-icon name="bulb-o" size="60"/></p>
-                    <p>没有查询出符合条件的申请信息, 换个条件试试~</p>
-                </div>
+                @endforelse
             </van-tab>
             <van-tab title="已接单">
+                @forelse($acceptes as $apply)
                 <div class="item">
                     <div class="item-hd">
-                        <span>2020/02/03</span>
-                        <span class="item__value" style="color:#999999">已接单</span>
+                        <span>{{$apply->date_begin}}</span>
+                        <span class="item__value" style="color:#999999">{{$apply->region ? $apply->region->region_name : ''}}</span>
                     </div>
                     <div class="item-bd">
-                        雷神山医院附近，单位名称 2名 医护人员 急需酒店。联系人：小明
+                        @if ($apply->region_id)
+                            {{$apply->region->region_name}}{{$apply->hope_addr ?? ''}} ，
+                        @elseif ($apply->hotel_id)
+                            {{$apply->hotel->region->region_name}}{{$apply->hotel->address}}附近，
+                        @else
+                            &nbsp;
+                        @endif
+                        {{$apply->conn_company}} {{$apply->checkin_num}}名 {{$apply->conn_position}} 急需酒店。
+                        联系人：{{$apply->conn_person}}
                     </div>
                 </div>
-                <div class="item-empty">
-                    <p><van-icon name="bulb-o" size="60"/></p>
-                    <p>没有查询出符合条件的申请信息, 换个条件试试~</p>
-                </div>
+                @empty
+                    <div class="item-empty">
+                        <p><van-icon name="bulb-o" size="60"/></p>
+                        <p>暂无申请信息~</p>
+                    </div>
+                @endforelse
             </van-tab>
         </van-tabs>
     </van-panel>
