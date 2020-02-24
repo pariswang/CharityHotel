@@ -91,6 +91,9 @@ class ApplyController extends Controller
 
         $sub = Subscribe::create($data);
         if($sub){
+//            $sub->nearbyHospitals()->attach([
+//                '1231059782408544257' => ['distance' => 2, 'region_id' => 1],
+//            ]);
             return [
                 'success' => 1,
                 'data' => [],
