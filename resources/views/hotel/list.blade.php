@@ -47,7 +47,7 @@
     @forelse ($hotels as $hotel)
         <div class="item">
             <div class="item-hd">
-                <span>2019/02/19</span>
+                <span>{{$hotel->classify}}</span>
                 <span class="item__value">{{$hotel->region->region_name}}</span>
             </div>
             <div class="item-bd">
