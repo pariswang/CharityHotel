@@ -23,7 +23,7 @@ class RedirectIfAuthenticated
                 session()->forget('url.intended');
                 return redirect($url);
             }
-            return redirect('/');
+            return redirect('/hotel_list');
         }
 
         return $next($request);
