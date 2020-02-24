@@ -82,6 +82,7 @@ class HotelController extends Controller
 
         $hotels = Hotel::where('hotel_name', 'like', "%$keyword%")
             ->orWhere('description', 'like', "%$keyword%")
+            ->orWhere('address', 'like', "%$keyword%")
             ->get();
         return $hotels->merge($hospitalHotels);
     }
