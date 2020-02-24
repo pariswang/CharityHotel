@@ -123,25 +123,53 @@
     <van-cell-group>
         <van-field
             v-model="hope_addr"
-            required
             label="期望地址"
             placeholder="请输入期望地址"/>
     </van-cell-group>
     <van-cell-group>
         <van-field
             v-model="remark"
-            required
             label="其他说明"
             type="textarea"
             autosize
             rows="2"
             placeholder="请输入备注文字"/>
     </van-cell-group>
+    <van-cell-group>
+        <div class="van-cell van-cell--required van-field">
+            <div class="van-cell__title van-field__label"><span>我的医院</span></div>
+            <div class="van-cell__value">
+                <div class="van-field__body --column">
+                    <div class="value___item" v-for="hospital in hospitals" key="hospital.id" >
+                        <span v-text="hospital.hospital_name"></span>
+                        <van-icon name="delete" color="#ee0a24" size="18" @click="deleteHospital(hospital.id)"/>
+                        <!-- <van-button icon="delete" plain type="danger" size="mini"/> -->
+                    </div>
+                    <div class="value___item" @click="hospitalPicker = true">
+                        <span>请增加医院</span>
+                        <van-icon name="plus" size="18"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <van-popup v-model="hospitalPicker" position="bottom">
+            <van-picker
+                show-toolbar
+                title="增加医院"
+                :columns="hospitals_columns"
+                @change="hospitalonChange"
+                @cancel="hospitalPicker = false"
+                @confirm="hospitalOnConfirm"
+            />
+        </van-popup>
+    </van-cell-group>
     <van-button class="submit-btn" type="primary" round block :loading="submitLoading" loading-text="申请中..." @click="onSubmit">申请</van-button>
 </div>
 @endsection
 @section('js')
 <script>
+    var REGIONS = {!! $regions->toJson() !!};
+    console.log('REGIONS', REGIONS);
     var CONN_PERSON = '{!! $user->uname !!}',
         CONN_PHONE = '{!! $user->phone !!}',
         CONN_POSITION = '{!! $user->position !!}',
@@ -153,5 +181,6 @@
     console.log('CONN_POSITION', CONN_POSITION);
     console.log('CONN_COMPANY', CONN_COMPANY);
 </script>
+<script src="{{asset('/js/apply_mixin.js')}}"></script>
 <script src="{{asset('/js/apply_open.js')}}"></script>
 @endsection
