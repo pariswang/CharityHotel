@@ -139,7 +139,7 @@ var apply = {
                     console.log('success', res);
                     vant.Notify({ type: 'success', message: '申请成功' });
                     setTimeout( function() {
-                        window.location.href = '/hotel_list';
+                        window.location.href = '/profile';
                     }, 1000);
                 },
                 error: function (res) {

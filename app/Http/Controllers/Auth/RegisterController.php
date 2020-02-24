@@ -76,6 +76,7 @@ class RegisterController extends Controller
             'position' => $data['position'],
             'company' => $data['company'],
             'role' => $data['role'],
+            'create_date' => date('Y-m-d H:i:s'),
         ]);
 
         if(3 == $data['role']){
