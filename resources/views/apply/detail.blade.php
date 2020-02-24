@@ -72,7 +72,7 @@
     </van-cell-group>
     <van-cell-group>
         <div class="van-cell van-field">
-            <div class="van-cell__title van-field__label"><span>是否原意付费</span></div>
+            <div class="van-cell__title van-field__label"><span>是否愿意付费</span></div>
             <div class="van-cell__value">
                 <div class="van-field__body --text-left">{{$apply->can_pay ? '是' : '否'}}</div>
             </div>

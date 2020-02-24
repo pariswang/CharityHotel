@@ -82,7 +82,7 @@
     </van-cell-group>
     <van-cell-group>
         <div class="van-cell van-cell--required van-field">
-            <div class="van-cell__title van-field__label"><span>原意付费</span></div>
+            <div class="van-cell__title van-field__label"><span>愿意付费</span></div>
             <div class="van-cell__value">
                 <div class="van-field__body">
                     <van-switch v-model="can_pay" active-color="#07c160" size="24"/>
