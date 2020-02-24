@@ -28,4 +28,9 @@ class Subscribe extends Model
     {
         return $this->belongsTo(User::class, 'user_id');
     }
+
+    public function nearbyHospitals()
+    {
+        return $this->belongsToMany(Hospital::class, 'wh_subscribe_hospital', 'subscribe_id', 'hospital_id')->withPivot('distance', 'region_id');
+    }
 }

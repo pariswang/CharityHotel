@@ -19,4 +19,9 @@ class Hospital extends Model
     {
         return $this->belongsToMany(Hotel::class, 'wh_hotel_hospital', 'hospital_id', 'hotel_id')->withPivot('distance');
     }
+
+    public function nearbyApply()
+    {
+        return $this->belongsToMany(Subscribe::class, 'wh_subscribe_hospital', 'hospital_id', 'subscribe_id')->withPivot('distance', 'region_id');
+    }
 }

@@ -43,13 +43,6 @@
     </van-cell-group>
     <van-cell-group>
         <van-field
-            v-model="position"
-            required
-            label="岗位"
-            placeholder="请输入岗位"/>
-    </van-cell-group>
-    <van-cell-group>
-        <van-field
             v-model="company"
             required
             label="工作单位"
@@ -65,6 +58,13 @@
                 </div>
             </div>
         </div>
+    </van-cell-group>
+    <van-cell-group>
+        <van-field
+                v-model="position"
+                required
+                label="岗位"
+                placeholder="请输入岗位"/>
     </van-cell-group>
     <van-popup
         v-model="showRoles"

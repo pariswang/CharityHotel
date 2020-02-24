@@ -30,12 +30,6 @@ class ApplyController extends Controller
         if($status){
             $where['status'] = $status;
         }
-        if($search){
-//            $where['hope_addr'] = $search;
-        }
-        if($hospitalId){
-//            $where['hospital_id'] = $hospitalId;
-        }
 
         if(!empty($where)){
             $applies = null;
@@ -91,9 +85,15 @@ class ApplyController extends Controller
             if(!isset($data['region_id'])){
                 $data['region_id'] = $hotel->region->id;
             }
+        }else{
+            $data['admin_id'] = 0;
         }
+
         $sub = Subscribe::create($data);
         if($sub){
+//            $sub->nearbyHospitals()->attach([
+//                '1231059782408544257' => ['distance' => 2, 'region_id' => 1],
+//            ]);
             return [
                 'success' => 1,
                 'data' => [],
@@ -105,7 +105,7 @@ class ApplyController extends Controller
     {
         $user = $request->user();
 
-        list($regions, $hospitals) = $this->selectOptions()
+        list($regions, $hospitals) = $this->selectOptions();
 
         return view('apply.open', compact('user', 'regions', 'hospitals'));
     }
