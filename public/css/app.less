@@ -2,7 +2,7 @@
  * @Author: kermit.yu 
  * @Date: 2020-02-22 22:51:09 
  * @Last Modified by: kermit.yu
- * @Last Modified time: 2020-02-24 00:19:46
+ * @Last Modified time: 2020-02-24 16:44:44
  */
 
 *{
@@ -94,6 +94,23 @@ body{
             &.--space-between{
                 display:flex;
                 justify-content:space-between;
+            }
+            &.--column{
+                display:flex;
+                flex-direction:column;
+            }
+            .value___item{
+                width:100%;
+                padding:0.3em 0;
+                display:flex;
+                align-items:center;
+                justify-content:space-between;
+                + .value___item{
+                    border-top:1px solid #ebedf0;
+                }
+                span{
+                    text-align:left;
+                }
             }
         }
         // .--flex-end{
