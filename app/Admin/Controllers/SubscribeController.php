@@ -49,7 +49,7 @@ class SubscribeController extends AdminController
         if(Admin::user()->id != '1'){
             switch ($path) {
                 case 'subscribe':
-                    $grid->model()->where('admin_id', '=', 0)->where('hotel_id','=',0);
+                    $grid->model()->where(['admin_id'=> 0,'hotel_id'=> 0]);
                     break;
                 case 'my-apply':
                     $grid->model()->where(['admin_id'=> Admin::user()->id,'status'=>1]);
