@@ -64,13 +64,18 @@ class SubscribeController extends AdminController
             ],$this);
         });
         $grid->column('checked', __('是否核实'));
-            // $grid->column('status', __('接单状态'));
-            // $grid->column('hotel_id', __('接单酒店'));
+        $grid->column('status', __('接单状态'))->display(function () {
+            return $this->status==5?'已接单':'未接单';
+        });
+
         
         $grid->column('createdate', __('创建日期'));
-
+        $grid->filter(function($filter){
+            // 去掉默认的id过滤器
+            // $filter->disableIdFilter();
+        });
         $grid->disableActions();
-        $grid->disableFilter();
+
         $grid->disableCreateButton();
         return $grid;
     }
@@ -83,7 +88,7 @@ class SubscribeController extends AdminController
     {
         $grid = new Grid(new Subscribe());
         if(Admin::user()->id != '1'){
-            $grid->model()->where('admin_id', '=', 0)->whereNull('hotel_id');
+            $grid->model()->where('admin_id', '=', 0)->where('hotel_id','<',1);
         }
         $grid->column('id', __('ID'));
 
@@ -219,11 +224,11 @@ class SubscribeController extends AdminController
     public function taking($id, Content $content)
     {
         if(Hotel::where('user_id',Admin::user()->id)->doesntExist()){
-            abort(403, '请先创建酒店');
+            return $content
+            ->withWarning('错误', '请先进入酒店管理菜单->新增酒店,创建酒店后方可接单');
         }
         $form = $this->takingForm($id);
-        if (Request::capture()->isMethod("put"))
-        {
+        if (Request::capture()->isMethod("put")){
             return $form->update($id);
         }
         return $content
@@ -234,7 +239,7 @@ class SubscribeController extends AdminController
     protected function takingForm($id)
     {
         $form = new Form(new Subscribe());
-        $form->select('hotel_id', __('酒店'))->options(Hotel::where('user_id',Admin::user()->id)->pluck('hotel_name', 'id')->all())->required();
+        $form->select('hotel_id', __('酒店'))->options(Hotel::where('user_id',Admin::user()->id)->pluck('hotel_name', 'id')->all())->required()->help('请选择您要接单的酒店');;
         $form->hidden('admin_id');
         $form->hidden('status');
         $form->setAction($form->resource().'/taking/'.$id);
@@ -259,6 +264,12 @@ class SubscribeController extends AdminController
             $form->status = 5;
             return $form;
         });
+        $form->saved(function (Form $form) {
+            if($form->status == 5){
+                return redirect('/admin/my-taking?id='.$form->model()->id);
+            }
+        });
+
         return $form;
     }
 
