@@ -99,7 +99,7 @@ class ApplyController extends Controller
     {
         $user = $request->user();
 
-        list($regions, $hospitals) = $this->selectOptions()
+        list($regions, $hospitals) = $this->selectOptions();
 
         return view('apply.open', compact('user', 'regions', 'hospitals'));
     }
