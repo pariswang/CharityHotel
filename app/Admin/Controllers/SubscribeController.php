@@ -25,59 +25,17 @@ class SubscribeController extends AdminController
     public function myTaking(Content $content) 
     {
         return $content
-            ->header('我的接单')
+            ->header('我的已接单')
             ->description('')
-            ->body($this->gridTaking());
+            ->body($this->grid());
     }
 
-    protected function gridTaking()
+    public function myApply(Content $content) 
     {
-        $grid = new Grid(new Subscribe());
-        if(Admin::user()->id != '1'){
-            $grid->model()->where('admin_id', '=', Admin::user()->id);
-        }
-        $grid->column('id', __('ID'));
-
-        $grid->column('user.uname', __('用户'));
-        $grid->column('region.region_name', __('区域'));
-        $grid->column('基本信息1')->display(function(){
-            return htmlInOneField([
-                'conn_person'=>['联系人'],
-                'conn_phone'=>['联系电话'],
-                'conn_type'=>['身份信息'],
-                'checkin_num'=>['入住人数'],
-                'date_begin'=>['开始日期'],
-                'date_end'=>['结束日期'],
-                'hope_addr'=>['希望地点'],
-                'checkin_reson'=>['入住原因'],
-                'remark'=>['其他说明'],
-            ],$this);
-        });
-        $grid->column('基本信息2')->display(function(){
-            return htmlInOneField([
-                'conn_position'=>['联系人职位'],
-                'conn_company'=>['联系人公司'],
-                'room_count'=>['所需房间数'],
-                'checkin_num'=>['入住人数'],
-                'can_pay'=>['能否支付费用','boolean'],
-                'has_letter'=>['是否有介绍信','boolean'],
-            ],$this);
-        });
-        $grid->column('checked', __('是否核实'));
-        $grid->column('status', __('接单状态'))->display(function () {
-            return $this->status==5?'已接单':'未接单';
-        });
-
-        
-        $grid->column('createdate', __('创建日期'));
-        $grid->filter(function($filter){
-            // 去掉默认的id过滤器
-            // $filter->disableIdFilter();
-        });
-        $grid->disableActions();
-
-        $grid->disableCreateButton();
-        return $grid;
+        return $content
+            ->header('申请单(我的酒店)')
+            ->description('')
+            ->body($this->grid());
     }
     /**
      * Make a grid builder.
@@ -87,8 +45,22 @@ class SubscribeController extends AdminController
     protected function grid()
     {
         $grid = new Grid(new Subscribe());
+        $path = explode('/',request()->path())[1];
         if(Admin::user()->id != '1'){
-            $grid->model()->where('admin_id', '=', 0)->where('hotel_id','<',1);
+            switch ($path) {
+                case 'subscribe':
+                    $grid->model()->where('admin_id', '=', 0)->where('hotel_id','=',0);
+                    break;
+                case 'my-apply':
+                    $grid->model()->where(['admin_id'=> Admin::user()->id,'status'=>1]);
+                    break;
+                case 'my-taking':
+                    $grid->model()->where(['admin_id'=> Admin::user()->id,'status'=>5]);
+                    break;
+                default:
+                    # code...
+                    break;
+            }
         }
         $grid->column('id', __('ID'));
 
@@ -127,7 +99,11 @@ class SubscribeController extends AdminController
             $grid->column('hotel.hotel_name', __('接单酒店'));
         }else{
             $grid->column('接单操作')->display(function(){
-                return '<a href="/'.Request::capture()->path().'/taking/'.$this->id.'" class="btn btn-sm btn-success" title="我要接单"><i class="fa fa-plus"></i><span class="hidden-xs">我要接单</span></a>';
+                if($this->status == 1){
+                    return '<a href="/admin/taking/'.$this->id.'" class="btn btn-sm btn-success"><i class="fa fa-plus"></i><span class="hidden-xs">'.(explode('/',request()->path())[1]=='my-apply'?'确认接单':'我要接单').'</span></a>';
+                }
+                return $this->status==5?'已接单':'未接单';
+                
             });
         }
         $grid->column('createdate', __('创建日期'));
@@ -155,7 +131,9 @@ class SubscribeController extends AdminController
         $grid->disableActions();
         $grid->filter(function($filter){
             // 去掉默认的id过滤器
-            $filter->disableIdFilter();
+            if(explode('/',request()->path())[1] != 'my-taking'){
+                $filter->disableIdFilter();
+            }
             $filter->equal('region_id','地区')->select(\App\Model\Region::pluck('region_name', 'id')->all());
         });
         $grid->actions(function ($actions) {
@@ -224,9 +202,16 @@ class SubscribeController extends AdminController
     public function taking($id, Content $content)
     {
         if(Hotel::where('user_id',Admin::user()->id)->doesntExist()){
-            return $content
-            ->withWarning('错误', '请先进入酒店管理菜单->新增酒店,创建酒店后方可接单');
+            return $content->withWarning('错误', '请先进入酒店管理菜单->新增酒店,创建酒店后方可接单');
         }
+        if($subs = Subscribe::find($id)){
+            if($subs->admin_id != 0 && $subs->admin_id != Admin::user()->id){
+                return $content->withWarning('错误', '您不能操作该申请单！');
+            }
+        }else{
+            return $content->withWarning('错误', '申请单不存在！');
+        }
+        
         $form = $this->takingForm($id);
         if (Request::capture()->isMethod("put")){
             return $form->update($id);
@@ -239,7 +224,12 @@ class SubscribeController extends AdminController
     protected function takingForm($id)
     {
         $form = new Form(new Subscribe());
-        $form->select('hotel_id', __('酒店'))->options(Hotel::where('user_id',Admin::user()->id)->pluck('hotel_name', 'id')->all())->required()->help('请选择您要接单的酒店');;
+        $subs = Subscribe::find($id);
+        if($subs->hotel_id > 0){
+            $form->select('hotel_id', __('酒店'))->options(Hotel::where('user_id',Admin::user()->id)->pluck('hotel_name', 'id')->all())->readonly()->help('申请人预选的酒店无法更改');
+        }else{
+            $form->select('hotel_id', __('酒店'))->options(Hotel::where('user_id',Admin::user()->id)->pluck('hotel_name', 'id')->all())->required()->help('请选择您要接单的酒店');
+        }
         $form->hidden('admin_id');
         $form->hidden('status');
         $form->setAction($form->resource().'/taking/'.$id);
@@ -253,7 +243,7 @@ class SubscribeController extends AdminController
             $tools->disableView();// 去掉`查看`按钮
         });
         $form->footer(function ($footer) {
-            // $footer->disableReset()// 去掉`重置`按钮
+            $footer->disableReset();// 去掉`重置`按钮
             // $footer->disableSubmit();// 去掉`提交`按钮
             $footer->disableViewCheck();// 去掉`查看`checkbox
             $footer->disableEditingCheck();// 去掉`继续编辑`checkbox

@@ -53,6 +53,7 @@ class HotelController extends AdminController
                 'simple_name'=>['简称'],
                 'classify'=>['类型'],
                 'address'=>['地址'],
+                'linephone'=>['固定电话'],
                 'uname'=>['联系人'],
                 'phone'=>['联系人电话'],
                 'wechat'=>['微信'],
@@ -63,12 +64,19 @@ class HotelController extends AdminController
             $fieldArr = [
                 'meal'=>['早中晚餐饮'],
                 'room_count'=>['可安排房间数'],
-                'use_room_count'=>['已使用房间数'],
+                // 'use_room_count'=>['已使用房间数'],
                 'discount_price'=>['优惠房价'],
                 'medical_staff_free'=>['医务人员是否免费','boolean'],
                 'expropriation'=>['是否愿意被征用','boolean'],
                 'reception'=>['是否有接待','boolean'],
                 'cleaning'=>['是否有清洁','boolean'],
+            ];
+            return htmlInOneField($fieldArr,$this);
+        });
+        $grid->column('酒店和房间说明')->display(function(){
+            $fieldArr = [
+                'collocation_description'=>['房间说明','longtext'],
+                'description'=>['酒店说明','longtext']
             ];
             return htmlInOneField($fieldArr,$this);
         });
@@ -80,8 +88,9 @@ class HotelController extends AdminController
         // $grid->column('discount_price', __('优惠房价'));
         // $grid->column('reception', __('是否有接待'));
         // $grid->column('cleaning', __('是否有清洁'));
-        $grid->column('collocation_description', __('房间搭配说明'));
-        $grid->column('description', __('酒店说明'));
+        
+        // $grid->column('collocation_description', __('房间搭配说明'));
+        // $grid->column('description', __('酒店说明'));
         $grid->column('create_date', __('创建日期'));
         $grid->actions(function ($actions) {
             $actions->disableDelete();
@@ -146,37 +155,46 @@ class HotelController extends AdminController
      */
     protected function form()
     {
+        $states = [
+            'on'  => ['value' => 1, 'text' => '是', 'color' => 'success'],
+            'off' => ['value' => 0, 'text' => '否', 'color' => 'danger'],
+        ];
         $form = new Form(new Hotel());
         // $form->number('user_id', __('User id'));
         // $form->mobile('phone', __('Phone'));
         // $form->password('pwd', __('Pwd'));
-        $form->text('hotel_name', __('酒店名称'))->required();;
-        $form->text('simple_name', __('简称'));
-        $form->select('region_id', __('所在区域'))->options(Region::pluck('region_name', 'id')->all())->required();
-        $form->select('classify', __('类型'))->options([
+        $form->text('hotel_name', __('酒店名称'))->required()->help('无需填写湖北省/武汉市/行政区等信息');
+        $form->radio('classify', __('类型'))->options([
             '酒店' => '酒店', '公寓' => '公寓', '民宿' => '民宿',
-        ]);
-        $form->text('address', __('地址'))->required();
-        $form->text('linephone', '固定电话')->required();
+        ])->required();
+        // $form->text('simple_name', __('简称'));
+        $form->radio('region_id', __('所在区域'))->options(Region::pluck('region_name', 'id')->all())->required()->help('酒店所属行政区');
+     
+        $form->text('address', __('地址'))->required()->help('详细填写路名+门牌号，请勿填写武汉市及所属行政区');
+        $form->mobile('linephone', __('固定电话'))->options(['mask' => '999 9999 9999'])->required();
         $form->text('uname', __('联系人'))->required();
-        $form->text('phone', __('联系人电话'))->required();
-        $form->number('room_count', __('可提供房间数'))->min(1)->help('请设置数字');
+        $form->mobile('phone', __('手机号码'))->options(['mask' => '999 9999 9999'])->required();
+        $form->text('wechat', __('微信号'))->required();
+        $form->number('room_count', __('可提供房间数'))->min(1)->help('请设置数字')->required();
+        $form->decimal('discount_price', __('优惠价格（元/间）'));
 //        $form->number('use_room_count', __('已使用房间数'))->min(0)->help('请设置数字');
-        $form->switch('meal', __('是否提供餐食'));
-        $form->switch('medical_staff_free', __('医务人员是否免费'));
-        $form->switch('expropriation', __('是否愿意被征用'));
-        $form->decimal('discount_price', __('优惠房价'));
-        $form->switch('reception', __('是否有接待'));
-        $form->switch('cleaning', __('是否有清洁'));
-        $form->textarea('collocation_description', __('房间搭配说明'));
-        $form->textarea('description', __('酒店说明'));
-        $form->hasMany('hospitals','附近医院', function (Form\NestedForm $form) {
+        $form->switch('medical_staff_free', __('医务人员是否免费'))->states($states);
+        $form->switch('expropriation', __('是否愿意被征用'))->states($states);
+        $form->radio('meal', __('是否提供餐食'))->options([
+            '早餐' => '早餐', '午餐' => '午餐', '晚餐' => '晚餐', '三餐都提供' => '三餐都提供', '不提供餐食' => '不提供餐食'
+        ])->required()->default('不提供餐食');
+        $form->switch('reception', __('是否有前台接待'))->states($states);
+        $form->switch('cleaning', __('是否提供客房清洁服务'))->states($states);
+        $form->text('collocation_description', __('房间配置说明'))->help('如独立空凋,洗衣机,冰箱等');
+        $form->textarea('description', __('酒店介绍'))->help('如周边地标、地铁站、火车站等交通信息');
+        $form->hasMany('hospitals','周边医院,最近的医院,最多3家', function (Form\NestedForm $form) {
             $form->select('region_id','地区')->options(Region::pluck('region_name', 'id')->all())->load('hospital_id', '/api/hospital_region');
             $form->select('hospital_id','医院');
-            $form->number('distance','距离/米');
+            $form->number('distance','距离/公里');
         });
         $form->hidden('create_date');
         $form->hidden('user_id');
+
         $form->footer(function ($footer) {
             // 去掉`重置`按钮
             // $footer->disableReset();

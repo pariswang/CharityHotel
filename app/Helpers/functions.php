@@ -4,7 +4,7 @@
  * @Author: Simon Zhao
  * @Date:   2020-02-23 01:08:19
  * @Last Modified by:   Simon Zhao
- * @Last Modified time: 2020-02-23 16:30:56
+ * @Last Modified time: 2020-02-24 11:22:22
  */
 
 /**
@@ -34,7 +34,22 @@ function htmlInOneField($fieldArr,$obj){
 	$html = "";
 	foreach ($fieldArr as $key => $value) {
 	    if(isset($obj->$key)&&$value[0]){
-	        $html .= "<p>".$value[0].":<strong>".(isset($value[1])&&$value[1]=='boolean'?($obj->$key?'是':'否'):$obj->$key)."</strong></p>";
+	    	if(isset($value[1])){
+	    		switch ($value[1]) {
+	    			case 'boolean':
+	        			$html .= "<p>".$value[0].":<strong>".($obj->$key?'是':'否')."</strong></p>";
+	    				break;
+	    			case 'longtext':
+	        			$html .= "<p>".$value[0].":<br><strong>".$obj->$key."</strong></p>";;
+	    				break;
+	    			default:
+	    				# code...
+	    				break;
+	    		}
+	    	}else{
+	        	$html .= "<p>".$value[0].":<strong>".$obj->$key."</strong></p>";
+
+	    	}
 	    }
 	}
 	return $html;
