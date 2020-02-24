@@ -57,13 +57,28 @@
         </div>
     </van-cell-group>
     <van-cell-group>
-        <div class="van-cell van-cell--required van-field" @click="showDatePicker = true">
-            <div class="van-cell__title van-field__label"><span>入住/离店时间</span></div>
+        <div class="van-cell van-cell--required van-field" @click="showDateBeginPicker = true">
+            <div class="van-cell__title van-field__label"><span>入住时间</span></div>
             <div class="van-cell__value">
-                <div class="van-field__body"><span class="__cell__value" v-text="date_begin+'-'+date_end"></span></div>
+                <div class="van-field__body --space-between">
+                    <span v-text="date_begin"></span>
+                    <van-icon name="arrow-down"/>
+                </div>
             </div>
         </div>
-        <van-calendar title="请选择入住/离店时间" v-model="showDatePicker" color="#07c160" type="range" @confirm="datePickerOnConfirm" />
+        <van-calendar title="请选择入住时间" v-model="showDateBeginPicker" color="#07c160" @confirm="dateBeginOnConfirm" />
+    </van-cell-group>
+    <van-cell-group>
+        <div class="van-cell van-field" @click="showDateEndPicker = true">
+            <div class="van-cell__title van-field__label"><span>离店时间</span></div>
+            <div class="van-cell__value">
+                <div class="van-field__body --space-between">
+                    <span v-text="date_end !== '' ? date_end : '请选择离店时间'"></span>
+                    <van-icon name="arrow-down"/>
+                </div>
+            </div>
+        </div>
+        <van-calendar title="请选择离店时间" v-model="showDateEndPicker" :min-date="date_end_min" :default-date="date_end_default" color="#07c160" @confirm="dateEndOnConfirm" />
     </van-cell-group>
     <van-cell-group>
         <div class="van-cell van-cell--required van-field">
