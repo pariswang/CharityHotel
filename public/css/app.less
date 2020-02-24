@@ -2,7 +2,7 @@
  * @Author: kermit.yu 
  * @Date: 2020-02-22 22:51:09 
  * @Last Modified by: kermit.yu
- * @Last Modified time: 2020-02-24 16:44:44
+ * @Last Modified time: 2020-02-24 18:22:20
  */
 
 *{
@@ -297,5 +297,52 @@ body{
                 }
             }
         }
+    }
+}
+
+// 医护人员个人中心
+#profile{
+    .item{
+        width:100%;
+        padding: 10px 16px;
+        background-color:#fff;
+        .item-hd{
+            color: #323233;
+            font-size: 14px;
+            line-height: 24px;
+            display:flex;
+            justify-content:space-between;
+            .item__value{
+                color: #969799;
+            }
+        }
+        .item-bd{
+            margin-top: 3px;
+            color: #969799;
+            font-size: 14px;
+            line-height: 21px;
+        }
+        .item-ft{
+            display:flex;
+            flex-wrap:wrap;
+            justify-content:flex-end;
+            align-items:flex-start;
+            padding-top:0.5em;
+            .van-button{
+                + .van-button{
+                    margin-left:0.5em;
+                }
+            }
+        }
+        + .item{
+            border-top:1px solid #ebedf0;
+        }
+    }
+    .item-empty{
+        width:100%;
+        padding:2em 0;
+        font-size:14px;
+        color:#6666;
+        text-align:center;
     }
 }
