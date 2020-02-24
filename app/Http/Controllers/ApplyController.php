@@ -30,12 +30,6 @@ class ApplyController extends Controller
         if($status){
             $where['status'] = $status;
         }
-        if($search){
-//            $where['hope_addr'] = $search;
-        }
-        if($hospitalId){
-//            $where['hospital_id'] = $hospitalId;
-        }
 
         if(!empty($where)){
             $applies = null;
