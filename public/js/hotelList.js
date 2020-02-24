@@ -2,7 +2,7 @@
  * @Author: kermit.yu 
  * @Date: 2020-02-22 22:13:41 
  * @Last Modified by: kermit.yu
- * @Last Modified time: 2020-02-23 23:51:18
+ * @Last Modified time: 2020-02-24 21:19:49
  */
 REGIONS.unshift({
     id: '',
@@ -31,6 +31,7 @@ console.log('hospital_index', hospital_index);
 new Vue({
     el: '#app',
     data: {
+        tabbarActive: 0,
         showAreas: false,
         area: '',
         areaIndex: area_index > 0 ? area_index : null,
