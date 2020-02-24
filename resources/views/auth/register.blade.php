@@ -76,7 +76,7 @@
         <van-picker :columns="roles" @change="rolesOnChange"/>
     </van-popup>
     <p class="register-tip">请如实录入您真实信息，不要透漏个人隐私</p>
-    <van-button class="login-btn" type="primary" round block :loading="submitLoading" loading-text="注册中..." @click="onSubmit">注册</van-button>
+    <van-button class="login-btn" color="#1d63cb" round block :loading="submitLoading" loading-text="注册中..." @click="onSubmit">注册</van-button>
 </div>
 @endsection
 

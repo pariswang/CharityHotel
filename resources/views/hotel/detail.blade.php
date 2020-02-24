@@ -108,7 +108,7 @@
             </div>
         </div>
     </van-cell-group>
-    <van-button class="submit-btn" type="primary" round block url="/apply_hotel?id={{$hotel->id}}">申请</van-button>
+    <van-button class="submit-btn" color="#1d63cb" round block url="/apply_hotel?id={{$hotel->id}}">申请</van-button>
 </div>
 @endsection
 @section('js')
