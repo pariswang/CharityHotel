@@ -20,7 +20,16 @@
 </head>
 <body>
     <div id="app">
-        <header id="header"><a href="/">中国加油，武汉加油</a></header>
+        <header id="header">
+            <a href="/" class="logo __imgbox"><img src="{{asset('/imgs/logo.png')}}" alt=""></a>
+            <button class="menu-btn __imgbox"></button>
+            <div class="menu-cover" id="menuCover">
+                <a href="/apply_list" class="menu__item">查看申请</a>
+                <a href="/hotel_list" class="menu__item">查找房源</a>
+                <a href="/login" class="menu__item">医护人员入口</a>
+                <a href="/admin/auth/login" class="menu__item">酒店人员入口</a>
+            </div>
+        </header>
         @yield('content')
     </div>
     <script src="{{asset('/vendor/ppo.min.js')}}"></script>
@@ -32,6 +41,14 @@
     <script src="{{asset('/vendor/vant/vant.min.js')}}"></script>
     <!-- <script src="https://cdn.bootcss.com/vConsole/3.3.4/vconsole.min.js"></script>
     <script>var vConsole = new VConsole();</script> -->
+    <script>
+        $(function() {
+            $('.menu-btn').click(function(){
+                $(this).toggleClass('active');
+                $('#menuCover').toggleClass('open');
+            });
+        });
+    </script>
     @section('js')
     @show
 </body>

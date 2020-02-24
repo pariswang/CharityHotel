@@ -2,7 +2,7 @@
  * @Author: kermit.yu 
  * @Date: 2020-02-22 22:51:09 
  * @Last Modified by: kermit.yu
- * @Last Modified time: 2020-02-24 21:18:13
+ * @Last Modified time: 2020-02-24 22:24:27
  */
 * {
   box-sizing: border-box;
@@ -13,7 +13,7 @@ body {
   background-color: #f7f8fa;
 }
 body {
-  padding-top: 38px;
+  padding-top: 49px;
   overflow-y: scroll;
   -webkit-overflow-scrolling: touch;
 }
@@ -23,14 +23,66 @@ body {
   left: 0;
   width: 100%;
   z-index: 999;
-  color: #fff;
-  text-align: center;
-  background-color: #07c160;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 15px;
+  background: #1e63cb url(../imgs/hd_bg.jpg) no-repeat left 0;
+  background-size: 100% 100%;
 }
-#header a {
+#header .logo {
+  width: 126px;
+}
+#header .menu-btn {
+  display: inline-block;
+  background-color: transparent;
+  border: 0;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #1e63cb url(../imgs/icon_memu.png) no-repeat 0 center;
+  background-size: 200% 100%;
+}
+#header .menu-btn.active {
+  background-position: 100% 0;
+}
+#header .menu-cover {
+  position: absolute;
+  top: 56px;
+  right: 15px;
+  width: 50%;
+  background-color: #1e63cb;
+  z-index: 9999;
+  padding: 15px;
+  border-radius: 5px;
+  display: none;
+}
+#header .menu-cover.open {
   display: block;
+}
+#header .menu-cover::before {
+  position: absolute;
+  top: -5px;
+  right: 10px;
+  content: '';
+  display: block;
+  width: 0;
+  height: 0;
+  border: 6px solid transparent;
+  border-top: 0;
+  border-bottom-color: #1e63cb;
+}
+#header .menu-cover .menu__item {
+  width: 100%;
+  display: block;
+  padding: 10px 0;
   color: #fff;
-  padding: 0.5em 1em;
+  font-size: 14px;
+}
+#header .menu-cover .menu__item + .menu__item {
+  border-top: 1px solid rgba(255, 255, 255, 0.5);
 }
 #footer {
   padding: 0.5em 1em;
@@ -65,7 +117,7 @@ body {
   align-items: center;
   overflow-y: scroll;
   -webkit-overflow-scrolling: touch;
-  padding: 1em;
+  padding: 15px;
   padding-bottom: 40px;
 }
 .page.page--start {
@@ -124,12 +176,39 @@ body {
 .text-right {
   text-align: right;
 }
-#index {
-  width: 100%;
-  height: 100%;
+img {
+  max-width: 100%;
 }
-#index .van-button + .van-button {
-  margin-top: 1em;
+.__img-box {
+  font-size: 0;
+  line-height: 0;
+}
+#index {
+  padding: 0;
+}
+#index .banner {
+  margin-left: auto;
+  margin-right: auto;
+}
+#index .menu-contain {
+  width: 100%;
+  padding: 28px 15px;
+  display: flex;
+  flex-wrap: wrap;
+}
+#index .menu__item {
+  text-align: center;
+  font-size: 14px;
+  color: #666;
+  width: 33.33333333%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+#index .menu__item .menu__icon {
+  max-width: 50px;
 }
 #login .register-titile,
 #register .register-titile {
@@ -161,20 +240,20 @@ body {
 #applylList {
   align-items: flex-start;
   justify-content: flex-start;
-  padding-top: 116px;
+  padding-top: 106px;
   padding-bottom: 80px;
 }
 #hotelList .list-hd,
 #applylList .list-hd {
   position: fixed;
-  top: 37px;
+  top: 50px;
   left: 0;
   width: 100%;
-  padding: 1em;
+  padding: 10px 15px;
   background-color: #fff;
   display: flex;
   flex-direction: column;
-  z-index: 999;
+  z-index: 990;
 }
 #hotelList .list-hd .pickers,
 #applylList .list-hd .pickers {
