@@ -13,7 +13,7 @@ class HomeController extends Controller
 {
     public function index(Content $content)
     {
-        if(Admin::user()->id != '1'){
+        if(!checkAdminRole('administrator')){
            return redirect('/admin/hotel');
         }
         return $content

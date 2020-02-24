@@ -25,21 +25,13 @@ class HotelController extends AdminController
      */
     protected function grid()
     {
+        ;
         $grid = new Grid(new Hotel());
-        if(Admin::user()->id != '1'){
+        if(!checkAdminRole('administrator')){
             $grid->model()->where('user_id', '=', Admin::user()->id);
         }
         $grid->column('id', __('ID'));
-        // $grid->column('user_id', __('关联用户'));
-        // $grid->column('phone', __('Phone'));
-        // $grid->column('pwd', __('Pwd'));
         $grid->column('region.region_name', __('区域'));
-        // $grid->column('hotel_name', __('酒店名称'));
-        // $grid->column('simple_name', __('简称'));
-        // $grid->column('classify', __('类型'));
-        // $grid->column('address', __('地址'));
-        // $grid->column('uname', __('联系人'));
-        // $grid->column('wechat', __('微信'));
         $grid->column('附近医院')->display(function(){
             $html = "";
             foreach ($this->nearbyHospitals as $key => $value) {

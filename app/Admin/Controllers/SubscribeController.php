@@ -92,7 +92,7 @@ class SubscribeController extends AdminController
         $grid->column('checked', __('是否核实'))->display(function () {
             return $this->checked?'已核实':'未核实';
         });
-        if(Admin::user()->id == '1'){
+        if(checkAdminRole('administrator')){
             $grid->column('status', __('接单状态'))->display(function () {
                 return $this->status==5?'已接单':'未接单';
             });
