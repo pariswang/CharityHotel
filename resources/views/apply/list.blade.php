@@ -81,6 +81,10 @@
         </div>
     </div>
     @endforeach
+    <div class="item-empty">
+        <p><van-icon name="bulb-o" size="60"/></p>
+        <p>没有查询出符合条件的申请信息, 换个条件试试~</p>
+    </div>
     <div class="ft-cover">
         <van-button type="primary" block round url="/admin/hotel/create">发布酒店信息</van-button>
     </div>
