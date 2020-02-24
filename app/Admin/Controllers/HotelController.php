@@ -152,20 +152,17 @@ class HotelController extends AdminController
         // $form->password('pwd', __('Pwd'));
         $form->text('hotel_name', __('酒店名称'))->required();;
         $form->text('simple_name', __('简称'));
-        $form->select('region_id', __('区域'))->options(Region::pluck('region_name', 'id')->all())->required();
-        $form->hasMany('hospitals','附近医院', function (Form\NestedForm $form) {
-            $form->select('region_id','地区')->options(Region::pluck('region_name', 'id')->all())->load('hospital_id', '/api/hospital_region');
-            $form->select('hospital_id','医院');
-            $form->number('distance','距离/米');
-        });
-        $form->divider('附近医院选择End');
-        $form->text('classify', __('类型'));
+        $form->select('region_id', __('所在区域'))->options(Region::pluck('region_name', 'id')->all())->required();
+        $form->select('classify', __('类型'))->options([
+            '酒店' => '酒店', '公寓' => '公寓', '民宿' => '民宿',
+        ]);
         $form->text('address', __('地址'))->required();
+        $form->text('linephone', '固定电话')->required();
         $form->text('uname', __('联系人'))->required();
         $form->text('phone', __('联系人电话'))->required();
-        $form->number('room_count', __('可安排房间数'))->min(1)->help('请设置数字');
-        $form->number('use_room_count', __('已使用房间数'))->min(0)->help('请设置数字');
-        $form->text('meal', __('早中晚餐饮'));
+        $form->number('room_count', __('可提供房间数'))->min(1)->help('请设置数字');
+//        $form->number('use_room_count', __('已使用房间数'))->min(0)->help('请设置数字');
+        $form->switch('meal', __('是否提供餐食'));
         $form->switch('medical_staff_free', __('医务人员是否免费'));
         $form->switch('expropriation', __('是否愿意被征用'));
         $form->decimal('discount_price', __('优惠房价'));
@@ -173,6 +170,11 @@ class HotelController extends AdminController
         $form->switch('cleaning', __('是否有清洁'));
         $form->textarea('collocation_description', __('房间搭配说明'));
         $form->textarea('description', __('酒店说明'));
+        $form->hasMany('hospitals','附近医院', function (Form\NestedForm $form) {
+            $form->select('region_id','地区')->options(Region::pluck('region_name', 'id')->all())->load('hospital_id', '/api/hospital_region');
+            $form->select('hospital_id','医院');
+            $form->number('distance','距离/米');
+        });
         $form->hidden('create_date');
         $form->hidden('user_id');
         $form->footer(function ($footer) {
