@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('title', '申请{{$hotel->hotel_name}}的住宿')
 @section('content')
-<div class="page page--start">
+<div class="page page--start page-tabbar">
     <h1 class="page-title">申请{{$hotel->hotel_name}}的住宿</h1>
     @csrf
     <van-cell-group>
@@ -129,6 +129,11 @@
         </van-popup>
     </van-cell-group>
     <van-button class="submit-btn" type="primary" round block :loading="submitLoading" loading-text="申请中..." @click="onSubmit">申请</van-button>
+    <van-tabbar v-model="tabbarActive" active-color="#07c160">
+        <van-tabbar-item url="/hotel_list" icon="search">查找房源</van-tabbar-item>
+        <van-tabbar-item url="/apply" icon="bullhorn-o">发布申请</van-tabbar-item>
+        <van-tabbar-item url="/profile" icon="user-o">个人中心</van-tabbar-item>
+    </van-tabbar>
 </div>
 @endsection
 @section('js')

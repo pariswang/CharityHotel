@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('title', '酒店列表')
 @section('content')
-<div class="page" id="hotelList">
+<div class="page page-tabbar" id="hotelList">
     <div class="list-hd">
         <div class="pickers">
             <van-button type="default" icon="arrow-down" round block size="small" plain :text="area !== '' ? area : '请选择区域'" @click="showAreas=true"></van-button>
@@ -71,9 +71,14 @@
             <p>没有查询出符合条件的酒店信息, 换个条件试试~</p>
         </div>
     @endforelse
-    <div class="ft-cover">
+    <!-- <div class="ft-cover">
         <van-button type="primary" block round url="/apply">发布住宿申请</van-button>
-    </div>
+    </div> -->
+    <van-tabbar v-model="tabbarActive" active-color="#07c160">
+        <van-tabbar-item url="/hotel_list" icon="search">查找房源</van-tabbar-item>
+        <van-tabbar-item url="/apply" icon="bullhorn-o">发布申请</van-tabbar-item>
+        <van-tabbar-item url="/profile" icon="user-o">个人中心</van-tabbar-item>
+    </van-tabbar>
 </div>
 @endsection
 @section('js')
