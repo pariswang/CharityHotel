@@ -2,8 +2,23 @@
  * @Author: kermit.yu 
  * @Date: 2020-02-22 22:13:41 
  * @Last Modified by: kermit.yu
- * @Last Modified time: 2020-02-23 15:23:08
+ * @Last Modified time: 2020-02-23 22:19:41
  */
+
+ var ROLES = [
+    {
+        id: 2,
+        role_name: '医护人员'
+    },
+    {
+        id: 3,
+        role_name: '酒店人员'
+    },
+    {
+        id: 4,
+        role_name: '志愿者'
+    }
+ ]
 
 new Vue({
     el: '#app',
@@ -14,9 +29,22 @@ new Vue({
         uname: '',
         position: '',
         company: '',
+        role: '',
+        roleIndex: null,
+        roles: _.pluck(ROLES, 'role_name'),
+        showRoles: false,
         submitLoading: false
     },
+    created: function() {
+        var ishotel = parseInt($('input[name="ishotel"]').val());
+        this.roleIndex = ishotel ? 1 : 0;
+        this.role = ROLES[this.roleIndex].role_name;
+    },
     methods: {
+        rolesOnChange: function (picker, value, index) {
+            this.role = value;
+            this.roleIndex = index;
+        },
         onSubmit: function () {
             var _this = this;
             if(this.phone == ''){
@@ -60,13 +88,30 @@ new Vue({
                     uname: this.uname,
                     position: this.position,
                     company: this.company,
+                    role: ROLES[this.roleIndex].id,
                 },
                 beforeSend: function () {
                     _this.submitLoading = true;
                 },
                 success: function (res) {
                     console.log('res', res);
-                    window.location.href = '/hotel_list';
+                    if(res && res.data && res.data.url){
+                        window.location.href = res.data.url;
+                    }else{
+                        window.location.href = '/hotel_list';
+                    }
+                },
+                error: function (res) {
+                    var errors = res.responseJSON.errors;
+                    console.log('errors', errors);
+                    var errors_text = '';
+                    for(var i in  errors) {
+                        var item = errors[i];
+                        item.forEach(function (_item) { 
+                            errors_text += _item;
+                        });
+                    }
+                    vant.Notify({ type: 'danger', message: errors_text !== '' ? errors_text : '注册错误，请重试'});
                 },
                 complete: function () {
                     _this.submitLoading = false;

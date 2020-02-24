@@ -3,6 +3,7 @@
 namespace App\Admin\Controllers;
 
 use Encore\Admin\Controllers\AuthController as BaseAuthController;
+use Illuminate\Http\Request;
 
 class AuthController extends BaseAuthController
 {
@@ -15,4 +16,18 @@ class AuthController extends BaseAuthController
 		echo($res);
 		
 	}
+
+    /**
+     * User logout.
+     *
+     * @return Redirect
+     */
+    public function getLogout(Request $request)
+    {
+        $this->guard()->logout();
+
+        $request->session()->invalidate();
+
+        return redirect('/');
+    }
 }

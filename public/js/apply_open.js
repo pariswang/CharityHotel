@@ -2,7 +2,7 @@
  * @Author: kermit.yu 
  * @Date: 2020-02-22 22:13:41 
  * @Last Modified by: kermit.yu
- * @Last Modified time: 2020-02-23 14:59:42
+ * @Last Modified time: 2020-02-24 12:14:34
  */
 
 new Vue({
@@ -19,12 +19,15 @@ new Vue({
         checkin_num: 1,
         room_count: 1,
         date_begin: moment().format('YYYY/MM/DD'),
-        date_end: moment().add(1, 'days').format('YYYY/MM/DD'),
+        date_end_min: new Date(moment().add(1, 'days').format('YYYY/MM/DD')),
+        date_end_default: new Date(moment().add(1, 'days').format('YYYY/MM/DD')),
+        date_end: '',
         can_pay: true,
         has_letter: true,
         hope_addr: '',
         remark: '',
-        showDatePicker: false,
+        showDateBeginPicker: false,
+        showDateEndPicker: false,
         submitLoading: false,
     },
     created: function() {
@@ -39,11 +42,17 @@ new Vue({
         formatDate: function(date) {
             return `${date.getMonth() + 1}/${date.getDate()}`;
         },
-        datePickerOnConfirm: function (date) {
-            console.log('date', date);
-            this.date_begin = moment(date[0]).format('YYYY/MM/DD');
-            this.date_end = moment(date[1]).format('YYYY/MM/DD');
-            this.showDatePicker = false;
+        dateBeginOnConfirm: function (date) {
+            console.log('dateBegin', date);
+            this.date_begin = moment(date).format('YYYY/MM/DD');
+            this.date_end_min = new Date(moment(date).add(1, 'days').format('YYYY/MM/DD')),
+            this.date_end_default = new Date(moment(date).add(1, 'days').format('YYYY/MM/DD')),
+            this.showDateBeginPicker = false;
+        },
+        dateEndOnConfirm: function (date) {
+            console.log('dateEnd', date);
+            this.date_end = moment(date).format('YYYY/MM/DD');
+            this.showDateEndPicker = false;
         },
         onSubmit: function () {
             var _this = this;
@@ -94,6 +103,18 @@ new Vue({
                     setTimeout( function() {
                         window.location.href = '/apply_list';
                     }, 1000);
+                },
+                error: function (res) {
+                    var errors = res.responseJSON.errors;
+                    console.log('errors', errors);
+                    var errors_text = '';
+                    for(var i in  errors) {
+                        var item = errors[i];
+                        item.forEach(function (_item) { 
+                            errors_text += _item;
+                        });
+                    }
+                    vant.Notify({ type: 'danger', message: errors_text !== '' ? errors_text : '发布错误，请重试'});
                 },
                 complete: function () {
                     _this.submitLoading = false;

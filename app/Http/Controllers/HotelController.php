@@ -17,39 +17,20 @@ class HotelController extends Controller
 {
     public function list(Request $request)
     {
-        $search = $request->input('s');
-        $hospitalId = $request->input('hospital');
-        $regionId = $request->input('region');
-
-        if($search){
-            $hotels = Hotel::where('address', 'like', "%$search%");
-            if($regionId){
-                $hotels = $hotels->where('region_id', $regionId);
-            }
-            $hotels = $hotels->get();
-        }elseif($regionId){
-            $hotels = Hotel::where('region_id', $regionId)->get();
-        }else{
-            $hotels = Hotel::all();
-        }
-
-        if($hospitalId) {
-            $hospital = Hospital::find($hospitalId);
-            if($hospital) {
-                $hospitalNearbyHotels = $hospital->nearbyHotels()->get(['hotel_id']);
-                $ids = $hospitalNearbyHotels->map(function ($item) {
-                    return $item->hotel_id;
-                });
-                $priorities = $hotels->filter(function ($item) use ($ids) {
-                    return in_array($item->id, $ids->toArray());
-                });
-                $others = $hotels->diff($priorities);
-                $hotels = $priorities->merge($others);
-            }
-        }
+        $hotels = $this->searchHotels($request);
 
         // 选项
-        $regions = Region::all();
+        $regions = Region::with('hospitals')->get();
+        $regions = $regions->map(function ($region){
+            $regionArr = $region->toArray();
+            $regionArr['hospitals'] = $region->hospitals->map(function ($hospital){
+                $hospital = $hospital->toArray();
+                $hospital['id'] = (string) $hospital['id'];
+                return $hospital;
+            })->toArray();
+            return $regionArr;
+        });
+
         $hospitals = Hospital::all();
         $hospitals = $hospitals->map(function ($hospital){
             $hospital = $hospital->toArray();
@@ -58,6 +39,51 @@ class HotelController extends Controller
         });
 
         return view('hotel.list', compact('hotels', 'regions', 'hospitals'));
+    }
+
+    private function searchHotels($request)
+    {
+        $search = $request->input('s');
+        $hospitalId = $request->input('hospital');
+        if(empty($search) && empty($hospitalId)){
+            return Hotel::all();
+        }
+
+        $hotels = collect([]);
+
+        if($search){
+            $hotels = $this->keywordSearch($search);
+        }
+
+        if($hospitalId) {
+            $hospital = Hospital::find($hospitalId);
+            if($hospital) {
+                $hospitalHotels = $hospital->nearbyHotels()->get();
+                if($hotels->count()>0){
+                    $hotels = $hotels->intersect($hospitalHotels);
+                }else{
+                    $hotels = $hospitalHotels;
+                }
+            }
+        }
+
+        return $hotels;
+    }
+
+    private function keywordSearch($keyword)
+    {
+        // 医院名称、酒店名称、酒店介绍
+        $hospitalHotels = Hospital::with('nearbyHotels')
+            ->where('hospital_name', 'like', "%$keyword%")
+            ->get()
+            ->map(function ($hospital){
+                return $hospital->nearbyHotels;
+            })->flatten();
+
+        $hotels = Hotel::where('hotel_name', 'like', "%$keyword%")
+            ->orWhere('description', 'like', "%$keyword%")
+            ->get();
+        return $hotels->merge($hospitalHotels);
     }
 
     public function detail(Request $request)

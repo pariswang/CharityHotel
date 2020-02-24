@@ -9,7 +9,7 @@ class Subscribe extends Model
     protected $table = 'wh_subscribe';
 
     protected $fillable = [
-        'user_id', 'conn_person', 'conn_phone', 'checkin_num', 'date_begin', 'date_end', 'createdate', 'hotel_id', 'conn_position', 'conn_company', 'room_count', 'can_pay', 'has_letter', 'status'
+        'user_id', 'conn_person', 'conn_phone', 'checkin_num', 'date_begin', 'date_end', 'createdate', 'hotel_id', 'conn_position', 'conn_company', 'room_count', 'can_pay', 'has_letter', 'status', 'admin_id', 'region_id',
     ];
 
     public $timestamps = false;
@@ -27,5 +27,10 @@ class Subscribe extends Model
 	public function user()
     {
         return $this->belongsTo(User::class, 'user_id');
+    }
+
+    public function nearbyHospitals()
+    {
+        return $this->belongsToMany(Hospital::class, 'wh_subscribe_hospital', 'subscribe_id', 'hospital_id')->withPivot('distance', 'region_id');
     }
 }

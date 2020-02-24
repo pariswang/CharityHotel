@@ -30,12 +30,6 @@ class ApplyController extends Controller
         if($status){
             $where['status'] = $status;
         }
-        if($search){
-//            $where['hope_addr'] = $search;
-        }
-        if($hospitalId){
-//            $where['hospital_id'] = $hospitalId;
-        }
 
         if(!empty($where)){
             $applies = null;
@@ -56,14 +50,7 @@ class ApplyController extends Controller
             $applies = Subscribe::all();
         }
 
-        // 选项
-        $regions = Region::all();
-        $hospitals = Hospital::all();
-        $hospitals = $hospitals->map(function ($hospital){
-            $hospital = $hospital->toArray();
-            $hospital['id'] = (string) $hospital['id'];
-            return $hospital;
-        });
+        list($regions, $hospitals) = $this->selectOptions();
 
         return view('apply.list', compact('applies', 'regions', 'hospitals'));
     }
@@ -78,7 +65,9 @@ class ApplyController extends Controller
         $hotel = Hotel::find($id);
         $user = $request->user();
 
-        return view('apply.hotel', compact('hotel', 'user'));
+        list($regions, $hospitals) = $this->selectOptions();
+
+        return view('apply.hotel', compact('hotel', 'user', 'regions', 'hospitals'));
     }
 
     public function apply_hotel_submit(Request $request)
@@ -91,9 +80,20 @@ class ApplyController extends Controller
         $data['checked'] = 0;
         $data['createdate'] = date('Y-m-d H:i:s');
         $data['status'] = 1;
+        if(isset($data['hotel_id']) && $hotel = \App\Model\Hotel::find($data['hotel_id'])){
+            $data['admin_id'] = $hotel->user_id;
+            if(!isset($data['region_id'])){
+                $data['region_id'] = $hotel->region->id;
+            }
+        }else{
+            $data['admin_id'] = 0;
+        }
 
         $sub = Subscribe::create($data);
         if($sub){
+//            $sub->nearbyHospitals()->attach([
+//                '1231059782408544257' => ['distance' => 2, 'region_id' => 1],
+//            ]);
             return [
                 'success' => 1,
                 'data' => [],
@@ -103,9 +103,11 @@ class ApplyController extends Controller
 
     public function apply(Request $request)
     {
-        $regions = Region::all();
         $user = $request->user();
-        return view('apply.open', compact('user', 'regions'));
+
+        list($regions, $hospitals) = $this->selectOptions();
+
+        return view('apply.open', compact('user', 'regions', 'hospitals'));
     }
 
     public function detail(Request $request)
@@ -117,5 +119,29 @@ class ApplyController extends Controller
         }
 
         return view('apply.detail', compact('apply'));
+    }
+
+    private function selectOptions()
+    {
+        // 选项
+        $regions = Region::with('hospitals')->get();
+        $regions = $regions->map(function ($region){
+            $regionArr = $region->toArray();
+            $regionArr['hospitals'] = $region->hospitals->map(function ($hospital){
+                $hospital = $hospital->toArray();
+                $hospital['id'] = (string) $hospital['id'];
+                return $hospital;
+            })->toArray();
+            return $regionArr;
+        });
+
+        $hospitals = Hospital::all();
+        $hospitals = $hospitals->map(function ($hospital){
+            $hospital = $hospital->toArray();
+            $hospital['id'] = (string) $hospital['id'];
+            return $hospital;
+        });
+
+        return [$regions, $hospitals];
     }
 }

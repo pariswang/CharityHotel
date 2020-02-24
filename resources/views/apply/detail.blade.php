@@ -4,116 +4,123 @@
 <div class="page page--start" id="index">
     <h1 class="page-title">申请详情</h1>
     @csrf
+    @if ($apply->hotel)
     <van-cell-group>
-        <van-field
-            v-model="hotle_name"
-            disabled
-            label="酒店名称"/>
+        <div class="van-cell van-field">
+            <div class="van-cell__title van-field__label"><span>酒店名称</span></div>
+            <div class="van-cell__value">
+                <div class="van-field__body --text-left">{{$apply->hotel->hotel_name}}</div>
+            </div>
+        </div>
+    </van-cell-group>
+    @endif
+    <van-cell-group>
+        <div class="van-cell van-field">
+            <div class="van-cell__title van-field__label"><span>联系人</span></div>
+            <div class="van-cell__value">
+                <div class="van-field__body --text-left">{{$apply->conn_person}}</div>
+            </div>
+        </div>
     </van-cell-group>
     <van-cell-group>
-        <van-field
-            v-model="conn_person"
-            disabled
-            label="联系电话"/>
+        <div class="van-cell van-field">
+            <div class="van-cell__title van-field__label"><span>联系人电话</span></div>
+            <div class="van-cell__value">
+                <div class="van-field__body --text-left">{{$apply->conn_phone}}</div>
+            </div>
+        </div>
     </van-cell-group>
     <van-cell-group>
-        <van-field
-            v-model="conn_phone"
-            disabled
-            label="联系电话"/>
+        <div class="van-cell van-field">
+            <div class="van-cell__title van-field__label"><span>职位</span></div>
+            <div class="van-cell__value">
+                <div class="van-field__body --text-left">{{$apply->conn_company}}</div>
+            </div>
+        </div>
     </van-cell-group>
     <van-cell-group>
-        <van-field
-            v-model="conn_position"
-            disabled
-            label="职位"/>
+        <div class="van-cell van-field">
+            <div class="van-cell__title van-field__label"><span>工作单位</span></div>
+            <div class="van-cell__value">
+                <div class="van-field__body --text-left">{{$apply->conn_company}}</div>
+            </div>
+        </div>
     </van-cell-group>
     <van-cell-group>
-        <van-field
-            v-model="conn_company"
-            disabled
-            label="工作单位"/>
+        <div class="van-cell van-field">
+            <div class="van-cell__title van-field__label"><span>入住人数</span></div>
+            <div class="van-cell__value">
+                <div class="van-field__body --text-left">{{$apply->checkin_num}}</div>
+            </div>
+        </div>
     </van-cell-group>
     <van-cell-group>
-        <van-field
-            v-model="checkin_num"
-            disabled
-            label="入住人数"/>
-    </van-cell-group>
-    <van-cell-group>
-        <van-field
-            v-model="room_count"
-            disabled
-            label="所需房间数"/>
+        <div class="van-cell van-field">
+            <div class="van-cell__title van-field__label"><span>所需房间数</span></div>
+            <div class="van-cell__value">
+                <div class="van-field__body --text-left">{{$apply->room_count}}</div>
+            </div>
+        </div>
     </van-cell-group>
     <van-cell-group>
         <div class="van-cell van-field">
             <div class="van-cell__title van-field__label"><span>入住/离店时间</span></div>
             <div class="van-cell__value">
-                <div class="van-field__body"><span class="__cell__value" v-text="date_begin+'-'+date_end"></span></div>
+                <div class="van-field__body --text-left"><span class="__cell__value">{{$apply->date_begin}}-{{$apply->date_end}}</span></div>
             </div>
         </div>
     </van-cell-group>
     <van-cell-group>
         <div class="van-cell van-field">
-            <div class="van-cell__title van-field__label"><span>原意付费</span></div>
+            <div class="van-cell__title van-field__label"><span>是否原意付费</span></div>
             <div class="van-cell__value">
-                <div class="van-field__body">
-                    <van-switch v-model="can_pay" disabled active-color="#07c160" size="24"/>
-                </div>
+                <div class="van-field__body --text-left">{{$apply->can_pay ? '是' : '否'}}</div>
             </div>
         </div>
     </van-cell-group>
     <van-cell-group>
         <div class="van-cell van-field">
-            <div class="van-cell__title van-field__label"><span>有公函</span></div>
+            <div class="van-cell__title van-field__label"><span>是否有公函</span></div>
             <div class="van-cell__value">
-                <div class="van-field__body">
-                    <van-switch v-model="has_letter" disabled active-color="#07c160" size="24"/>
-                </div>
+                <div class="van-field__body --text-left">{{$apply->has_letter ? '有' : '没有'}}</div>
             </div>
         </div>
     </van-cell-group>
+    @if ($apply->region)
     <van-cell-group>
-        <van-field
-            v-model="room_count"
-            disabled
-            label="选择区域"/>
+        <div class="van-cell van-field">
+            <div class="van-cell__title van-field__label"><span>区域</span></div>
+            <div class="van-cell__value">
+                <div class="van-field__body --text-left">{{$apply->region ? $apply->region->region_name : ''}}</div>
+            </div>
+        </div>
     </van-cell-group>
+    @endif
+    @if ($apply->hope_addr)
     <van-cell-group>
-        <van-field
-            v-model="hope_addr"
-            disabled
-            label="期望地址"/>
+        <div class="van-cell van-field">
+            <div class="van-cell__title van-field__label"><span>期望地址</span></div>
+            <div class="van-cell__value">
+                <div class="van-field__body --text-left">{{$apply->hope_addr}}</div>
+            </div>
+        </div>
     </van-cell-group>
+    @endif
+    @if ($apply->remark)
     <van-cell-group>
-        <van-field
-            v-model="remark"
-            disabled
-            label="其他说明"
-            type="textarea"
-            autosize
-            rows="2"/>
+        <div class="van-cell van-field">
+            <div class="van-cell__title van-field__label"><span>其他说明</span></div>
+            <div class="van-cell__value">
+                <div class="van-field__body --text-left">{{$apply->remark}}</div>
+            </div>
+        </div>
     </van-cell-group>
-    <van-button class="submit-btn" type="primary" round block :loading="submitLoading" loading-text="取消发布中..." @click="onCancel">取消发布</van-button>
+    @endif
+    @if ($apply->status == 1)
+        <van-button class="submit-btn" type="primary" round block url="/admin/subscribe/taking/{{$apply->id}}">我来接单</van-button>
+    @endif
 </div>
 @endsection
 @section('js')
-<script>
-    var HOTLE_NAME = '', // 酒店名称
-        CONN_PERSON = '{!! $apply->conn_person !!}',
-        CONN_PHONE = '{!! $apply->conn_phone !!}',
-        CONN_POSITION = '{!! $apply->conn_position !!}',
-        CONN_COMPANY = '{!! $apply->conn_company !!}',
-        CHECKIN_NUM = '{!! $apply->checkin_num !!}',
-        ROOM_COUNT = '{!! $apply->room_count !!}',
-        DATE_BEGIN = '{!! $apply->date_begin !!}',
-        DATE_END = '{!! $apply->date_end !!}',
-        CAN_PAY = '{!! $apply->can_pay !!}',
-        HAS_LETTER = '{!! isset($apply->has_letter) ? $apply->has_letter : false !!}',
-        REGION_NAME = '', // 区域名称
-        HOPE_ADDR = '{!! isset($apply->hope_addr) ? $apply->hope_addr : '' !!}',
-        REMARK = '{!! isset($apply->remark) ? $apply->remark : '' !!}';
-</script>
-<script src="{{asset('/js/apply_detail.js')}}"></script>
+<script src="{{asset('/js/index.js')}}"></script>
 @endsection

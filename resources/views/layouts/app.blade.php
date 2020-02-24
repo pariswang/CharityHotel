@@ -14,14 +14,14 @@
     <title>@yield('title')中国加油，武汉加油</title>
     <!-- 引入样式文件 -->
     <link rel="stylesheet" href="{{asset('/vendor/vant/index.css')}}">
-    <link rel="stylesheet" href="{{asset('/css/app.css')}}">
+    <link rel="stylesheet" href="{{asset('/css/app.css?v1.02')}}">
+    @section('css')
+    @show
 </head>
 <body>
     <div id="app">
         <header id="header"><a href="/">中国加油，武汉加油</a></header>
-        <div class="container">
-            @yield('content')
-        </div>
+        @yield('content')
     </div>
     <script src="{{asset('/vendor/ppo.min.js')}}"></script>
     <script src="{{asset('/vendor/underscore-min.js')}}"></script>
@@ -30,6 +30,8 @@
     <!-- 引入 Vue 和 Vant 的 JS 文件 -->
     <script src="{{asset('/vendor/vant/vue.min.js')}}"></script>
     <script src="{{asset('/vendor/vant/vant.min.js')}}"></script>
+    <script src="https://cdn.bootcss.com/vConsole/3.3.4/vconsole.min.js"></script>
+    <script>var vConsole = new VConsole();</script>
     @section('js')
     @show
 </body>

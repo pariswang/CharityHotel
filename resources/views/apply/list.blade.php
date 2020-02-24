@@ -26,14 +26,16 @@
         closeable
         round
         position="bottom"
+        close-icon="{{asset('/imgs/confirm_btn.png')}}"
         :style="{ height: '30%' }">
-        <van-picker :columns="areas" @change="areaOnChange"/>
+        <van-picker :columns="areas" :default-index="areaIndex || 0" @change="areaOnChange"/>
     </van-popup>
     <van-popup
         v-model="showHospitals"
         closeable
         round
         position="bottom"
+        close-icon="{{asset('/imgs/confirm_btn.png')}}"
         :style="{ height: '30%' }">
         <van-picker :columns="hospitals" @change="hospitalOnChange"/>
     </van-popup>
@@ -42,46 +44,51 @@
         closeable
         round
         position="bottom"
+        close-icon="{{asset('/imgs/confirm_btn.png')}}"
         :style="{ height: '30%' }">
-        <van-picker :columns="status" @change="statuOnChange"/>
+        <van-picker :columns="status" :default-index="statuIndex || 0" @change="statuOnChange"/>
     </van-popup>
     <!--
     参数说明
     ?distinct={distinct_id}&hospital={hospital_id}&s={addr_str}
     -->
-    @foreach ($applies as $apply)
-    <div class="item">
-        <div class="item-hd">
-            <span>{{$apply->date_begin}}</span>
-            <span class="item__value">
-                @if ($apply->status==1)
-                    已申请
-                @elseif ($apply->status==5)
-                    已接单
+    @forelse ($applies as $apply)
+        <div class="item">
+            <div class="item-hd">
+                <span>{{$apply->date_begin}}</span>
+                <span class="item__value" style="color:#07c160">
+                    {{$apply->region ? $apply->region->region_name : ''}}
+                </span>
+            </div>
+            <div class="item-bd">
+                @if ($apply->region_id)
+                    {{$apply->region->region_name}}{{$apply->hope_addr ?? ''}} ，
+                @elseif ($apply->hotel_id)
+                    {{$apply->hotel->region->region_name}}{{$apply->hotel->address}}附近，
+                @else
+                    &nbsp;
                 @endif
-            </span>
+                {{$apply->conn_company}} {{$apply->checkin_num}}名 {{$apply->conn_position}} 急需酒店。
+                联系人：{{$apply->conn_person}}
+            </div>
+            <div class="item-ft">
+                {{--<van-button type="default" size="small" round plain url="#">已拒绝</van-button>--}}
+                @if ($apply->status==1)
+                    <van-button type="primary" size="small" round url="/apply_detail?id={{$apply->id}}">我来接单</van-button>
+                @elseif ($apply->status==5)
+                    <van-button type="primary" size="small" round plain url="/apply_detail?id={{$apply->id}}">查看详情</van-button>
+                @endif
+            </div>
         </div>
-        <div class="item-bd">
-            @if ($apply->region_id)
-                {{$apply->region->region_name}} ，
-            @elseif ($apply->hotel_id)
-                {{$apply->hotel->region->region_name}}{{$apply->hotel->address}}附近，
-            @else
-                &nbsp;
-            @endif
-            {{$apply->conn_company}} {{$apply->checkin_num}}名 {{$apply->conn_position}} 急需酒店。
-            联系人：{{$apply->conn_person}}
+    @empty
+        <div class="item-empty">
+            <p><van-icon name="bulb-o" size="60"/></p>
+            <p>没有查询出符合条件的申请信息, 换个条件试试~</p>
         </div>
-        <div class="item-ft">
-            {{--<van-button type="default" size="small" round plain url="#">已拒绝</van-button>--}}
-            @if ($apply->status==1)
-                <van-button type="primary" size="small" round url="/apply_detail?id={{$apply->id}}">我来接单</van-button>
-            @elseif ($apply->status==5)
-                <van-button type="primary" size="small" round plain url="/apply_detail?id={{$apply->id}}">查看详情</van-button>
-            @endif
-        </div>
+    @endforelse
+    <div class="ft-cover">
+        <van-button type="primary" block round url="/admin/hotel/create">发布酒店信息</van-button>
     </div>
-    @endforeach
 </div>
 @endsection
 @section('js')
@@ -101,5 +108,5 @@
     console.log('REGIONS', REGIONS);
     console.log('HOSPITALS', HOSPITALS);
 </script>
-<script src="{{asset('/js/apply_list.js')}}"></script>
+<script src="{{asset('/js/apply_list.js').'?'.time()}}"></script>
 @endsection
