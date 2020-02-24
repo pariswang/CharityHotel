@@ -30,12 +30,6 @@ class ApplyController extends Controller
         if($status){
             $where['status'] = $status;
         }
-        if($search){
-//            $where['hope_addr'] = $search;
-        }
-        if($hospitalId){
-//            $where['hospital_id'] = $hospitalId;
-        }
 
         if(!empty($where)){
             $applies = null;
@@ -105,7 +99,7 @@ class ApplyController extends Controller
     {
         $user = $request->user();
 
-        list($regions, $hospitals) = $this->selectOptions()
+        list($regions, $hospitals) = $this->selectOptions();
 
         return view('apply.open', compact('user', 'regions', 'hospitals'));
     }
