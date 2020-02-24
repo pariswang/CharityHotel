@@ -3,8 +3,8 @@
 @section('content')
 <div class="page page--start" id="profile">
     <van-cell-group>
-        <van-cell title="用户名" label="13222222222" />
-        <van-icon name="edit" size="20"/>
+        <van-cell title="{{$user->uname}}" label="{{$user->phone}}" />
+        {{--<van-icon name="edit" size="20"/>--}}
     </van-cell-group>
     <van-panel title="我的申请单" style="margin-top:1em;">
         <van-tabs @click="changeTab" color="#07c160">
