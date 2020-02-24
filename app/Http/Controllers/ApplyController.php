@@ -85,7 +85,10 @@ class ApplyController extends Controller
             if(!isset($data['region_id'])){
                 $data['region_id'] = $hotel->region->id;
             }
+        }else{
+            $data['admin_id'] = 0;
         }
+
         $sub = Subscribe::create($data);
         if($sub){
             return [
