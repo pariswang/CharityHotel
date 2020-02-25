@@ -17,6 +17,9 @@ class Hotel extends Model
 
     public $timestamps = false;
 
+    const STATUS_DISABLE = 5;
+    const STATUS_ENABLE = 0;
+
     public function region()
     {
         return $this->belongsTo(Region::class, 'region_id');
