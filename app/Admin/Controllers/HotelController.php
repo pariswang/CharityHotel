@@ -5,10 +5,13 @@ namespace App\Admin\Controllers;
 use App\Model\Hotel;
 use App\Model\Region;
 use Encore\Admin\Controllers\AdminController;
+use Encore\Admin\Layout\Content;
 use Encore\Admin\Form;
 use Encore\Admin\Grid;
 use Encore\Admin\Show;
 use Encore\Admin\Facades\Admin;
+use Encore\Admin\Widgets\Box;
+
 class HotelController extends AdminController
 {
     /**
@@ -150,6 +153,14 @@ class HotelController extends AdminController
         return $show;
     }
 
+    public function create(Content $content)
+    {
+        return $content
+            ->title($this->title())
+            ->description("<span style='color:red;'>如遇到问题，<a href='http://nxw.so/3yxyV'>请点击查看帮助视频</a>！</span>")
+            ->body($this->form());
+    }
+
     /**
      * Make a form builder.
      *
@@ -162,9 +173,7 @@ class HotelController extends AdminController
             'off' => ['value' => 0, 'text' => '否', 'color' => 'danger'],
         ];
         $form = new Form(new Hotel());
-        // $form->number('user_id', __('User id'));
-        // $form->mobile('phone', __('Phone'));
-        // $form->password('pwd', __('Pwd'));
+
         $form->text('hotel_name', __('酒店名称'))->required()->help('无需填写湖北省/武汉市/行政区等信息');
         $form->radio('classify', __('类型'))->options([
             '酒店' => '酒店', '公寓' => '公寓', '民宿' => '民宿',
