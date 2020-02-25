@@ -4,16 +4,6 @@
 <div class="page page--start">
     <h1 class="page-title">申请详情</h1>
     @csrf
-    @if ($apply->hotel)
-    <van-cell-group>
-        <div class="van-cell van-field">
-            <div class="van-cell__title van-field__label"><span>酒店名称</span></div>
-            <div class="van-cell__value">
-                <div class="van-field__body --text-left">{{$apply->hotel->hotel_name}}</div>
-            </div>
-        </div>
-    </van-cell-group>
-    @endif
     <van-cell-group>
         <div class="van-cell van-field">
             <div class="van-cell__title van-field__label"><span>联系人</span></div>
@@ -46,6 +36,36 @@
             </div>
         </div>
     </van-cell-group>
+    @if ($apply->region)
+        <van-cell-group>
+            <div class="van-cell van-field">
+                <div class="van-cell__title van-field__label"><span>所在地区</span></div>
+                <div class="van-cell__value">
+                    <div class="van-field__body --text-left">{{$apply->region ? $apply->region->region_name : ''}}</div>
+                </div>
+            </div>
+        </van-cell-group>
+    @endif
+    @if ($apply->hope_addr)
+        <van-cell-group>
+            <div class="van-cell van-field">
+                <div class="van-cell__title van-field__label"><span>期望住址</span></div>
+                <div class="van-cell__value">
+                    <div class="van-field__body --text-left">{{$apply->hope_addr}}</div>
+                </div>
+            </div>
+        </van-cell-group>
+    @endif
+    @if ($apply->hotel)
+        <van-cell-group>
+            <div class="van-cell van-field">
+                <div class="van-cell__title van-field__label"><span>期望入住酒店</span></div>
+                <div class="van-cell__value">
+                    <div class="van-field__body --text-left">{{$apply->hotel->hotel_name}}</div>
+                </div>
+            </div>
+        </van-cell-group>
+    @endif
     <van-cell-group>
         <div class="van-cell van-field">
             <div class="van-cell__title van-field__label"><span>入住人数</span></div>
@@ -86,26 +106,8 @@
             </div>
         </div>
     </van-cell-group>
-    @if ($apply->region)
-    <van-cell-group>
-        <div class="van-cell van-field">
-            <div class="van-cell__title van-field__label"><span>区域</span></div>
-            <div class="van-cell__value">
-                <div class="van-field__body --text-left">{{$apply->region ? $apply->region->region_name : ''}}</div>
-            </div>
-        </div>
-    </van-cell-group>
-    @endif
-    @if ($apply->hope_addr)
-    <van-cell-group>
-        <div class="van-cell van-field">
-            <div class="van-cell__title van-field__label"><span>期望地址</span></div>
-            <div class="van-cell__value">
-                <div class="van-field__body --text-left">{{$apply->hope_addr}}</div>
-            </div>
-        </div>
-    </van-cell-group>
-    @endif
+
+
     @if ($apply->remark)
     <van-cell-group>
         <div class="van-cell van-field">
