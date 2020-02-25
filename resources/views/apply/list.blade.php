@@ -54,23 +54,25 @@
     -->
     @forelse ($applies as $apply)
         <div class="item">
-            <div class="item-hd">
-                <span>{{$apply->date_begin}}</span>
-                <span class="item__value" style="color:#1e63cb">
-                    {{$apply->region ? $apply->region->region_name : ''}}
-                </span>
-            </div>
-            <div class="item-bd">
-                @if ($apply->region_id)
-                    {{$apply->region->region_name}}{{$apply->hope_addr ?? ''}} ，
-                @elseif ($apply->hotel_id)
-                    {{$apply->hotel->region->region_name}}{{$apply->hotel->address}}附近，
-                @else
-                    &nbsp;
-                @endif
-                {{$apply->conn_company}} {{$apply->checkin_num}}名 {{$apply->conn_position}} 急需酒店。
-                联系人：{{$apply->conn_person}}
-            </div>
+            <a href="/apply_detail?id={{$apply->id}}" class="block__link">
+                <div class="item-hd">
+                    <span>{{$apply->date_begin}}</span>
+                    <span class="item__value" style="color:#1e63cb">
+                        {{$apply->region ? $apply->region->region_name : ''}}
+                    </span>
+                </div>
+                <div class="item-bd">
+                    @if ($apply->region_id)
+                        {{$apply->region->region_name}}{{$apply->hope_addr ?? ''}} ，
+                    @elseif ($apply->hotel_id)
+                        {{$apply->hotel->region->region_name}}{{$apply->hotel->address}}附近，
+                    @else
+                        &nbsp;
+                    @endif
+                    {{$apply->conn_company}} {{$apply->checkin_num}}名 {{$apply->conn_position}} 急需酒店。
+                    联系人：{{$apply->conn_person}}
+                </div>
+            </a>
             <div class="item-ft">
                 {{--<van-button type="default" size="small" round plain url="#">已拒绝</van-button>--}}
                 @if ($apply->status==1)

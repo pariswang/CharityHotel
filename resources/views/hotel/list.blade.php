@@ -46,19 +46,21 @@
     -->
     @forelse ($hotels as $hotel)
         <div class="item">
-            <div class="item-hd">
-                <span>{{$hotel->classify}}</span>
-                <span class="item__value">{{$hotel->region->region_name}}</span>
-            </div>
-            <div class="item-bd">
-                {{$hotel->hotel_name}}可安排{{$hotel->room_count-$hotel->use_room_count}}间，
-                @if ($hotel->medical_staff_free)
-                    医护人员免费，其他人员享受折扣<span class="text--green">{{$hotel->discount_price}}/晚</span>。
-                    @else
-                    <span class="text--green">享受折扣</span>。
-                @endif
-                联系人:{{$hotel->uname}}
-            </div>
+            <a href="/hotel_detail?id={{$hotel->id}}" class="block__link">
+                <div class="item-hd">
+                    <span>{{$hotel->classify}}</span>
+                    <span class="item__value">{{$hotel->region->region_name}}</span>
+                </div>
+                <div class="item-bd">
+                    {{$hotel->hotel_name}}可安排{{$hotel->room_count-$hotel->use_room_count}}间，
+                    @if ($hotel->medical_staff_free)
+                        医护人员免费，其他人员享受折扣<span class="text--green">{{$hotel->discount_price}}/晚</span>。
+                        @else
+                        <span class="text--green">享受折扣</span>。
+                    @endif
+                    联系人:{{$hotel->uname}}
+                </div>
+            </a>
             <div class="item-ft">
                 {{--<van-button type="default" size="small" round plain url="#"></van-button>--}}
                 <van-button color="#1d63cb" size="small" round plain url="/hotel_detail?id={{$hotel->id}}">查看详情</van-button>
