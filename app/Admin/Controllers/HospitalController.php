@@ -40,6 +40,7 @@ class HospitalController extends AdminController
             $filter->equal('region_id','地区')->select(Region::pluck('region_name', 'id')->all());
             $filter->like('hospital_name', '医院名称');
         });
+        $grid->disableRowSelector();
         return $grid;
     }
 
