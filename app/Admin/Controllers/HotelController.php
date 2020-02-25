@@ -35,7 +35,7 @@ class HotelController extends AdminController
         $grid->column('附近医院')->display(function(){
             $html = "";
             foreach ($this->nearbyHospitals as $key => $value) {
-                $html .= "<p>".$value->hospital_name.",距离:<strong>".$value->pivot->distance."</strong>米</p>";
+                $html .= "<p>".$value->hospital_name.",距离:<strong>".$value->pivot->distance."</strong>公里</p>";
             }
             return $html;
         });
@@ -124,7 +124,7 @@ class HotelController extends AdminController
         $show->field('附近医院')->unescape()->as(function(){
             $html = "";
             foreach ($this->nearbyHospitals as $key => $value) {
-                $html .= "<p>".$value->hospital_name.",距离:<strong>".$value->pivot->distance."</strong>米</p>";
+                $html .= "<p>".$value->hospital_name.",距离:<strong>".$value->pivot->distance."</strong>公里</p>";
             }
             return $html;
         });
