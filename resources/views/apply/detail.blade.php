@@ -116,11 +116,63 @@
         </div>
     </van-cell-group>
     @endif
+
     @if (($apply->status == 1 && (isset($user) && $user->id != $apply->user_id)) || !isset($user))
-        <van-button class="submit-btn" type="primary" round block url="/admin/taking/{{$apply->id}}">我来接单</van-button>
+        <van-button class="submit-btn" color="#1d63cb" round block url="/admin/taking/{{$apply->id}}">我来接单</van-button>
+    @endif
+    @if ($apply->status == 1 && (isset($user) && $user->id == $apply->user_id))
+        <van-button class="submit-btn" color="#1d63cb" round block @click="cancelApply({{$apply->id}})">取消申请</van-button>
     @endif
 </div>
 @endsection
 @section('js')
-<script src="{{asset('/js/index.js')}}"></script>
+<script>
+new Vue({
+    el: '#app',
+    methods: {
+        cancelApply: function (applyid) {
+            var _this = this;
+            function beforeClose(action, done) {
+                if (action === 'confirm') {
+                    $.ajax({
+                        type: 'POST',
+                        url: '/apply/cancel',
+                        data: {
+                            _token: $('input[name="_token"]').val(),
+                            id: applyid,
+                        },
+                        success: function (res) {
+                            console.log('res', res);
+                            done();
+                            window.location.href = '/profile';
+                        },
+                        error: function (res) {
+                            var errors = res.responseJSON.errors;
+                            console.log('errors', errors);
+                            var errors_text = '';
+                            for(var i in  errors) {
+                                var item = errors[i];
+                                item.forEach(function (_item) { 
+                                    errors_text += _item;
+                                });
+                            }
+                            vant.Notify({ type: 'danger', message: errors_text !== '' ? errors_text : '登录错误，请重试'});
+                        },
+                        complete: function () {
+                            done();
+                        }
+                    });
+                } else {
+                    done();
+                }
+            }
+            vant.Dialog.confirm({
+                title: '提示',
+                message: '你确定要取消这个申请单？',
+                beforeClose
+            });
+        }
+    }
+});
+</script>
 @endsection
