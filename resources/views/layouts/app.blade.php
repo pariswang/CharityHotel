@@ -14,7 +14,7 @@
     <title>@yield('title')中国加油，武汉加油</title>
     <!-- 引入样式文件 -->
     <link rel="stylesheet" href="{{asset('/vendor/vant/index.css')}}">
-    <link rel="stylesheet" href="{{asset('/css/app.css?v1.02')}}">
+    <link rel="stylesheet" href="{{asset('/css/app.css?v1.03')}}">
     @section('css')
     @show
 </head>
