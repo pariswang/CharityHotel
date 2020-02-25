@@ -95,6 +95,8 @@ class SubscribeController extends AdminController
                 'off' => ['value' => 0, 'text' => '未核实', 'color' => 'default']
             ];
             $grid->column('checked', __('是否核实'))->switch($checked_states);
+            $grid->column('hide_status', __('是否隐藏'))->switch();
+
         }else{
             $grid->column('checked', __('是否核实'))->display(function () {
                 return $this->checked?'已核实':'未核实';
@@ -208,6 +210,9 @@ class SubscribeController extends AdminController
                 'off' => ['value' => 0, 'text' => '未核实', 'color' => 'default']
             ];
             $form->switch('checked', __('是否核实'))->states($checked_states);
+            if(checkAdminRole(['administrator','volunteer'])){
+                $form->switch('hide_status', __('是否隐藏'));
+            }
             $form->date('date_begin', __('开始日期'))->default(date('Y-m-d'));
             $form->date('date_end', __('结束日期'))->default(date('Y-m-d'));
             $form->number('region_id', __('区域'));
