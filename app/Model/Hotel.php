@@ -10,6 +10,7 @@
 namespace App\Model;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Events\HotelSaving;
 
 class Hotel extends Model
 {
@@ -19,6 +20,10 @@ class Hotel extends Model
 
     const STATUS_DISABLE = 5;
     const STATUS_ENABLE = 0;
+
+    protected $dispatchesEvents = [
+        'saving' => HotelSaving::class,
+    ];
 
     public function region()
     {
