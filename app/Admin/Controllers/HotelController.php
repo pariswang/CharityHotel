@@ -5,10 +5,13 @@ namespace App\Admin\Controllers;
 use App\Model\Hotel;
 use App\Model\Region;
 use Encore\Admin\Controllers\AdminController;
+use Encore\Admin\Layout\Content;
 use Encore\Admin\Form;
 use Encore\Admin\Grid;
 use Encore\Admin\Show;
 use Encore\Admin\Facades\Admin;
+use Encore\Admin\Widgets\Box;
+
 class HotelController extends AdminController
 {
     /**
@@ -35,7 +38,7 @@ class HotelController extends AdminController
         $grid->column('附近医院')->display(function(){
             $html = "";
             foreach ($this->nearbyHospitals as $key => $value) {
-                $html .= "<p>".$value->hospital_name.",距离:<strong>".$value->pivot->distance."</strong>米</p>";
+                $html .= "<p>".$value->hospital_name.",距离:<strong>".$value->pivot->distance."</strong>公里</p>";
             }
             return $html;
         });
@@ -124,7 +127,7 @@ class HotelController extends AdminController
         $show->field('附近医院')->unescape()->as(function(){
             $html = "";
             foreach ($this->nearbyHospitals as $key => $value) {
-                $html .= "<p>".$value->hospital_name.",距离:<strong>".$value->pivot->distance."</strong>米</p>";
+                $html .= "<p>".$value->hospital_name.",距离:<strong>".$value->pivot->distance."</strong>公里</p>";
             }
             return $html;
         });
@@ -150,6 +153,14 @@ class HotelController extends AdminController
         return $show;
     }
 
+    public function create(Content $content)
+    {
+        return $content
+            ->title($this->title())
+            ->description("<span style='color:red;'>如遇到问题，<a href='http://nxw.so/3yxyV'>请点击查看帮助视频</a>！</span>")
+            ->body($this->form());
+    }
+
     /**
      * Make a form builder.
      *
@@ -162,9 +173,7 @@ class HotelController extends AdminController
             'off' => ['value' => 0, 'text' => '否', 'color' => 'danger'],
         ];
         $form = new Form(new Hotel());
-        // $form->number('user_id', __('User id'));
-        // $form->mobile('phone', __('Phone'));
-        // $form->password('pwd', __('Pwd'));
+
         $form->text('hotel_name', __('酒店名称'))->required()->help('无需填写湖北省/武汉市/行政区等信息');
         $form->radio('classify', __('类型'))->options([
             '酒店' => '酒店', '公寓' => '公寓', '民宿' => '民宿',
@@ -179,14 +188,13 @@ class HotelController extends AdminController
         $form->text('wechat', __('微信号'))->required();
         $form->number('room_count', __('可提供房间数'))->min(1)->help('请设置数字')->required();
         $form->decimal('discount_price', __('优惠价格（元/间）'));
-//        $form->number('use_room_count', __('已使用房间数'))->min(0)->help('请设置数字');
-        $form->switch('medical_staff_free', __('医务人员是否免费'))->states($states);
+        $form->switch('medical_staff_free', __('医务人员是否免费'))->states($states)->default(1);
         $form->switch('expropriation', __('是否愿意被征用'))->states($states);
         $form->radio('meal', __('是否提供餐食'))->options([
             '早餐' => '早餐', '午餐' => '午餐', '晚餐' => '晚餐', '三餐都提供' => '三餐都提供', '不提供餐食' => '不提供餐食'
         ])->required()->default('不提供餐食');
         $form->switch('reception', __('是否有前台接待'))->states($states);
-        $form->switch('cleaning', __('是否提供客房清洁服务'))->states($states);
+        $form->switch('cleaning', __('是否提供客房清洁服务'))->states($states)->default(1);
         $form->text('collocation_description', __('房间配置说明'))->help('如独立空凋,洗衣机,冰箱等');
         $form->textarea('description', __('酒店介绍'))->help('如周边地标、地铁站、火车站等交通信息');
         $form->hasMany('hospitals','周边医院，最多3家，至少一家', function (Form\NestedForm $form) {

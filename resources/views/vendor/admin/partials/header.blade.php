@@ -28,13 +28,14 @@
 
                 <!-- User Account Menu -->
                 <li class="dropdown user user-menu">
-                    @if (checkAdminRole('administrator'))
+                    @if (checkAdminRole(['administrator','volunteer']))
                     <!-- Menu Toggle Button -->
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                         <!-- The user image in the navbar-->
                         <!-- <img src="{{ Admin::user()->avatar }}" class="user-image" alt="User Image"> -->
                         <!-- hidden-xs hides the username on small devices so only the image appears. -->
-                        <span class="hidden-xs">{{ Admin::user()->name }}</span>
+                        {{ Admin::user()->name }}
+                        <span class="hidden-xs"></span>
                     </a>
                     <ul class="dropdown-menu">
                         <!-- The user image in the menu -->

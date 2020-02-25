@@ -7,8 +7,15 @@ https://github.com/we2notnull
 https://github.com/piexl  
 https://github.com/pariswang 
 
+### 技术问题解答/测试招募
+微信号：suppersoft
+
 ### 项目框架
 Laravel、Laravel-Admin、Vue
  
 ### 项目线路图
+参见 [项目详情](https://github.com/pariswang/CharityHotel/projects/1)
+
+### 已上线项目地址
+[http://hotel_healthcare_support.dragongap.cn](http://hotel_healthcare_support.dragongap.cn)
 
