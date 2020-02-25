@@ -1,4 +1,11 @@
 <?php
+/**
+ * Created by PhpStorm.
+ * User: pariswang
+ * Date: 2020/2/22
+ * Project: CharityHotel
+ * Github: https://github.com/pariswang/CharityHotel
+ */
 
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;

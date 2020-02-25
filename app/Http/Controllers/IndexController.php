@@ -3,7 +3,8 @@
  * Created by PhpStorm.
  * User: pariswang
  * Date: 2020/2/22
- * Time: 8:35 PM
+ * Project: CharityHotel
+ * Github: https://github.com/pariswang/CharityHotel
  */
 
 namespace App\Http\Controllers;

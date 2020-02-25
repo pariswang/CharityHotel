@@ -3,7 +3,8 @@
  * Created by PhpStorm.
  * User: pariswang
  * Date: 2020/2/22
- * Time: 8:55 PM
+ * Project: CharityHotel
+ * Github: https://github.com/pariswang/CharityHotel
  */
 
 namespace App\Http\Controllers;
@@ -47,7 +48,7 @@ class HotelController extends Controller
         $search = $request->input('s');
         $hospitalId = $request->input('hospital');
         if(empty($search) && empty($hospitalId) && empty($regionId)){
-            return Hotel::all();
+            return Hotel::where('status', '<>', Hotel::STATUS_DISABLE)->get();
         }
 
         $hotels = collect([]);
@@ -73,6 +74,9 @@ class HotelController extends Controller
             }
         }
 
+        $hotels = $hotels->filter(function ($hotel){
+            return $hotel->status != Hotel::STATUS_DISABLE;
+        });
         return $hotels;
     }
 

@@ -45,7 +45,7 @@
                     @endforeach
                 @endif
 
-                <input type="text" class="form-control" placeholder="{{ trans('admin.username') }}" name="username" value="{{ old('username') }}">
+                <input type="text" class="form-control" placeholder="请填写注册的手机号" name="username" value="{{ old('username') }}">
                 <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
             </div>
             <div class="form-group has-feedback {!! !$errors->has('password') ?: 'has-error' !!}">
