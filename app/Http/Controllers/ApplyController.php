@@ -14,6 +14,7 @@ use App\Model\Subscribe;
 use App\Model\Region;
 use App\Model\Hospital;
 use Illuminate\Http\Request;
+use Illuminate\Validation\ValidationException;
 
 class ApplyController extends Controller
 {
@@ -77,6 +78,8 @@ class ApplyController extends Controller
     public function apply_hotel_submit(Request $request)
     {
         $user = $request->user();
+        $this->checkApplyFrequency($user);
+
         $data = $request->only(['conn_person', 'conn_phone', 'conn_position', 'conn_company', 'checkin_num', 'room_count', 'date_begin', 'date_end', 'can_pay', 'has_letter', 'hotel_id','region_id', 'hope_addr', 'remark']);
         $data['can_pay'] = $data['can_pay'] ? 1 : 0;
         $data['has_letter'] = $data['has_letter'] ? 1 : 0;
@@ -104,6 +107,18 @@ class ApplyController extends Controller
                 'success' => 1,
                 'data' => [],
             ];
+        }
+    }
+
+    private function checkApplyFrequency($user)
+    {
+        $last = Subscribe::where('user_id', $user->id)->orderBy('createdate', 'desc')->first();
+        if($last){
+            if( time() < strtotime($last->createdate) + 10*60 ){
+                throw ValidationException::withMessages([
+                    'remark' => ['每10分钟只允许提交一次！'],
+                ]);
+            }
         }
     }
 
