@@ -87,7 +87,9 @@ class HotelController extends AdminController
         $grid->actions(function ($actions) {
             $actions->disableDelete();
         });
+        $grid->disableExport();
         $grid->disableRowSelector();
+        $grid->disableColumnSelector();
         $grid->filter(function($filter){
             // 去掉默认的id过滤器
             $filter->disableIdFilter();

@@ -126,8 +126,9 @@ class SubscribeController extends AdminController
         // // $grid->column('admin_id', __('Admin id'));
         // // $grid->column('status', __('接单状态'));
         // $grid->column('hotel_id', __('接单酒店'));
-
+        $grid->disableExport();
         $grid->disableRowSelector();
+        $grid->disableColumnSelector();
         $grid->disableCreateButton();
         $grid->disableActions();
         $grid->filter(function($filter){
