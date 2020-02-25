@@ -179,14 +179,13 @@ class HotelController extends AdminController
         $form->text('wechat', __('微信号'))->required();
         $form->number('room_count', __('可提供房间数'))->min(1)->help('请设置数字')->required();
         $form->decimal('discount_price', __('优惠价格（元/间）'));
-//        $form->number('use_room_count', __('已使用房间数'))->min(0)->help('请设置数字');
-        $form->switch('medical_staff_free', __('医务人员是否免费'))->states($states);
+        $form->switch('medical_staff_free', __('医务人员是否免费'))->states($states)->default(1);
         $form->switch('expropriation', __('是否愿意被征用'))->states($states);
         $form->radio('meal', __('是否提供餐食'))->options([
             '早餐' => '早餐', '午餐' => '午餐', '晚餐' => '晚餐', '三餐都提供' => '三餐都提供', '不提供餐食' => '不提供餐食'
         ])->required()->default('不提供餐食');
         $form->switch('reception', __('是否有前台接待'))->states($states);
-        $form->switch('cleaning', __('是否提供客房清洁服务'))->states($states);
+        $form->switch('cleaning', __('是否提供客房清洁服务'))->states($states)->default(1);
         $form->text('collocation_description', __('房间配置说明'))->help('如独立空凋,洗衣机,冰箱等');
         $form->textarea('description', __('酒店介绍'))->help('如周边地标、地铁站、火车站等交通信息');
         $form->hasMany('hospitals','周边医院，最多3家，至少一家', function (Form\NestedForm $form) {
