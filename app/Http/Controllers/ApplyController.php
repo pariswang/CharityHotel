@@ -144,13 +144,14 @@ class ApplyController extends Controller
 
     public function detail(Request $request)
     {
+        $user = $request->user();
         $id = $request->input('id');
         $apply = Subscribe::find($id);
         if(empty($apply)){
             return response()->redirectTo('/');
         }
 
-        return view('apply.detail', compact('apply'));
+        return view('apply.detail', compact('apply', 'user'));
     }
 
     private function selectOptions()
