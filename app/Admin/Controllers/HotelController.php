@@ -189,7 +189,7 @@ class HotelController extends AdminController
         $form->switch('cleaning', __('是否提供客房清洁服务'))->states($states);
         $form->text('collocation_description', __('房间配置说明'))->help('如独立空凋,洗衣机,冰箱等');
         $form->textarea('description', __('酒店介绍'))->help('如周边地标、地铁站、火车站等交通信息');
-        $form->hasMany('hospitals','周边医院,最近的医院,最多3家', function (Form\NestedForm $form) {
+        $form->hasMany('hospitals','周边医院，最多3家，至少一家', function (Form\NestedForm $form) {
             $form->select('region_id','地区')->options(Region::pluck('region_name', 'id')->all())->load('hospital_id', '/api/hospital_region')->required();
             $form->select('hospital_id','医院')->required();
             $form->number('distance','距离/公里')->required();
@@ -201,6 +201,7 @@ class HotelController extends AdminController
             ];
             $form->switch('status','状态')->states($hotel_states);
         }
+
         $form->hidden('create_date');
         $form->hidden('user_id');
 
@@ -227,7 +228,6 @@ class HotelController extends AdminController
                     'title'   => '请录入周边医院',
                     'message' => '至少录入一家',
                 ]);
-                return back()->with('error');
             }elseif (count($form->hospitals) - array_sum(array_column($form->hospitals, '_remove_'))>3) {
                 $error = new \Illuminate\Support\MessageBag([
                     'title'   => '请录入周边医院',
