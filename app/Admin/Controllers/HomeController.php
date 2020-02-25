@@ -26,8 +26,8 @@ class HomeController extends Controller
                 $row->column(6, function (Column $column) {
                     $headers = ['title'=>'统计类型','today'=>'当日', 'yesterday'=>'昨日', 'total'=>'累计'];
                     $staticTitles = [
-                        'register_hotel_users'=>'注册酒店',
-                        'register_doctors'=>'注册医护',
+                        'register_hotel_users'=>'注册酒店人员',
+                        'register_doctors'=>'注册医护人员',
                         'put_hotels'=>'发布酒店数',
                         'put_hotels_rooms'=>'发布房间数',
                         'request_count'=>'入住需求数',
