@@ -186,7 +186,7 @@ class HotelController extends AdminController
             $form->select('region_id','地区')->options(Region::pluck('region_name', 'id')->all())->load('hospital_id', '/api/hospital_region')->required();
             $form->select('hospital_id','医院')->required();
             $form->number('distance','距离/公里')->required();
-        });
+        })->required();
         $form->hidden('create_date');
         $form->hidden('user_id');
 
