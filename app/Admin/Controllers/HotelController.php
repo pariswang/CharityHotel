@@ -71,7 +71,7 @@ class HotelController extends AdminController
                 'description'=>['酒店说明','longtext']
             ];
             return htmlInOneField($fieldArr,$this);
-        });
+        })->width(350);
         // $grid->column('meal', __('早中晚餐饮'));
         // $grid->column('room_count', __('可安排房间数'));
         // $grid->column('use_room_count', __('已使用房间数'));
