@@ -2,7 +2,7 @@
  * @Author: kermit.yu 
  * @Date: 2020-02-22 22:13:41 
  * @Last Modified by: kermit.yu
- * @Last Modified time: 2020-02-23 22:19:41
+ * @Last Modified time: 2020-02-25 11:49:44
  */
 
  var ROLES = [
@@ -23,6 +23,9 @@
 new Vue({
     el: '#app',
     data: {
+        tipOverlay: true,
+        closebtnDisabled: true,
+        countDown: 3,
         phone: '',
         password: '',
         password_f: '',
@@ -39,6 +42,20 @@ new Vue({
         var ishotel = parseInt($('input[name="ishotel"]').val());
         this.roleIndex = ishotel ? 1 : 0;
         this.role = ROLES[this.roleIndex].role_name;
+    },
+    mounted: function (){
+        var _this = this;
+        function countdown () {
+            setTimeout(function() {
+                if (_this.countDown > 0) {
+                    _this.countDown --;
+                    countdown();
+                } else {
+                    _this.closebtnDisabled = false;
+                }
+            }, 1000)
+        }
+        countdown();
     },
     methods: {
         rolesOnChange: function (picker, value, index) {
