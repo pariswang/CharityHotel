@@ -2,7 +2,7 @@
  * @Author: kermit.yu 
  * @Date: 2020-02-22 22:51:09 
  * @Last Modified by: kermit.yu
- * @Last Modified time: 2020-02-24 22:24:27
+ * @Last Modified time: 2020-02-25 11:43:06
  */
 
 *{
@@ -18,6 +18,10 @@ body{
     padding-top:49px;
     overflow-y:scroll;
     -webkit-overflow-scrolling: touch;
+}
+
+.van-overlay{
+    z-index:9999;
 }
 
 #header{
@@ -191,6 +195,10 @@ body{
     color:#1e63cb;
 }
 
+.text--red{
+    color:#ee0a24;
+}
+
 .text-right{
     text-align:right;
 }
@@ -258,6 +266,34 @@ img{
 #login{
     width:100%;
     height:100%;
+}
+
+#register{
+    .text-btn{
+        border:0;
+        background-color:transparent;
+        padding:0.5em 0;
+        color:#1e63cb;
+    }
+    .overlay__wrapper{
+        display: flex;
+        flex-direction:column;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
+        padding:15px;
+    }
+    .overlay__inner{
+        background-color:#fff;
+        padding:15px;
+        border-radius:5px;f
+        overflow: hidden;
+    }
+    .scroll__box{
+        max-height:300px;
+        overflow-y: scroll;
+        -webkit-overflow-scrolling: touch;
+    }
 }
 
 // 酒店列表
@@ -461,5 +497,18 @@ img{
     img{
         margin-left:auto;
         margin-right:auto;
+    }
+    ul,ol{
+        padding-left:20px;
+        list-style: disc;
+        margin:0.5em 0;
+        li{
+            +li{
+                margin-top:0.5em;
+            }
+        }
+    }
+    ol{
+        list-style: decimal;
     }
 }
