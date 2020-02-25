@@ -20,41 +20,36 @@ class ApplyController extends Controller
 {
     public function list(Request $request)
     {
-        $search = $request->input('s');
-        $hospitalId = $request->input('hospital');
-        $regionId = $request->input('distinct');
-        $status = $request->input('status');
-
-        $where = [];
-        if($regionId){
-            $where['region_id'] = $regionId;
-        }
-        if($status){
-            $where['status'] = $status;
-        }
-
-        if(!empty($where)){
-            $applies = null;
-            foreach($where as $key => $value){
-                if(null == $applies){
-                    $applies = Subscribe::where($key, $value);
-                }else{
-                    $applies = $applies->where($key, $value);
-                }
-            }
-            if($search){
-                $applies = $applies->where('hope_addr', 'like', "%$search%");
-            }
-            $applies = $applies->get();
-        }elseif($search) {
-            $applies = Subscribe::where('hope_addr', 'like', "%$search%")->get();
-        }else{
-            $applies = Subscribe::all();
-        }
+        $applies = $this->searchList($request);
 
         list($regions, $hospitals) = $this->selectOptions();
 
         return view('apply.list', compact('applies', 'regions', 'hospitals'));
+    }
+
+    private function searchList($request)
+    {
+        $keyword = $request->input('s');
+        $hospitalId = $request->input('hospital');
+        $regionId = $request->input('distinct');
+        $status = $request->input('status');
+
+        $search = (new Subscribe())->newQuery();
+        if($status){
+            $search->where('status', $status);
+        }
+        if($regionId){
+            $search->where('region_id', $regionId);
+        }
+        if($keyword){
+            $search->where('hope_addr', 'like', "%$keyword%");
+        }
+        return $search->orderBy('createdate', 'desc')->get();
+    }
+
+    private function searchKeyword($keyword)
+    {
+
     }
 
     public function apply_hotel(Request $request)
