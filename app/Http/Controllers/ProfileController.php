@@ -3,7 +3,8 @@
  * Created by PhpStorm.
  * User: pariswang
  * Date: 2020/2/24
- * Time: 4:21 PM
+ * Project: CharityHotel
+ * Github: https://github.com/pariswang/CharityHotel
  */
 
 namespace App\Http\Controllers;
@@ -18,7 +19,14 @@ class ProfileController extends Controller
     {
         $user = $request->user();
         $applies = Subscribe::where('user_id', $user->id)->get();
+
+        $publishes = $applies->filter(function ($item){
+            return $item->status == 1;
+        });
+        $acceptes = $applies->filter(function ($item){
+            return $item->status == 5;
+        });
         
-        return view('profile.index', compact('user', 'applies'));
+        return view('profile.index', compact('user', 'publishes', 'acceptes'));
     }
 }

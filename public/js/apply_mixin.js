@@ -2,7 +2,7 @@
  * @Author: kermit.yu 
  * @Date: 2020-02-22 22:13:41 
  * @Last Modified by: kermit.yu
- * @Last Modified time: 2020-02-24 17:11:16
+ * @Last Modified time: 2020-02-24 21:14:17
  */
 
 var HOSPITALS_COLUMNS = {};
@@ -16,6 +16,7 @@ console.log('HOSPITALS_COLUMNS', HOSPITALS_COLUMNS);
 
 var apply = {
     data: {
+        tabbarActive: 1,
         conn_person: CONN_PERSON,
         conn_phone: CONN_PHONE,
         conn_position: CONN_POSITION,
@@ -138,7 +139,7 @@ var apply = {
                     console.log('success', res);
                     vant.Notify({ type: 'success', message: '申请成功' });
                     setTimeout( function() {
-                        window.location.href = '/hotel_list';
+                        window.location.href = '/profile';
                     }, 1000);
                 },
                 error: function (res) {

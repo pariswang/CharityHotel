@@ -28,7 +28,7 @@
 
                 <!-- User Account Menu -->
                 <li class="dropdown user user-menu">
-                    @if (Admin::user()->id == 1)
+                    @if (checkAdminRole('administrator'))
                     <!-- Menu Toggle Button -->
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                         <!-- The user image in the navbar-->

@@ -25,21 +25,13 @@ class HotelController extends AdminController
      */
     protected function grid()
     {
+        ;
         $grid = new Grid(new Hotel());
-        if(Admin::user()->id != '1'){
+        if(!checkAdminRole(['administrator','volunteer'])){
             $grid->model()->where('user_id', '=', Admin::user()->id);
         }
         $grid->column('id', __('ID'));
-        // $grid->column('user_id', __('关联用户'));
-        // $grid->column('phone', __('Phone'));
-        // $grid->column('pwd', __('Pwd'));
         $grid->column('region.region_name', __('区域'));
-        // $grid->column('hotel_name', __('酒店名称'));
-        // $grid->column('simple_name', __('简称'));
-        // $grid->column('classify', __('类型'));
-        // $grid->column('address', __('地址'));
-        // $grid->column('uname', __('联系人'));
-        // $grid->column('wechat', __('微信'));
         $grid->column('附近医院')->display(function(){
             $html = "";
             foreach ($this->nearbyHospitals as $key => $value) {
@@ -79,7 +71,14 @@ class HotelController extends AdminController
                 'description'=>['酒店说明','longtext']
             ];
             return htmlInOneField($fieldArr,$this);
-        });
+        })->width(350);
+        if(checkAdminRole(['administrator','volunteer'])){
+            $hotel_states = [
+                'on'  => ['value' => 0, 'text' => '启用', 'color' => 'primary'],
+                'off' => ['value' => 5, 'text' => '禁用', 'color' => 'default']
+            ];
+            $grid->column('status','状态')->switch($hotel_states);
+        }
         // $grid->column('meal', __('早中晚餐饮'));
         // $grid->column('room_count', __('可安排房间数'));
         // $grid->column('use_room_count', __('已使用房间数'));
@@ -95,6 +94,9 @@ class HotelController extends AdminController
         $grid->actions(function ($actions) {
             $actions->disableDelete();
         });
+        $grid->disableExport();
+        $grid->disableRowSelector();
+        $grid->disableColumnSelector();
         $grid->filter(function($filter){
             // 去掉默认的id过滤器
             $filter->disableIdFilter();
@@ -187,11 +189,19 @@ class HotelController extends AdminController
         $form->switch('cleaning', __('是否提供客房清洁服务'))->states($states);
         $form->text('collocation_description', __('房间配置说明'))->help('如独立空凋,洗衣机,冰箱等');
         $form->textarea('description', __('酒店介绍'))->help('如周边地标、地铁站、火车站等交通信息');
-        $form->hasMany('hospitals','周边医院,最近的医院,最多3家', function (Form\NestedForm $form) {
-            $form->select('region_id','地区')->options(Region::pluck('region_name', 'id')->all())->load('hospital_id', '/api/hospital_region');
-            $form->select('hospital_id','医院');
-            $form->number('distance','距离/公里');
+        $form->hasMany('hospitals','周边医院，最多3家，至少一家', function (Form\NestedForm $form) {
+            $form->select('region_id','地区')->options(Region::pluck('region_name', 'id')->all())->load('hospital_id', '/api/hospital_region')->required();
+            $form->select('hospital_id','医院')->required();
+            $form->number('distance','距离/公里')->required();
         });
+        if(checkAdminRole(['administrator','volunteer'])){
+            $hotel_states = [
+                'on'  => ['value' => 0, 'text' => '启用', 'color' => 'primary'],
+                'off' => ['value' => 5, 'text' => '禁用', 'color' => 'default'],
+            ];
+            $form->switch('status','状态')->states($hotel_states);
+        }
+
         $form->hidden('create_date');
         $form->hidden('user_id');
 
@@ -208,9 +218,34 @@ class HotelController extends AdminController
             $footer->disableCreatingCheck();
 
         });
+
         $form->saving(function (Form $form) {
-            $form->user_id = Admin::user()->id;
-            $form->create_date = date('Y-m-d H:i:s');
+            if(!array_key_exists('user_id', request()->input()) ){
+                return $form;
+            }
+            if($form->hospitals == null || (count($form->hospitals) - array_sum(array_column($form->hospitals, '_remove_')) == 0) ){
+                $error = new \Illuminate\Support\MessageBag([
+                    'title'   => '请录入周边医院',
+                    'message' => '至少录入一家',
+                ]);
+            }elseif (count($form->hospitals) - array_sum(array_column($form->hospitals, '_remove_'))>3) {
+                $error = new \Illuminate\Support\MessageBag([
+                    'title'   => '请录入周边医院',
+                    'message' => '至多输入三家',
+                ]);
+            }elseif (count($form->hospitals) > count(array_unique(array_column($form->hospitals, 'hospital_id'))) ) {
+                $error = new \Illuminate\Support\MessageBag([
+                    'title'   => '请录入周边医院',
+                    'message' => '请勿录入相同医院',
+                ]);
+            }
+            if(isset($error)){
+                return back()->with(['error'=>$error]);
+            }
+            if($form->isCreating()){
+                $form->user_id = Admin::user()->id;
+                $form->create_date = date('Y-m-d H:i:s');
+            }
             return $form;
         });
         return $form;

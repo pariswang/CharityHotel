@@ -3,7 +3,8 @@
  * Created by PhpStorm.
  * User: pariswang
  * Date: 2020/2/22
- * Time: 8:55 PM
+ * Project: CharityHotel
+ * Github: https://github.com/pariswang/CharityHotel
  */
 
 namespace App\Http\Controllers;
@@ -43,10 +44,11 @@ class HotelController extends Controller
 
     private function searchHotels($request)
     {
+        $regionId = $request->input('distinct');
         $search = $request->input('s');
         $hospitalId = $request->input('hospital');
-        if(empty($search) && empty($hospitalId)){
-            return Hotel::all();
+        if(empty($search) && empty($hospitalId) && empty($regionId)){
+            return Hotel::where('status', '<>', Hotel::STATUS_DISABLE)->get();
         }
 
         $hotels = collect([]);
@@ -65,8 +67,16 @@ class HotelController extends Controller
                     $hotels = $hospitalHotels;
                 }
             }
+        }elseif($regionId){
+            $region = Region::find($regionId);
+            if($region){
+                $hotels = $region->hospitals;
+            }
         }
 
+        $hotels = $hotels->filter(function ($hotel){
+            return $hotel->status != Hotel::STATUS_DISABLE;
+        });
         return $hotels;
     }
 
@@ -82,6 +92,7 @@ class HotelController extends Controller
 
         $hotels = Hotel::where('hotel_name', 'like', "%$keyword%")
             ->orWhere('description', 'like', "%$keyword%")
+            ->orWhere('address', 'like', "%$keyword%")
             ->get();
         return $hotels->merge($hospitalHotels);
     }

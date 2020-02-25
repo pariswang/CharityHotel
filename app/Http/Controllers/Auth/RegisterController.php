@@ -1,4 +1,11 @@
 <?php
+/**
+ * Created by PhpStorm.
+ * User: pariswang
+ * Date: 2020/2/22
+ * Project: CharityHotel
+ * Github: https://github.com/pariswang/CharityHotel
+ */
 
 namespace App\Http\Controllers\Auth;
 
@@ -76,6 +83,7 @@ class RegisterController extends Controller
             'position' => $data['position'],
             'company' => $data['company'],
             'role' => $data['role'],
+            'create_date' => date('Y-m-d H:i:s'),
         ]);
 
         if(3 == $data['role']){

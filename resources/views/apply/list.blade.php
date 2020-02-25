@@ -17,7 +17,7 @@
             <van-button type="default" icon="arrow-down" round block size="small" plain :text="statu !== '' ? statu : '请选择状态'" @click="showStatus=true"></van-button>
         </div>
         <van-field v-model="keyword" placeholder="地址关键词">
-            <van-button slot="button" type="primary" round size="small" @click="onSearch">查询</van-button>
+            <van-button slot="button" color="#1d63cb" round size="small" @click="onSearch">查询</van-button>
         </van-field>
         <!-- <van-action-sheet v-model="showAreas" :actions="areas" @select="areaOnSelect" /> -->
     </div>
@@ -56,7 +56,7 @@
         <div class="item">
             <div class="item-hd">
                 <span>{{$apply->date_begin}}</span>
-                <span class="item__value" style="color:#07c160">
+                <span class="item__value" style="color:#1e63cb">
                     {{$apply->region ? $apply->region->region_name : ''}}
                 </span>
             </div>
@@ -74,9 +74,9 @@
             <div class="item-ft">
                 {{--<van-button type="default" size="small" round plain url="#">已拒绝</van-button>--}}
                 @if ($apply->status==1)
-                    <van-button type="primary" size="small" round url="/apply_detail?id={{$apply->id}}">我来接单</van-button>
+                    <van-button color="#1d63cb" size="small" round url="/apply_detail?id={{$apply->id}}">我来接单</van-button>
                 @elseif ($apply->status==5)
-                    <van-button type="primary" size="small" round plain url="/apply_detail?id={{$apply->id}}">查看详情</van-button>
+                    <van-button color="#1d63cb" size="small" round plain url="/apply_detail?id={{$apply->id}}">查看详情</van-button>
                 @endif
             </div>
         </div>
@@ -87,7 +87,7 @@
         </div>
     @endforelse
     <div class="ft-cover">
-        <van-button type="primary" block round url="/admin/hotel/create">发布酒店信息</van-button>
+        <van-button color="#1d63cb" block round url="/admin/hotel/create">发布酒店信息</van-button>
     </div>
 </div>
 @endsection

@@ -3,7 +3,8 @@
  * Created by PhpStorm.
  * User: pariswang
  * Date: 2020/2/22
- * Time: 8:56 PM
+ * Project: CharityHotel
+ * Github: https://github.com/pariswang/CharityHotel
  */
 
 namespace App\Http\Controllers;
@@ -63,6 +64,9 @@ class ApplyController extends Controller
         }
 
         $hotel = Hotel::find($id);
+        if(empty($hotel)){
+            return response()->redirectTo('/apply');
+        }
         $user = $request->user();
 
         list($regions, $hospitals) = $this->selectOptions();
@@ -89,11 +93,13 @@ class ApplyController extends Controller
             $data['admin_id'] = 0;
         }
 
+        $hospitals = $request->input('hospitals');
         $sub = Subscribe::create($data);
         if($sub){
-//            $sub->nearbyHospitals()->attach([
-//                '1231059782408544257' => ['distance' => 2, 'region_id' => 1],
-//            ]);
+            if(!empty($hospitals)){
+                $sub->nearbyHospitals()->attach($this->savePivot($hospitals));
+            }
+
             return [
                 'success' => 1,
                 'data' => [],
@@ -101,6 +107,17 @@ class ApplyController extends Controller
         }
     }
 
+    private function savePivot($hospitals)
+    {
+        $attaches = [];
+        foreach($hospitals as $hospital){
+            $attaches[$hospital['id']] = [
+                'distance' => 0,
+                'region_id' => $hospital['region_id'],
+            ];
+        }
+        return $attaches;
+    }
     public function apply(Request $request)
     {
         $user = $request->user();

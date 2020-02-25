@@ -1,4 +1,11 @@
 <?php
+/**
+ * Created by PhpStorm.
+ * User: pariswang
+ * Date: 2020/2/22
+ * Project: CharityHotel
+ * Github: https://github.com/pariswang/CharityHotel
+ */
 
 namespace App\Model;
 
@@ -9,6 +16,9 @@ class Hotel extends Model
     protected $table = 'wh_hotel';
 
     public $timestamps = false;
+
+    const STATUS_DISABLE = 5;
+    const STATUS_ENABLE = 0;
 
     public function region()
     {

@@ -4,7 +4,7 @@
  * @Author: Simon Zhao
  * @Date:   2020-02-23 01:08:19
  * @Last Modified by:   Simon Zhao
- * @Last Modified time: 2020-02-24 11:22:22
+ * @Last Modified time: 2020-02-25 15:26:44
  */
 
 /**
@@ -53,4 +53,7 @@ function htmlInOneField($fieldArr,$obj){
 	    }
 	}
 	return $html;
+}
+function checkAdminRole($role_slug){
+	return count(array_intersect(is_string($role_slug)?[$role_slug]:$role_slug, \Encore\Admin\Facades\Admin::user()->roles->pluck('slug')->toArray()))?true:false;
 }
