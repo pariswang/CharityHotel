@@ -15,7 +15,7 @@ class UserController extends AdminController
      *
      * @var string
      */
-    protected $title = 'App\Model\User';
+    protected $title = '用户列表';
 
     /**
      * Make a grid builder.
@@ -33,10 +33,16 @@ class UserController extends AdminController
         $grid->column('phonenumber', __('联系电话'));
         $grid->column('position', __('岗位'));
         $grid->column('company', __('公司'));
-        $grid->column('role', __('角色'));
+        $grid->column('role', __('角色'))->using(['1' => '管理人员', '2' => '求助者', '3'=>'酒店人员','4'=>'志愿者']);
         $grid->column('state', __('核实状态'));
         $grid->column('create_date', __('创建时间'));
         // $grid->column('openid', __('Openid'));
+        $grid->filter(function($filter){
+            $filter->disableIdFilter();
+            $filter->like('uname', '姓名');
+            $filter->like('phone', '手机号');
+            $filter->equal('role', '用户角色')->select(['1' => '管理人员', '2' => '求助者', '3'=>'酒店人员','4'=>'志愿者']);
+        });
         $grid->actions(function ($actions) {
             $actions->disableDelete();
         });
