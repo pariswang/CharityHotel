@@ -27,7 +27,7 @@ class HotelController extends AdminController
     {
         ;
         $grid = new Grid(new Hotel());
-        if(!checkAdminRole('administrator')){
+        if(!checkAdminRole(['administrator','volunteer'])){
             $grid->model()->where('user_id', '=', Admin::user()->id);
         }
         $grid->column('id', __('ID'));
@@ -72,6 +72,13 @@ class HotelController extends AdminController
             ];
             return htmlInOneField($fieldArr,$this);
         })->width(350);
+        if(checkAdminRole(['administrator','volunteer'])){
+            $hotel_states = [
+                'on'  => ['value' => 0, 'text' => '启用', 'color' => 'primary'],
+                'off' => ['value' => 5, 'text' => '禁用', 'color' => 'default']
+            ];
+            $grid->column('status','状态')->switch($hotel_states);
+        }
         // $grid->column('meal', __('早中晚餐饮'));
         // $grid->column('room_count', __('可安排房间数'));
         // $grid->column('use_room_count', __('已使用房间数'));
@@ -187,6 +194,13 @@ class HotelController extends AdminController
             $form->select('hospital_id','医院')->required();
             $form->number('distance','距离/公里')->required();
         });
+        if(checkAdminRole(['administrator','volunteer'])){
+            $hotel_states = [
+                'on'  => ['value' => 0, 'text' => '启用', 'color' => 'primary'],
+                'off' => ['value' => 5, 'text' => '禁用', 'color' => 'default'],
+            ];
+            $form->switch('status','状态')->states($hotel_states);
+        }
         $form->hidden('create_date');
         $form->hidden('user_id');
 
@@ -205,6 +219,9 @@ class HotelController extends AdminController
         });
 
         $form->saving(function (Form $form) {
+            if(!array_key_exists('user_id', request()->input()) ){
+                return $form;
+            }
             if($form->hospitals == null || (count($form->hospitals) - array_sum(array_column($form->hospitals, '_remove_')) == 0) ){
                 $error = new \Illuminate\Support\MessageBag([
                     'title'   => '请录入周边医院',
@@ -225,8 +242,10 @@ class HotelController extends AdminController
             if(isset($error)){
                 return back()->with(['error'=>$error]);
             }
-            $form->user_id = Admin::user()->id;
-            $form->create_date = date('Y-m-d H:i:s');
+            if($form->isCreating()){
+                $form->user_id = Admin::user()->id;
+                $form->create_date = date('Y-m-d H:i:s');
+            }
             return $form;
         });
         return $form;

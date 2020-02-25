@@ -46,7 +46,7 @@ class SubscribeController extends AdminController
     {
         $grid = new Grid(new Subscribe());
         $path = explode('/',request()->path())[1];
-        if(Admin::user()->id != '1'){
+        if(!(checkAdminRole(['administrator','volunteer']))){
             switch ($path) {
                 case 'subscribe':
                     $grid->model()->where(['admin_id'=> 0,'hotel_id'=> 0]);
@@ -89,10 +89,18 @@ class SubscribeController extends AdminController
                 'has_letter'=>['是否有介绍信','boolean'],
             ],$this);
         });
-        $grid->column('checked', __('是否核实'))->display(function () {
-            return $this->checked?'已核实':'未核实';
-        });
-        if(checkAdminRole('administrator')){
+        if(checkAdminRole(['administrator','volunteer'])){
+            $checked_states = [
+                'on'  => ['value' => 1, 'text' => '已核实', 'color' => 'primary'],
+                'off' => ['value' => 0, 'text' => '未核实', 'color' => 'default']
+            ];
+            $grid->column('checked', __('是否核实'))->switch($checked_states);
+        }else{
+            $grid->column('checked', __('是否核实'))->display(function () {
+                return $this->checked?'已核实':'未核实';
+            });
+        }        
+        if(checkAdminRole(['administrator','volunteer'])){
             $grid->column('status', __('接单状态'))->display(function () {
                 return $this->status==5?'已接单':'未接单';
             });
@@ -181,23 +189,27 @@ class SubscribeController extends AdminController
      */
     protected function form()
     {
-        // $form = new Form(new Subscribe());
-
-        $form->number('user_id', __('用户'));
-        $form->text('conn_person', __('联系人'));
-        $form->text('conn_phone', __('联系电话'));
-        $form->number('conn_type', __('身份信息'));
-        $form->number('checkin_num', __('入住人数'));
-        $form->number('checked', __('是否核实'));
-        $form->date('date_begin', __('开始日期'))->default(date('Y-m-d'));
-        $form->date('date_end', __('结束日期'))->default(date('Y-m-d'));
-        $form->number('region_id', __('区域'));
-        $form->text('hope_addr', __('希望地点'));
-        $form->text('checkin_reson', __('入住原因'));
-        $form->text('remark', __('其他说明'));
-        $form->datetime('createdate', __('创建日期'))->default(date('Y-m-d H:i:s'));
-        $form->number('hotel_id', __('酒店'));
-
+        $form = new Form(new Subscribe());
+        if(checkAdminRole(['administrator','volunteer'])){
+            $form->number('user_id', __('用户'));
+            $form->text('conn_person', __('联系人'));
+            $form->text('conn_phone', __('联系电话'));
+            $form->number('conn_type', __('身份信息'));
+            $form->number('checkin_num', __('入住人数'));
+            $checked_states = [
+                'on'  => ['value' => 1, 'text' => '已核实', 'color' => 'primary'],
+                'off' => ['value' => 0, 'text' => '未核实', 'color' => 'default']
+            ];
+            $form->switch('checked', __('是否核实'))->states($checked_states);
+            $form->date('date_begin', __('开始日期'))->default(date('Y-m-d'));
+            $form->date('date_end', __('结束日期'))->default(date('Y-m-d'));
+            $form->number('region_id', __('区域'));
+            $form->text('hope_addr', __('希望地点'));
+            $form->text('checkin_reson', __('入住原因'));
+            $form->text('remark', __('其他说明'));
+            $form->datetime('createdate', __('创建日期'))->default(date('Y-m-d H:i:s'));
+            $form->number('hotel_id', __('酒店'));
+        }
         return $form;
     }
 
