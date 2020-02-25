@@ -83,7 +83,7 @@
         @endif
     </p>
     <van-button class="login-btn" color="#1d63cb" round block :loading="submitLoading" loading-text="注册中..." @click="onSubmit">注册</van-button>
-    <van-overlay :show="tipOverlay">
+    <div class="overlay" :class="{'overlay-show': tipOverlay}">
         <div class="overlay__wrapper">
             @if (isset($hotel))
             <div class="overlay__inner" id="detail">
@@ -120,13 +120,11 @@
             @else
             <div class="overlay__inner" id="detail">
                 <h2 class="page-title">《医护人员入住须知》</h2>
-                <div class="scroll__box">
-                    <p>1.请务必提供医护证明或公函（电子版也可接受）；</p>
-                    <p>2.<span class="text--green">请自行做好防护</span>,保护自己和他人,入住前最好自带4件套、一次性用品、垃圾袋（或酒店提供）、消毒液（如有资源请自带）；</p>
-                    <p>3.入住后,请大家自己打包好4件套（装塑料袋）尽量不要让酒店人员处理用物；</p>
-                    <p>4.接待人员都是普通的市民,也有家庭,入住人员如有感染症状请回家隔离</p>
-                    <p>5.医护人员如有资源,请自行携带消毒液等。</p>
-                </div>
+                <p>1.请务必提供医护证明或公函（电子版也可接受）；</p>
+                <p>2.<span class="text--green">请自行做好防护</span>,保护自己和他人,入住前最好自带4件套、一次性用品、垃圾袋（或酒店提供）、消毒液（如有资源请自带）；</p>
+                <p>3.入住后,请大家自己打包好4件套（装塑料袋）尽量不要让酒店人员处理用物；</p>
+                <p>4.接待人员都是普通的市民,也有家庭,入住人员如有感染症状请回家隔离</p>
+                <p>5.医护人员如有资源,请自行携带消毒液等。</p>
                 <van-button
                     color="#1d63cb"
                     :disabled="closebtnDisabled"
@@ -138,7 +136,7 @@
             </div>
             @endif
         </div>
-    </van-overlay>
+    </div>
 </div>
 @endsection
 

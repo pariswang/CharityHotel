@@ -2,7 +2,7 @@
  * @Author: kermit.yu 
  * @Date: 2020-02-22 22:51:09 
  * @Last Modified by: kermit.yu
- * @Last Modified time: 2020-02-25 11:43:06
+ * @Last Modified time: 2020-02-25 15:17:44
  */
 
 *{
@@ -15,7 +15,7 @@ html,body{
 }
 
 body{
-    padding-top:49px;
+    // padding-top:49px;
     overflow-y:scroll;
     -webkit-overflow-scrolling: touch;
 }
@@ -107,6 +107,7 @@ body{
 }
 
 #app{
+    padding-top:49px;
     display:flex;
     flex-direction:column;
     overflow-y:scroll;
@@ -275,22 +276,37 @@ img{
         padding:0.5em 0;
         color:#1e63cb;
     }
+    .overlay{
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: 9;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0,0,0,.7);
+        display:none;
+        &.overlay-show{
+            display:block;
+        }
+    }
+    .page-title{
+        font-size:16px;
+    }
     .overlay__wrapper{
         display: flex;
+        height:100%;
         flex-direction:column;
         align-items: center;
         justify-content: center;
-        height: 100%;
         padding:15px;
     }
     .overlay__inner{
         background-color:#fff;
         padding:15px;
-        border-radius:5px;f
-        overflow: hidden;
+        border-radius:5px;
     }
     .scroll__box{
-        max-height:300px;
+        height:300px;
         overflow-y: scroll;
         -webkit-overflow-scrolling: touch;
     }
