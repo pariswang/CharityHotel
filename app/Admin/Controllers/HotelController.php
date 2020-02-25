@@ -210,7 +210,6 @@ class HotelController extends AdminController
                     'title'   => '请录入周边医院',
                     'message' => '至少录入一家',
                 ]);
-                return back()->with('error');
             }elseif (count($form->hospitals) - array_sum(array_column($form->hospitals, '_remove_'))>3) {
                 $error = new \Illuminate\Support\MessageBag([
                     'title'   => '请录入周边医院',
