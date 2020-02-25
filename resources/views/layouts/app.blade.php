@@ -14,7 +14,7 @@
     <title>@yield('title')中国加油，武汉加油</title>
     <!-- 引入样式文件 -->
     <link rel="stylesheet" href="{{asset('/vendor/vant/index.css')}}">
-    <link rel="stylesheet" href="{{asset('/css/app.css?v1.03')}}">
+    <link rel="stylesheet" href="{{asset('/css/app.css?v').time()}}">
     @section('css')
     @show
 </head>
@@ -28,6 +28,8 @@
                 <a href="/hotel_list" class="menu__item">查找房源</a>
                 <a href="/login" class="menu__item">医护人员入口</a>
                 <a href="/admin/auth/login" class="menu__item">酒店人员入口</a>
+                <a href="/hotel_staff" class="menu__item">酒店支持说明</a>
+                <a href="/help_seeker_staff" class="menu__item">志愿者支持说明</a>
             </div>
         </header>
         @yield('content')

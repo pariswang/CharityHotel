@@ -430,3 +430,36 @@ img{
 .page-tabbar{
     padding-bottom:70px;
 }
+
+// 详情页
+#detail{
+    font-size:14px;
+    color:#333;
+    line-height:1.75;
+    .subtitle{
+        margin:0.5em 0;
+        font-weight:normal;
+        font-size:16px;
+        margin-bottom:0.5em;
+    }
+    .text-center{
+        text-align:center;
+    }
+    p{
+        width:100%;
+        margin:0;
+        + p{
+            margin-top:1em;
+        }
+    }
+    a{
+        color:#1e63cb;
+        &:hover{
+            color:darken(#1e63cb, 10%);
+        }
+    }
+    img{
+        margin-left:auto;
+        margin-right:auto;
+    }
+}
