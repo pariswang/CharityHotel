@@ -9,13 +9,13 @@ use Encore\Admin\Layout\Content;
 use Encore\Admin\Layout\Row;
 use Encore\Admin\Facades\Admin;
 use Encore\Admin\Widgets\Table;
+use Illuminate\Support\Facades\Cache;
 
 class HomeController extends Controller
 {
     public function index(Content $content)
     {
-        // if(!checkAdminRole(['administrator','volunteer'])){
-        if(!checkAdminRole(['administrator'])){
+        if(!checkAdminRole(['administrator','volunteer'])){
            return redirect('/admin/hotel');
         }
          $content
@@ -36,9 +36,13 @@ class HomeController extends Controller
                         'request_taking_users'=>'接单接待人数'
                     ];
                     $list = [];
-                    foreach (array_keys($staticTitles) as $title ) {
-                         $list[$title]  =  getStaticData($title);
+                    if(!$list = Cache::get('statistic')){
+                        foreach (array_keys($staticTitles) as $title ) {
+                             $list[$title]  =  getStaticData($title);
+                        }
+                        Cache::put('statistic', $list, 10);
                     }
+                    
                     $column->append(view('admin::dashboard.statistic', compact('list','headers','staticTitles')));
                 });
 
