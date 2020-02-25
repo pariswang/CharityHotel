@@ -11,4 +11,8 @@ https://github.com/pariswang
 Laravel、Laravel-Admin、Vue
  
 ### 项目线路图
+参见 [项目详情](https://github.com/pariswang/CharityHotel/projects/1)
+
+### 已上线项目地址
+[http://hotel_healthcare_support.dragongap.cn](http://hotel_healthcare_support.dragongap.cn)
 
