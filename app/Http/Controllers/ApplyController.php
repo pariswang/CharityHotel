@@ -63,6 +63,9 @@ class ApplyController extends Controller
         }
 
         $hotel = Hotel::find($id);
+        if(empty($hotel)){
+            return response()->redirectTo('/apply');
+        }
         $user = $request->user();
 
         list($regions, $hospitals) = $this->selectOptions();
