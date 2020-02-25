@@ -2,7 +2,7 @@
  * @Author: kermit.yu 
  * @Date: 2020-02-22 22:51:09 
  * @Last Modified by: kermit.yu
- * @Last Modified time: 2020-02-25 15:03:18
+ * @Last Modified time: 2020-02-25 15:17:44
  */
 * {
   box-sizing: border-box;
@@ -248,9 +248,21 @@ img {
   padding: 0.5em 0;
   color: #1e63cb;
 }
-#register .van-overlay {
-  overflow-y: scroll;
-  -webkit-overflow-scrolling: touch;
+#register .overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 9;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: none;
+}
+#register .overlay.overlay-show {
+  display: block;
+}
+#register .page-title {
+  font-size: 16px;
 }
 #register .overlay__wrapper {
   display: flex;

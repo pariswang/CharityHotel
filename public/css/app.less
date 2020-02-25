@@ -2,7 +2,7 @@
  * @Author: kermit.yu 
  * @Date: 2020-02-22 22:51:09 
  * @Last Modified by: kermit.yu
- * @Last Modified time: 2020-02-25 15:03:18
+ * @Last Modified time: 2020-02-25 15:17:44
  */
 
 *{
@@ -276,9 +276,21 @@ img{
         padding:0.5em 0;
         color:#1e63cb;
     }
-    .van-overlay{
-        overflow-y: scroll;
-        -webkit-overflow-scrolling: touch;
+    .overlay{
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: 9;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0,0,0,.7);
+        display:none;
+        &.overlay-show{
+            display:block;
+        }
+    }
+    .page-title{
+        font-size:16px;
     }
     .overlay__wrapper{
         display: flex;
