@@ -34,4 +34,21 @@ class Hotel extends Model
     {
         return $this->hasMany(HotelHospital::class, 'hotel_id');
     }
+
+    const DELIMITER = '|';
+
+    public function keywords()
+    {
+        $hospitalNames = $this->nearbyHospitals()->pluck('hospital_name')->toArray();
+        return implode(self::DELIMITER, array_merge([
+            $this->hotel_name,
+            $this->address,
+            $this->description,
+        ], $hospitalNames));
+    }
+
+    public function hospitalSearchString()
+    {
+        return self::DELIMITER . implode(self::DELIMITER, $this->hospitals()->pluck('hospital_id')->toArray()) . self::DELIMITER;
+    }
 }

@@ -55,56 +55,19 @@ class HotelController extends Controller
     private function searchHotels($request)
     {
         $regionId = $request->input('distinct');
-        $search = $request->input('s');
+        $keywords = $request->input('s');
         $hospitalId = $request->input('hospital');
-        if(empty($search) && empty($hospitalId) && empty($regionId)){
-            return Hotel::where('status', '<>', Hotel::STATUS_DISABLE)->get();
-        }
 
-        $hotels = collect([]);
-
-        if($search){
-            $hotels = $this->keywordSearch($search);
-        }
-
-        if($hospitalId) {
-            $hospital = Hospital::find($hospitalId);
-            if($hospital) {
-                $hospitalHotels = $hospital->nearbyHotels()->get();
-                if($hotels->count()>0){
-                    $hotels = $hotels->intersect($hospitalHotels);
-                }else{
-                    $hotels = $hospitalHotels;
-                }
-            }
+        $search = (new Hotel())->newQuery();
+        if($hospitalId){
+            $search->where('hospital_ids', 'like', "%|$hospitalId|%");
         }elseif($regionId){
-            $region = Region::find($regionId);
-            if($region){
-                $hotels = $region->hospitals;
-            }
+            $search->where('region_id', $regionId);
         }
-
-        $hotels = $hotels->filter(function ($hotel){
-            return $hotel->status != Hotel::STATUS_DISABLE;
-        });
-        return $hotels;
-    }
-
-    private function keywordSearch($keyword)
-    {
-        // 医院名称、酒店名称、酒店介绍
-        $hospitalHotels = Hospital::with('nearbyHotels')
-            ->where('hospital_name', 'like', "%$keyword%")
-            ->get()
-            ->map(function ($hospital){
-                return $hospital->nearbyHotels;
-            })->flatten();
-
-        $hotels = Hotel::where('hotel_name', 'like', "%$keyword%")
-            ->orWhere('description', 'like', "%$keyword%")
-            ->orWhere('address', 'like', "%$keyword%")
-            ->get();
-        return $hotels->merge($hospitalHotels);
+        if($keywords){
+            $search->where('search_keywords', 'like', "%$keywords%");
+        }
+        return $search->get()->shuffle();
     }
 
     public function detail(Request $request)
