@@ -7,6 +7,9 @@ https://github.com/we2notnull
 https://github.com/piexl  
 https://github.com/pariswang 
 
+### 技术问题解答/测试招募
+微信号：suppersoft
+
 ### 项目框架
 Laravel、Laravel-Admin、Vue
  
