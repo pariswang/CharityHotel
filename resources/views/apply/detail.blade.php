@@ -116,7 +116,7 @@
         </div>
     </van-cell-group>
     @endif
-    @if ($apply->status == 1)
+    @if (($apply->status == 1 && (isset($user) && $user->id != $apply->user_id)) || !isset($user))
         <van-button class="submit-btn" type="primary" round block url="/admin/taking/{{$apply->id}}">我来接单</van-button>
     @endif
 </div>
