@@ -135,7 +135,9 @@ class SubscribeController extends AdminController
         // // $grid->column('status', __('接单状态'));
         // $grid->column('hotel_id', __('接单酒店'));
         $grid->disableExport();
-        $grid->disableRowSelector();
+        if(!checkAdminRole(['administrator'])){
+            $grid->disableRowSelector();
+        }
         $grid->disableColumnSelector();
         $grid->disableCreateButton();
         $grid->disableActions();
@@ -147,6 +149,7 @@ class SubscribeController extends AdminController
             $filter->equal('region_id','地区')->select(\App\Model\Region::pluck('region_name', 'id')->all());
         });
         $grid->actions(function ($actions) {
+
             $actions->disableDelete();
             $actions->disableView();
             $actions->disableEdit();
