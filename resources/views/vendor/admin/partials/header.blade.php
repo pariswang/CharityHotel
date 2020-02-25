@@ -28,7 +28,7 @@
 
                 <!-- User Account Menu -->
                 <li class="dropdown user user-menu">
-                    @if (checkAdminRole('administrator'))
+                    @if (checkAdminRole(['administrator','volunteer']))
                     <!-- Menu Toggle Button -->
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                         <!-- The user image in the navbar-->
