@@ -14,7 +14,7 @@ html,body,#app{ height:100%;}
     <p>为帮助酒店和公寓管理者更好地使用此平台，请按照以下步骤操作：</p>
     <h2 class="subtitle">第一：请扫描以下二维码加入医护酒店公寓平台微信群，参与在线培训，针对系统使用过程中遇到的问题也将通过此群反馈和解答</h2>
     <p class="text-center"><img src="{{asset('/imgs/help_seeker_qrcode.png')}}" alt=""></p>
-    <h2 class="subtitle">第二：<a href="https://shimo.im/docs/hhrGCPHr69HddwXv/read" target="_blank">点击此处</a>下载酒店用户手册</h2>
+    <h2 class="subtitle">第二：<a href="http://hotel_healthcare_support.dragongap.cn/download/%E5%8C%BB%E6%8A%A4%E4%BA%BA%E5%91%98%E4%BD%BF%E7%94%A8%E6%89%8B%E5%86%8C.docx" target="_blank">点击此处</a>下载酒店用户手册</h2>
     <h2 class="subtitle">第三：参与在线培训后，扫描以下二维码进入系统开始注册和提交酒店资料</h2>
     <p class="text-center"><img src="{{asset('/imgs/help_seeker_enterqrcode.png')}}" alt=""></p>
 </div>
