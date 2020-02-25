@@ -75,13 +75,11 @@ class HotelController extends AdminController
             ];
             return htmlInOneField($fieldArr,$this);
         })->width(350);
-        if(checkAdminRole(['administrator','volunteer'])){
-            $hotel_states = [
-                'on'  => ['value' => 0, 'text' => '启用', 'color' => 'primary'],
-                'off' => ['value' => 5, 'text' => '禁用', 'color' => 'default']
-            ];
-            $grid->column('status','状态')->switch($hotel_states);
-        }
+        $hotel_states = [
+            'on'  => ['value' => 0, 'text' => '启用', 'color' => 'primary'],
+            'off' => ['value' => 5, 'text' => '禁用', 'color' => 'default']
+        ];
+        $grid->column('status','状态')->switch($hotel_states);
         // $grid->column('meal', __('早中晚餐饮'));
         // $grid->column('room_count', __('可安排房间数'));
         // $grid->column('use_room_count', __('已使用房间数'));
@@ -205,13 +203,11 @@ class HotelController extends AdminController
             $form->select('hospital_id','医院')->required();
             $form->number('distance','距离/公里')->required();
         });
-        if(checkAdminRole(['administrator','volunteer'])){
-            $hotel_states = [
-                'on'  => ['value' => 0, 'text' => '启用', 'color' => 'primary'],
-                'off' => ['value' => 5, 'text' => '禁用', 'color' => 'default'],
-            ];
-            $form->switch('status','状态')->states($hotel_states);
-        }
+        $hotel_states = [
+            'on'  => ['value' => 0, 'text' => '启用', 'color' => 'primary'],
+            'off' => ['value' => 5, 'text' => '禁用', 'color' => 'default'],
+        ];
+        $form->switch('status','状态')->states($hotel_states);
 
         $form->hidden('create_date');
         $form->hidden('user_id');
