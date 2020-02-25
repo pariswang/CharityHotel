@@ -42,21 +42,26 @@
             <van-tab title="已接单">
                 @forelse($acceptes as $apply)
                 <div class="item">
-                    <div class="item-hd">
-                        <span>{{$apply->date_begin}}</span>
-                        <span class="item__value" style="color:#999999">{{$apply->region ? $apply->region->region_name : ''}}</span>
-                    </div>
-                    <div class="item-bd">
-                        @if ($apply->region_id)
-                            {{$apply->region->region_name}}{{$apply->hope_addr ?? ''}} ，
-                        @elseif ($apply->hotel_id)
-                            {{$apply->hotel->region->region_name}}{{$apply->hotel->address}}附近，
-                        @else
-                            &nbsp;
-                        @endif
-                        {{$apply->conn_company}} {{$apply->checkin_num}}名 {{$apply->conn_position}} 急需酒店。
-                        联系人：{{$apply->conn_person}}
-                    </div>
+                    <a href="/apply_detail?id={{$apply->id}}">
+                        <div class="item-hd">
+                            <span>{{$apply->date_begin}}</span>
+                            <span class="item__value" style="color:#999999">{{$apply->region ? $apply->region->region_name : ''}}</span>
+                        </div>
+                        <div class="item-bd">
+                            @if ($apply->region_id)
+                                {{$apply->region->region_name}}{{$apply->hope_addr ?? ''}} ，
+                            @elseif ($apply->hotel_id)
+                                {{$apply->hotel->region->region_name}}{{$apply->hotel->address}}附近，
+                            @else
+                                &nbsp;
+                            @endif
+                            {{$apply->conn_company}} {{$apply->checkin_num}}名 {{$apply->conn_position}} 急需酒店。
+                            联系人：{{$apply->conn_person}}
+                        </div>
+                        <div class="item-ft">
+                            <van-button color="#1d63cb" size="small" round plain>查看详情</van-button>
+                        </div>
+                    </a>
                 </div>
                 @empty
                     <div class="item-empty">
