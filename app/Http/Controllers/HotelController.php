@@ -37,7 +37,17 @@ class HotelController extends Controller
             $hospital = $hospital->toArray();
             $hospital['id'] = (string) $hospital['id'];
             return $hospital;
-        });
+        })->sort(function ($v1, $v2){
+            if(strpos($v1['hospital_name'], '方舱') !== false &&
+                strpos($v2['hospital_name'], '方舱') === false){
+                return false;
+            }
+            if(strpos($v1['hospital_name'], '方舱') === false &&
+                strpos($v2['hospital_name'], '方舱') !== false){
+                return true;
+            }
+            return $v1['id'] > $v2['id'];
+        })->values();
 
         return view('hotel.list', compact('hotels', 'regions', 'hospitals'));
     }

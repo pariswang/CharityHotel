@@ -20,5 +20,15 @@ Route::get('/hospital_region', function (Request $request) {
         $hospital = $hospital->toArray();
         $hospital['id'] = (string) $hospital['id'];
         return $hospital;
-    });
+    })->sort(function ($v1, $v2){
+        if(strpos($v1['text'], '方舱') !== false &&
+            strpos($v2['text'], '方舱') === false){
+            return false;
+        }
+        if(strpos($v1['text'], '方舱') === false &&
+            strpos($v2['text'], '方舱') !== false){
+            return true;
+        }
+        return $v1['id'] > $v2['id'];
+    })->values();
 });

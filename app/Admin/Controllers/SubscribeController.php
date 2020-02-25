@@ -109,8 +109,12 @@ class SubscribeController extends AdminController
             $grid->column('接单操作')->display(function(){
                 if($this->status == 1){
                     return '<a href="/admin/taking/'.$this->id.'" class="btn btn-sm btn-success"><i class="fa fa-plus"></i><span class="hidden-xs">'.(explode('/',request()->path())[1]=='my-apply'?'确认接单':'我要接单').'</span></a>';
+                }elseif ($this->status==5) {
+                    return '已接单 <br>'.(empty($this->hoteltaking_date)?'':('时间:'.$this->hoteltaking_date)).'<br/>酒店:'.$this->hotel->hotel_name;
+                }else{
+                    return '未接单';
                 }
-                return $this->status==5?'已接单':'未接单';
+                
                 
             });
         }
@@ -135,7 +139,9 @@ class SubscribeController extends AdminController
         // // $grid->column('status', __('接单状态'));
         // $grid->column('hotel_id', __('接单酒店'));
         $grid->disableExport();
-        $grid->disableRowSelector();
+        if(!checkAdminRole(['administrator'])){
+            $grid->disableRowSelector();
+        }
         $grid->disableColumnSelector();
         $grid->disableCreateButton();
         $grid->disableActions();
@@ -147,6 +153,7 @@ class SubscribeController extends AdminController
             $filter->equal('region_id','地区')->select(\App\Model\Region::pluck('region_name', 'id')->all());
         });
         $grid->actions(function ($actions) {
+
             $actions->disableDelete();
             $actions->disableView();
             $actions->disableEdit();
@@ -246,6 +253,7 @@ class SubscribeController extends AdminController
         }
         $form->hidden('admin_id');
         $form->hidden('status');
+        $form->hidden('hoteltaking_date');
         $form->setAction($form->resource().'/taking/'.$id);
 
         $form->hidden(Builder::PREVIOUS_URL_KEY)->value($form->resource());
@@ -266,6 +274,7 @@ class SubscribeController extends AdminController
         $form->saving(function (Form $form) {
             $form->admin_id = Admin::user()->id;
             $form->status = 5;
+            $form->hoteltaking_date = date('Y-m-d H:i:s');
             return $form;
         });
         $form->saved(function (Form $form) {
