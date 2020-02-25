@@ -97,6 +97,9 @@ class HotelController extends AdminController
         $grid->actions(function ($actions) {
             $actions->disableDelete();
         });
+        if(!checkAdminRole(['administrator','hotel_user'])){
+            $grid->disableCreateButton();
+        }
         $grid->disableExport();
         $grid->disableRowSelector();
         $grid->disableColumnSelector();
