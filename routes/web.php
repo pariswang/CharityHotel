@@ -14,6 +14,10 @@
 // 首页
 Route::get('/', 'IndexController@index');
 
+// 说明页
+Route::get('hotel_staff', function (){return view('desc.hotel');});
+Route::get('help_seeker_staff', function (){return view('desc.help_seeker');});
+
 // 查找房源（酒店列表）
 Route::get('hotel_list', 'HotelController@list');
 Route::get('hotel_detail', 'HotelController@detail');
