@@ -53,6 +53,7 @@ Route::group(['middleware' => 'auth'], function (){
     Route::get('apply', 'ApplyController@apply');
     Route::post('apply', 'ApplyController@apply_hotel_submit');
 
+    Route::post('apply/cancel', 'ApplyController@cancel');
     // 医护人员个人中心
     Route::get('profile', 'ProfileController@index');
 });

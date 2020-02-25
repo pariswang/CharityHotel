@@ -186,4 +186,24 @@ class ApplyController extends Controller
 
         return [$regions, $hospitals];
     }
+
+    public function cancel(Request $request)
+    {
+        $user = $request->user();
+        $id = $request->input('id');
+
+        $apply = Subscribe::find($id);
+
+        if($apply->user_id != $user->id){
+            throw ValidationException::withMessages([
+                'remark' => ['这不是您的申请单！'],
+            ]);
+        }
+
+        $apply->delete();
+        return [
+            'success' => 1,
+            'data' => [],
+        ];
+    }
 }
