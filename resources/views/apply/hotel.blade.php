@@ -66,7 +66,7 @@
                 </div>
             </div>
         </div>
-        <van-calendar title="请选择入住时间" v-model="showDateBeginPicker" color="#07c160" @confirm="dateBeginOnConfirm" />
+        <van-calendar title="请选择入住时间" v-model="showDateBeginPicker" color="#1e63cb" @confirm="dateBeginOnConfirm" />
     </van-cell-group>
     <van-cell-group>
         <div class="van-cell van-field" @click="showDateEndPicker = true">
@@ -78,14 +78,14 @@
                 </div>
             </div>
         </div>
-        <van-calendar title="请选择离店时间" v-model="showDateEndPicker" :min-date="date_end_min" :default-date="date_end_default" color="#07c160" @confirm="dateEndOnConfirm" />
+        <van-calendar title="请选择离店时间" v-model="showDateEndPicker" :min-date="date_end_min" :default-date="date_end_default" color="#1e63cb" @confirm="dateEndOnConfirm" />
     </van-cell-group>
     <van-cell-group>
         <div class="van-cell van-cell--required van-field">
-            <div class="van-cell__title van-field__label"><span>原意付费</span></div>
+            <div class="van-cell__title van-field__label"><span>愿意付费</span></div>
             <div class="van-cell__value">
                 <div class="van-field__body">
-                    <van-switch v-model="can_pay" active-color="#07c160" size="24"/>
+                    <van-switch v-model="can_pay" active-color="#1e63cb" size="24"/>
                 </div>
             </div>
         </div>
@@ -95,7 +95,7 @@
             <div class="van-cell__title van-field__label"><span>有公函</span></div>
             <div class="van-cell__value">
                 <div class="van-field__body">
-                    <van-switch v-model="has_letter" active-color="#07c160" size="24"/>
+                    <van-switch v-model="has_letter" active-color="#1e63cb" size="24"/>
                 </div>
             </div>
         </div>
@@ -128,8 +128,8 @@
             />
         </van-popup>
     </van-cell-group>
-    <van-button class="submit-btn" type="primary" round block :loading="submitLoading" loading-text="申请中..." @click="onSubmit">申请</van-button>
-    <van-tabbar v-model="tabbarActive" active-color="#07c160">
+    <van-button class="submit-btn" color="#1d63cb" round block :loading="submitLoading" loading-text="申请中..." @click="onSubmit">申请</van-button>
+    <van-tabbar v-model="tabbarActive" active-color="#1e63cb">
         <van-tabbar-item url="/hotel_list" icon="search">查找房源</van-tabbar-item>
         <van-tabbar-item url="/apply" icon="bullhorn-o">发布申请</van-tabbar-item>
         <van-tabbar-item url="/profile" icon="user-o">个人中心</van-tabbar-item>

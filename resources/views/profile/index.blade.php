@@ -7,7 +7,7 @@
         {{--<van-icon name="edit" size="20"/>--}}
     </van-cell-group>
     <van-panel title="我的申请单" style="margin-top:1em;">
-        <van-tabs @click="changeTab" color="#07c160">
+        <van-tabs @click="changeTab" color="#1e63cb">
             <van-tab title="已发布">
                 @forelse($publishes as $apply)
                     <div class="item">
@@ -63,7 +63,7 @@
         </van-tabs>
     </van-panel>
     <van-button class="submit-btn" plain type="default" round block url="/logout">退出</van-button>
-    <van-tabbar v-model="tabbarActive" active-color="#07c160">
+    <van-tabbar v-model="tabbarActive" active-color="#1e63cb">
         <van-tabbar-item url="/hotel_list" icon="search">查找房源</van-tabbar-item>
         <van-tabbar-item url="/apply" icon="bullhorn-o">发布申请</van-tabbar-item>
         <van-tabbar-item url="/profile" icon="user-o">个人中心</van-tabbar-item>

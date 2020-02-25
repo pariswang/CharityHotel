@@ -25,7 +25,7 @@ html,body,#app{ height:100%;}
             label="密码"
             placeholder="请输入密码"/>
     </van-cell-group>
-    <van-button class="login-btn" type="primary" round block :loading="submitLoading" loading-text="登录中..." @click="onSubmit">登录</van-button>
+    <van-button class="login-btn" color="#1d63cb" round block :loading="submitLoading" loading-text="登录中..." @click="onSubmit">登录</van-button>
     <van-button plain round block type="default" url="/register">注册</van-button>
 </div>
 <!-- @if ($errors->any())

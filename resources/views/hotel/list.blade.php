@@ -9,7 +9,7 @@
             <!-- <van-button type="default" icon="arrow-down" round block size="small" plain :text="statu !== '' ? statu : '请选择状态'" @click="showStatus=true"></van-button> -->
         </div>
         <van-field v-model="keyword" placeholder="地址关键词">
-            <van-button slot="button" type="primary" round size="small" @click="onSearch">查询</van-button>
+            <van-button slot="button" color="#1d63cb" round size="small" @click="onSearch">查询</van-button>
         </van-field>
         <!-- <van-action-sheet v-model="showAreas" :actions="areas" @select="areaOnSelect" /> -->
     </div>
@@ -61,8 +61,8 @@
             </div>
             <div class="item-ft">
                 {{--<van-button type="default" size="small" round plain url="#"></van-button>--}}
-                <van-button type="primary" size="small" round plain url="/hotel_detail?id={{$hotel->id}}">查看详情</van-button>
-                <van-button type="primary" size="small" round url="/apply_hotel?id={{$hotel->id}}">我要申请</van-button>
+                <van-button color="#1d63cb" size="small" round plain url="/hotel_detail?id={{$hotel->id}}">查看详情</van-button>
+                <van-button color="#1d63cb" size="small" round url="/apply_hotel?id={{$hotel->id}}">我要申请</van-button>
             </div>
         </div>
     @empty
@@ -72,9 +72,9 @@
         </div>
     @endforelse
     <!-- <div class="ft-cover">
-        <van-button type="primary" block round url="/apply">发布住宿申请</van-button>
+        <van-button color="#1d63cb" block round url="/apply">发布住宿申请</van-button>
     </div> -->
-    <van-tabbar v-model="tabbarActive" active-color="#07c160">
+    <van-tabbar v-model="tabbarActive" active-color="#1e63cb">
         <van-tabbar-item url="/hotel_list" icon="search">查找房源</van-tabbar-item>
         <van-tabbar-item url="/apply" icon="bullhorn-o">发布申请</van-tabbar-item>
         <van-tabbar-item url="/profile" icon="user-o">个人中心</van-tabbar-item>

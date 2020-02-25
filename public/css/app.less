@@ -2,7 +2,7 @@
  * @Author: kermit.yu 
  * @Date: 2020-02-22 22:51:09 
  * @Last Modified by: kermit.yu
- * @Last Modified time: 2020-02-24 21:18:13
+ * @Last Modified time: 2020-02-24 22:24:27
  */
 
 *{
@@ -15,7 +15,7 @@ html,body{
 }
 
 body{
-    padding-top:38px;
+    padding-top:49px;
     overflow-y:scroll;
     -webkit-overflow-scrolling: touch;
 }
@@ -26,13 +26,65 @@ body{
     left:0;
     width:100%;
     z-index:999;
-    color:#fff;
-    text-align:center;
-    background-color:#07c160;
-    a{
-        display:block;
-        color:#fff;
-        padding:0.5em 1em;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:8px 15px;
+    background:#1e63cb url(../imgs/hd_bg.jpg) no-repeat left 0;
+    background-size:100% 100%;
+    .logo{
+        width:126px;
+    }
+    .menu-btn{
+        display:inline-block;
+        background-color:transparent;
+        border:0;
+        width:30px;
+        height:30px;
+        display:flex;
+        justify-content:center;
+        align-items:center;
+        background:#1e63cb url(../imgs/icon_memu.png) no-repeat 0 center;
+        background-size:200% 100%;
+        &.active{
+            background-position:100% 0;
+        }
+    }
+    .menu-cover{
+        position: absolute;
+        top:56px;
+        right:15px;
+        width:50%;
+        background-color:rgba(30, 99, 203, 1);
+        z-index:9999;
+        padding:15px;
+        border-radius:5px;
+        display:none;
+        &.open{
+            display:block;
+        }
+        &::before{
+            position: absolute;
+            top:-5px;
+            right:10px;
+            content:'';
+            display:block;
+            width:0;
+            height:0;
+            border:6px solid transparent;
+            border-top:0;
+            border-bottom-color:rgba(30, 99, 203, 1);
+        }
+        .menu__item{
+            width:100%;
+            display:block;
+            padding:10px 0;
+            color:#fff;
+            font-size:14px;
+            + .menu__item{
+                border-top:1px solid rgba(255, 255, 255, 0.5);
+            }
+        }
     }
 }
 
@@ -74,7 +126,7 @@ body{
     align-items:center;
     overflow-y:scroll;
     -webkit-overflow-scrolling: touch;
-    padding:1em;
+    padding:15px;
     padding-bottom:40px;
     &.page--start{
         justify-content:flex-start;
@@ -132,24 +184,51 @@ body{
 }
 
 .tel{
-    color:#07c160;
+    color:#1e63cb;
 }
 
 .text--green{
-    color:#07c160;
+    color:#1e63cb;
 }
 
 .text-right{
     text-align:right;
 }
 
+img{
+    max-width:100%;
+}
+
+.__img-box{
+    font-size:0;
+    line-height:0;
+}
+
 // 首页样式
 #index{
-    width:100%;
-    height:100%;
-    .van-button{
-        + .van-button{
-            margin-top:1em;
+    padding:0;
+    .banner{
+        margin-left:auto;
+        margin-right:auto;
+    }
+    .menu-contain{
+        width:100%;
+        padding:28px 15px;
+        display:flex;
+        flex-wrap:wrap;
+    }
+    .menu__item{
+        text-align:center;
+        font-size:14px;
+        color:#666;
+        width:100%/3;
+        display:flex;
+        flex-direction:column;
+        align-items:center;
+        justify-content:center;
+        padding:20px;
+        .menu__icon{
+            max-width:50px;
         }
     }
 }
@@ -185,18 +264,18 @@ body{
 #hotelList,#applylList{
     align-items:flex-start;
     justify-content:flex-start;
-    padding-top:116px;
+    padding-top:106px;
     padding-bottom:80px;
     .list-hd{
         position: fixed;
-        top:37px;
+        top:50px;
         left:0;
         width:100%;
-        padding:1em;
+        padding:10px 15px;
         background-color:#fff;
         display:flex;
         flex-direction:column;
-        z-index: 999;
+        z-index: 990;
         .pickers{
             width:100%;
             display:flex;
