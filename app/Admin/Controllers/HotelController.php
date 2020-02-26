@@ -158,7 +158,7 @@ class HotelController extends AdminController
     {
         return $content
             ->title($this->title())
-            ->description("<span style='color:red;'>如遇到问题，<a href='http://nxw.so/3yxyV'>请点击查看帮助视频</a>！</span>")
+            ->description("<span style='color:red;'>如遇到问题，<a href='http://1252139118.vod2.myqcloud.com/48f025a3vodcq1252139118/6b40cf595285890799046373528/MO9OIDEE9twA.mp4'>请点击查看帮助视频</a>！</span>")
             ->body($this->form());
     }
 
