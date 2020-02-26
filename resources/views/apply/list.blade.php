@@ -56,7 +56,7 @@
         <div class="item">
             <a href="/apply_detail?id={{$apply->id}}" class="block__link">
                 <div class="item-hd">
-                    <span>{{$apply->date_begin}}</span>
+                    <span>{{$apply->date_begin}} 入住</span>
                     <span class="item__value" style="color:#1e63cb">
                         {{$apply->region ? $apply->region->region_name : ''}}
                     </span>
@@ -74,6 +74,8 @@
                 </div>
             </a>
             <div class="item-ft">
+                <span style="color: gray;font-size: 13px;">{{mdate(strtotime($apply->createdate))}} 发布</span>
+                <span style="flex:1;">&nbsp;</span>
                 {{--<van-button type="default" size="small" round plain url="#">已拒绝</van-button>--}}
                 @if ($apply->status==1)
                     <van-button color="#1d63cb" size="small" round url="/apply_detail?id={{$apply->id}}">我来接单</van-button>
