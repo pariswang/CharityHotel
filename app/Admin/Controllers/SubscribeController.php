@@ -97,29 +97,38 @@ class SubscribeController extends AdminController
             $grid->column('checked', __('是否核实'))->switch($checked_states);
             $grid->column('hide_status', __('是否隐藏'))->switch();
 
+            $grid->column('status', __('接单状态'))->display(function(){
+                if($this->hide_status){
+                    return '该申请已隐藏';
+                }else{
+                    if($this->status == 5){
+                        return '<a href="/admin/taking/'.$this->id.'?cancel_taking=1" class="btn btn-sm btn-warning"><span class="hidden-xs">撤销接单</span></a>';
+                    }else{
+                        return '<a href="/admin/taking/'.$this->id.'" class="btn btn-sm btn-success"><span class="hidden-xs">操作接单</span></a>';
+                    }
+                }
+                    
+            });
+            $grid->column('hotel.hotel_name', __('目标酒店'));
         }else{
             $grid->column('checked', __('是否核实'))->display(function () {
                 return $this->checked?'已核实':'未核实';
             });
-        }        
-        if(checkAdminRole(['administrator','volunteer'])){
-            $grid->column('status', __('接单状态'))->display(function () {
-                return $this->status==5?'已接单':'未接单';
-            });
-            $grid->column('hotel.hotel_name', __('接单酒店'));
-        }else{
             $grid->column('接单操作')->display(function(){
-                if($this->status == 1){
-                    return '<a href="/admin/taking/'.$this->id.'" class="btn btn-sm btn-success"><i class="fa fa-plus"></i><span class="hidden-xs">'.(explode('/',request()->path())[1]=='my-apply'?'确认接单':'我要接单').'</span></a>';
-                }elseif ($this->status==5) {
-                    return '已接单 <br>'.(empty($this->hoteltaking_date)?'':('时间:'.$this->hoteltaking_date)).'<br/>酒店:'.$this->hotel->hotel_name;
+                if($this->hide_status){
+                    return '该申请已隐藏';
                 }else{
-                    return '未接单';
+                    if($this->status == 1){
+                        return '<a href="/admin/taking/'.$this->id.'" class="btn btn-sm btn-success"><i class="fa fa-plus"></i><span class="hidden-xs">'.(explode('/',request()->path())[1]=='my-apply'?'确认接单':'我要接单').'</span></a>';
+                    }elseif ($this->status==5) {
+                        return '已接单 <br>'.(empty($this->hoteltaking_date)?'':('时间:'.$this->hoteltaking_date)).'<br/>酒店:'.$this->hotel->hotel_name.',酒店ID:'.$this->hotel->id;
+                    }else{
+                        return '未接单';
+                    }
                 }
                 
-                
             });
-        }
+        } 
         $grid->column('createdate', __('创建日期'));
 
         // $grid->column('conn_person', __('联系人'));
@@ -149,10 +158,11 @@ class SubscribeController extends AdminController
         $grid->disableActions();
         $grid->filter(function($filter){
             // 去掉默认的id过滤器
+            $filter->equal('region_id','地区')->select(\App\Model\Region::pluck('region_name', 'id')->all());
             if(explode('/',request()->path())[1] != 'my-taking'){
                 $filter->disableIdFilter();
+                $filter->equal('status','接单状态')->radio([''=>'全部','1' => '未接单','5'=>'已接单']);
             }
-            $filter->equal('region_id','地区')->select(\App\Model\Region::pluck('region_name', 'id')->all());
         });
         $grid->actions(function ($actions) {
 
@@ -160,6 +170,7 @@ class SubscribeController extends AdminController
             $actions->disableView();
             $actions->disableEdit();
         });
+
         return $grid;
     }
 
@@ -202,7 +213,7 @@ class SubscribeController extends AdminController
         if(checkAdminRole(['administrator','volunteer'])){
             $form->number('user_id', __('用户'));
             $form->text('conn_person', __('联系人'));
-            $form->text('conn_phone', __('联系电话'));
+            $form->text('conn_phone', __('联系电话'))->required();
             $form->number('conn_type', __('身份信息'));
             $form->number('checkin_num', __('入住人数'));
             $checked_states = [
@@ -210,9 +221,12 @@ class SubscribeController extends AdminController
                 'off' => ['value' => 0, 'text' => '未核实', 'color' => 'default']
             ];
             $form->switch('checked', __('是否核实'))->states($checked_states);
-            if(checkAdminRole(['administrator','volunteer'])){
-                $form->switch('hide_status', __('是否隐藏'));
-            }
+            $form->switch('hide_status', __('是否隐藏'));
+            $taking_status = [
+                'on'  => ['value' => 5, 'text' => '已接', 'color' => 'primary'],
+                'off' => ['value' => 1, 'text' => '未接', 'color' => 'default']
+            ];
+            $form->switch('status', __('接单状态'))->states($taking_status);
             $form->date('date_begin', __('开始日期'))->default(date('Y-m-d'));
             $form->date('date_end', __('结束日期'))->default(date('Y-m-d'));
             $form->number('region_id', __('区域'));
@@ -221,25 +235,49 @@ class SubscribeController extends AdminController
             $form->text('remark', __('其他说明'));
             $form->datetime('createdate', __('创建日期'))->default(date('Y-m-d H:i:s'));
             $form->number('hotel_id', __('酒店'));
+
+            $form->saving(function (Form $form) {
+                if(!array_key_exists('conn_phone', request()->input()) ){
+                    if(request()->input('status') == 'on'){
+                        return response(['status'=>false,'message'=>'更新失败']);
+                    }
+                    return $form;
+                }
+                if($form->isCreating()){
+                    $form->user_id = Admin::user()->id;
+                    $form->create_date = date('Y-m-d H:i:s');
+                }
+                return $form;
+            });
         }
+
         return $form;
     }
 
     public function taking($id, Content $content)
     {
-        if(Hotel::where('user_id',Admin::user()->id)->doesntExist()){
-            return $content->withWarning('错误', '请先进入酒店管理菜单->新增酒店,创建酒店后方可接单');
-        }
-        if($subs = Subscribe::find($id)){
-            if($subs->admin_id != 0 && $subs->admin_id != Admin::user()->id){
-                return $content->withWarning('错误', '您不能操作该申请单！');
+        if(!checkAdminRole(['administrator','volunteer'])){
+            if(Hotel::where('user_id',Admin::user()->id)->doesntExist()){
+                return $content->withWarning('错误', '请先进入酒店管理菜单->新增酒店,创建酒店后方可接单');
             }
-        }else{
-            return $content->withWarning('错误', '申请单不存在！');
+            if($subs = Subscribe::find($id)){
+                if($subs->admin_id != 0 && $subs->admin_id != Admin::user()->id){
+                    return $content->withWarning('错误', '您不能操作该申请单！');
+                }
+            }else{
+                return $content->withWarning('错误', '申请单不存在！');
+            }
         }
-        
+        if(request()->input('cancel_taking') == '1' && Subscribe::where('id', $id)->update(['status' => 1,'hotel_id'=>0,'admin_id'=>0,'hoteltaking_date'=>null])){
+            $success = new \Illuminate\Support\MessageBag([
+                'title'   => '撤销接单',
+                'message' => '成功',
+            ]);
+            return back()->with(compact('success'));
+        }
         $form = $this->takingForm($id);
         if (Request::capture()->isMethod("put")){
+            
             return $form->update($id);
         }
         return $content
@@ -251,14 +289,25 @@ class SubscribeController extends AdminController
     {
         $form = new Form(new Subscribe());
         $subs = Subscribe::find($id);
-        if($subs->hotel_id > 0){
-            $form->select('hotel_id', __('酒店'))->options(Hotel::where('user_id',Admin::user()->id)->pluck('hotel_name', 'id')->all())->readonly()->help('申请人预选的酒店无法更改');
+        if(checkAdminRole(['administrator','volunteer'])){
+            $form->select('hotel.region_id','区域')->options(\App\Model\Region::pluck('region_name', 'id')->all())->load('hotel_id', '/api/hotel_region');
+            $form->select('hotel_id', __('酒店'))->options(Hotel::where('status',0)->pluck('hotel_name', 'id')->all())->required()->help('请选择您要接单的酒店');
+             $taking_status = [
+                'on'  => ['value' => 5, 'text' => '已接', 'color' => 'primary'],
+                'off' => ['value' => 1, 'text' => '未接', 'color' => 'default']
+            ];
+            $form->switch('status','状态')->states($taking_status);
         }else{
-            $form->select('hotel_id', __('酒店'))->options(Hotel::where('user_id',Admin::user()->id)->pluck('hotel_name', 'id')->all())->required()->help('请选择您要接单的酒店');
+            if($subs->hotel_id > 0){
+                $form->select('hotel_id', __('酒店'))->options(Hotel::where('user_id',Admin::user()->id)->pluck('hotel_name', 'id')->all())->readonly()->help('申请人预选的酒店无法更改');
+            }else{
+                $form->select('hotel_id', __('酒店'))->options(Hotel::where('user_id',Admin::user()->id)->pluck('hotel_name', 'id')->all())->required()->help('请选择您要接单的酒店');
+            }
+            $form->hidden('status');
         }
         $form->hidden('admin_id');
-        $form->hidden('status');
         $form->hidden('hoteltaking_date');
+
         $form->setAction($form->resource().'/taking/'.$id);
 
         $form->hidden(Builder::PREVIOUS_URL_KEY)->value($form->resource());
@@ -276,18 +325,26 @@ class SubscribeController extends AdminController
             $footer->disableEditingCheck();// 去掉`继续编辑`checkbox
             $footer->disableCreatingCheck();// 去掉`继续创建`checkbox
         });
-        $form->saving(function (Form $form) {
-            $form->admin_id = Admin::user()->id;
-            $form->status = 5;
-            $form->hoteltaking_date = date('Y-m-d H:i:s');
-            return $form;
-        });
-        $form->saved(function (Form $form) {
-            if($form->status == 5){
-                return redirect('/admin/my-taking?id='.$form->model()->id);
-            }
-        });
-
+        if(!checkAdminRole(['administrator','volunteer'])){
+            $form->saving(function (Form $form) {
+                $form->admin_id = Admin::user()->id;
+                $form->status = 5;
+                $form->hoteltaking_date = date('Y-m-d H:i:s');
+                return $form;
+            });
+            $form->saved(function (Form $form) {
+                if($form->status == 5){
+                    return redirect('/admin/my-taking?id='.$form->model()->id);
+                }
+            });
+        }else{
+            // dd(request()->input());
+            $form->saving(function (Form $form) {
+                $form->admin_id = Hotel::find($form->hotel_id)->user_id;
+                $form->hoteltaking_date = date('Y-m-d H:i:s');
+                return $form;
+            });
+        }
         return $form;
     }
 

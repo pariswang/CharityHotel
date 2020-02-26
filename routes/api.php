@@ -32,3 +32,6 @@ Route::get('/hospital_region', function (Request $request) {
         return $v1['id'] > $v2['id'];
     })->values();
 });
+Route::get('/hotel_region', function (Request $request) {
+    return \App\Model\Hotel::where('region_id',$request->input('q'))->get(['id', 'hotel_name as text'])->values();
+});
