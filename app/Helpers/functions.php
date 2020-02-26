@@ -4,7 +4,7 @@
  * @Author: Simon Zhao
  * @Date:   2020-02-23 01:08:19
  * @Last Modified by:   Simon Zhao
- * @Last Modified time: 2020-02-25 22:34:00
+ * @Last Modified time: 2020-02-26 20:06:18
  */
 
 /**
@@ -17,6 +17,8 @@ function createHoteler($data){
 	try{
         $user = $userModel::create(collect($data)->only(['username','name','password'])->toArray());
     	$user->roles()->attach(2);
+    	\Encore\Admin\Facades\Admin::guard()->login($user,true);
+
 	}catch (\Exception $e) {
 		switch ($e->getCode()) {
 			case '23000':
