@@ -36,6 +36,22 @@ class UserController extends AdminController
         $grid->column('role', __('角色'))->using(['1' => '管理人员', '2' => '求助者', '3'=>'酒店人员','4'=>'志愿者']);
         $grid->column('state', __('核实状态'));
         $grid->column('create_date', __('创建时间'));
+        $grid->column('附加信息')->display(function(){
+            switch ($this->role) {
+                case '3':
+                    if($hasHotelAdminUser = \App\Model\AdminUser::where('username',$this->phone)->has('hotels')->first()){
+                        return implode("<br>", $hasHotelAdminUser->hotels->map(function ($hotel){
+                            return $hotel->hotel_name.',ID:'.$hotel->id;
+                        })->toArray());
+                    }else{
+                        return '未发布酒店';
+                    }
+                    return $hasHotelAdminUser ? $hasHotelAdminUser->hotels->pluck('hotel_name','id')->toArray() : '无发布酒店'; 
+                    break;
+                default:
+                    break;
+            }
+        });
         // $grid->column('openid', __('Openid'));
         $grid->filter(function($filter){
             $filter->disableIdFilter();
