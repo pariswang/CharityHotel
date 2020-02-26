@@ -25,6 +25,10 @@ html,body,#app{ height:100%;}
             <div class="menu__icon __imgobox"><img src="{{asset('/imgs/icon_hottle.png')}}" alt=""></div>
             <span class="menu__text">酒店人员入口</span>
         </a>
+        <a href="/advisory" class="menu__item">
+            <div class="menu__icon __imgobox"><img src="{{asset('/imgs/icon_helper.png')}}" alt=""></div>
+            <span class="menu__text">咨询客服</span>
+        </a>
         <!-- <a href="/admin/auth/login"" class="menu__item">
             <div class="menu__icon __imgobox"><img src="{{asset('/imgs/icon_setting.png')}}" alt=""></div>
             <span class="menu__text">系统管理入口</span>

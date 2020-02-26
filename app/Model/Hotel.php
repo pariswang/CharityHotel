@@ -10,6 +10,7 @@
 namespace App\Model;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Events\HotelSaving;
 
 class Hotel extends Model
 {
@@ -19,6 +20,10 @@ class Hotel extends Model
 
     const STATUS_DISABLE = 5;
     const STATUS_ENABLE = 0;
+
+    protected $dispatchesEvents = [
+        'saving' => HotelSaving::class,
+    ];
 
     public function region()
     {
@@ -33,5 +38,22 @@ class Hotel extends Model
     public function hospitals()
     {
         return $this->hasMany(HotelHospital::class, 'hotel_id');
+    }
+
+    const DELIMITER = '|';
+
+    public function keywords()
+    {
+        $hospitalNames = $this->nearbyHospitals()->pluck('hospital_name')->toArray();
+        return implode(self::DELIMITER, array_merge([
+            $this->hotel_name,
+            $this->address,
+            $this->description,
+        ], $hospitalNames));
+    }
+
+    public function hospitalSearchString()
+    {
+        return self::DELIMITER . implode(self::DELIMITER, $this->hospitals()->pluck('hospital_id')->toArray()) . self::DELIMITER;
     }
 }

@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('title', '酒店详情')
 @section('content')
-<div class="page page--start" id="index">
+<div class="page page--start">
     <h1 class="page-title">酒店详情</h1>
     @csrf
     <van-cell-group>
@@ -25,6 +25,14 @@
             <div class="van-cell__title van-field__label"><span>酒店三餐</span></div>
             <div class="van-cell__value">
                 <div class="van-field__body --text-left">{{$hotel->meal}}</div>
+            </div>
+        </div>
+    </van-cell-group>
+    <van-cell-group>
+        <div class="van-cell van-field">
+            <div class="van-cell__title van-field__label"><span>所在地区</span></div>
+            <div class="van-cell__value">
+                <div class="van-field__body --text-left">{{$hotel->region->region_name}}</div>
             </div>
         </div>
     </van-cell-group>
@@ -65,6 +73,14 @@
             <div class="van-cell__title van-field__label"><span>医护人员免费</span></div>
             <div class="van-cell__value">
                 <div class="van-field__body --text-left">{{$hotel->medical_staff_free ? '免费' : '不免费'}}</div>
+            </div>
+        </div>
+    </van-cell-group>
+    <van-cell-group>
+        <div class="van-cell van-field">
+            <div class="van-cell__title van-field__label"><span>折扣价格</span></div>
+            <div class="van-cell__value">
+                <div class="van-field__body --text-left">{{$hotel->discount_price}}</div>
             </div>
         </div>
     </van-cell-group>

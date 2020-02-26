@@ -13,8 +13,8 @@
     <div class="list-hd">
         <div class="pickers">
             <van-button type="default" icon="arrow-down" round block size="small" plain :text="area !== '' ? area : '请选择区域'" @click="showAreas=true"></van-button>
-            <!-- <van-button type="default" icon="arrow-down" round block size="small" plain :text="hospital !== '' ? hospital : '请选择医院'" @click="showHospitals=true"></van-button> -->
-            <van-button type="default" icon="arrow-down" round block size="small" plain :text="statu !== '' ? statu : '请选择状态'" @click="showStatus=true"></van-button>
+            <van-button type="default" icon="arrow-down" round block size="small" plain :text="hospital !== '' ? hospital : '请选择医院'" @click="showHospitals=true"></van-button>
+            <!-- <van-button type="default" icon="arrow-down" round block size="small" plain :text="statu !== '' ? statu : '请选择状态'" @click="showStatus=true"></van-button> -->
         </div>
         <van-field v-model="keyword" placeholder="地址关键词">
             <van-button slot="button" color="#1d63cb" round size="small" @click="onSearch">查询</van-button>
@@ -37,7 +37,7 @@
         position="bottom"
         close-icon="{{asset('/imgs/confirm_btn.png')}}"
         :style="{ height: '30%' }">
-        <van-picker :columns="hospitals" @change="hospitalOnChange"/>
+        <van-picker :columns="hospitals" :default-index="hospitalIndex || 0" @change="hospitalOnChange"/>
     </van-popup>
     <van-popup
         v-model="showStatus"
@@ -54,24 +54,28 @@
     -->
     @forelse ($applies as $apply)
         <div class="item">
-            <div class="item-hd">
-                <span>{{$apply->date_begin}}</span>
-                <span class="item__value" style="color:#1e63cb">
-                    {{$apply->region ? $apply->region->region_name : ''}}
-                </span>
-            </div>
-            <div class="item-bd">
-                @if ($apply->region_id)
-                    {{$apply->region->region_name}}{{$apply->hope_addr ?? ''}} ，
-                @elseif ($apply->hotel_id)
-                    {{$apply->hotel->region->region_name}}{{$apply->hotel->address}}附近，
-                @else
-                    &nbsp;
-                @endif
-                {{$apply->conn_company}} {{$apply->checkin_num}}名 {{$apply->conn_position}} 急需酒店。
-                联系人：{{$apply->conn_person}}
-            </div>
+            <a href="/apply_detail?id={{$apply->id}}" class="block__link">
+                <div class="item-hd">
+                    <span>{{$apply->date_begin}} 入住</span>
+                    <span class="item__value" style="color:#1e63cb">
+                        {{$apply->region ? $apply->region->region_name : ''}}
+                    </span>
+                </div>
+                <div class="item-bd">
+                    @if ($apply->region_id)
+                        {{$apply->region->region_name}}{{$apply->hope_addr ?? ''}} ，
+                    @elseif ($apply->hotel_id)
+                        {{$apply->hotel->region->region_name}}{{$apply->hotel->address}}附近，
+                    @else
+                        &nbsp;
+                    @endif
+                    {{$apply->conn_company}} {{$apply->checkin_num}}名 {{$apply->conn_position}} 急需酒店。
+                    联系人：{{$apply->conn_person}}
+                </div>
+            </a>
             <div class="item-ft">
+                <span style="color: gray;font-size: 13px;">{{mdate(strtotime($apply->createdate))}} 发布</span>
+                <span style="flex:1;">&nbsp;</span>
                 {{--<van-button type="default" size="small" round plain url="#">已拒绝</van-button>--}}
                 @if ($apply->status==1)
                     <van-button color="#1d63cb" size="small" round url="/apply_detail?id={{$apply->id}}">我来接单</van-button>

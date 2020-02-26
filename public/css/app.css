@@ -1,8 +1,8 @@
 /*
- * @Author: kermit.yu 
- * @Date: 2020-02-22 22:51:09 
+ * @Author: kermit.yu
+ * @Date: 2020-02-22 22:51:09
  * @Last Modified by: kermit.yu
- * @Last Modified time: 2020-02-25 15:17:44
+ * @Last Modified time: 2020-02-25 22:21:02
  */
 * {
   box-sizing: border-box;
@@ -100,11 +100,17 @@ body {
   color: #333;
 }
 #app {
-  padding-top: 49px;
   display: flex;
   flex-direction: column;
   overflow-y: scroll;
   -webkit-overflow-scrolling: touch;
+  min-height: 100vh;
+}
+#app::before {
+  content: '';
+  width: 100%;
+  height: 49px;
+  display: block;
 }
 #app .van-popup .van-icon {
   z-index: 3;
@@ -284,6 +290,7 @@ img {
 }
 #hotelList,
 #applylList {
+  flex: 1;
   align-items: flex-start;
   justify-content: flex-start;
   padding-top: 106px;
@@ -300,6 +307,7 @@ img {
   display: flex;
   flex-direction: column;
   z-index: 990;
+  border-bottom: 1px solid #dddddd;
 }
 #hotelList .list-hd .pickers,
 #applylList .list-hd .pickers {
@@ -327,27 +335,20 @@ img {
 #hotelList .list-hd .van-cell .van-field__control,
 #applylList .list-hd .van-cell .van-field__control {
   line-height: 30px;
-  border-bottom: 1px solid #999;
-}
-#hotelList .list-hd::after,
-#applylList .list-hd::after {
-  position: absolute;
-  box-sizing: border-box;
-  content: ' ';
-  pointer-events: none;
-  top: -50%;
-  right: -50%;
-  bottom: -50%;
-  left: -50%;
-  border-bottom: 1px solid #999;
-  -webkit-transform: scale(0.5);
-  transform: scale(0.5);
+  border-radius: 30px;
+  background-color: #f2f2f2;
+  padding-left: 15px;
+  padding-right: 15px;
 }
 #hotelList .item,
 #applylList .item {
   width: 100%;
   padding: 10px 16px;
   background-color: #fff;
+}
+#hotelList .item .block__link,
+#applylList .item .block__link {
+  display: block;
 }
 #hotelList .item .item-hd,
 #applylList .item .item-hd {
@@ -407,6 +408,9 @@ img {
   width: 100%;
   padding: 10px 16px;
   background-color: #fff;
+}
+#profile .item .block__link {
+  display: block;
 }
 #profile .item .item-hd {
   color: #323233;

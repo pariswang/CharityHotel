@@ -24,6 +24,7 @@ Route::get('/', 'IndexController@index');
 // 说明页
 Route::get('hotel_staff', function (){return view('desc.hotel');});
 Route::get('help_seeker_staff', function (){return view('desc.help_seeker');});
+Route::get('advisory', function (){return view('desc.advisory');});
 
 // 查找房源（酒店列表）
 Route::get('hotel_list', 'HotelController@list');
@@ -52,6 +53,7 @@ Route::group(['middleware' => 'auth'], function (){
     Route::get('apply', 'ApplyController@apply');
     Route::post('apply', 'ApplyController@apply_hotel_submit');
 
+    Route::post('apply/cancel', 'ApplyController@cancel');
     // 医护人员个人中心
     Route::get('profile', 'ProfileController@index');
 });
