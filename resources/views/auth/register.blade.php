@@ -6,7 +6,15 @@
 @section('content')
 <div class="page page--start" id="register">
     <h1 class="page-title">{{isset($hotel) ? '酒店人员注册' : ' 医护人员注册'}}</h1>
-    <h3 class="register-titile" >本系统为不涉及捐赠等事情，如果发现有人涉嫌利用虚假信息进行诈骗等活动，请及时举报。</h3>
+    <h3 class="register-titile" >
+        本系统为不涉及捐赠等事情，如果发现有人涉嫌利用虚假信息进行诈骗等活动，请及时举报。
+        <br/>
+        @if (isset($hotel) && $hotel==1)
+            如遇到问题，请点击查看<a href="http://1252139118.vod2.myqcloud.com/48f025a3vodcq1252139118/6b40cf595285890799046373528/MO9OIDEE9twA.mp4">帮助视频</a>。
+        @else
+            如遇到问题，请点击查看<a href="http://1252139118.vod2.myqcloud.com/48f025a3vodcq1252139118/6d60b6135285890799046445117/F6vE2urUG0UA.mp4">帮助视频</a>。
+        @endif
+    </h3>
     @csrf
     <input type="hidden" name="ishotel" value="{{isset($hotel)? $hotel : '0'}}"/>
     <van-cell-group>
