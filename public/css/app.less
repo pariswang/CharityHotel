@@ -1,6 +1,6 @@
 /*
- * @Author: kermit.yu 
- * @Date: 2020-02-22 22:51:09 
+ * @Author: kermit.yu
+ * @Date: 2020-02-22 22:51:09
  * @Last Modified by: kermit.yu
  * @Last Modified time: 2020-02-25 22:21:02
  */
@@ -107,11 +107,18 @@ body{
 }
 
 #app{
-    padding-top:49px;
+    //padding-top:49px;
     display:flex;
     flex-direction:column;
     overflow-y:scroll;
     -webkit-overflow-scrolling: touch;
+    min-height: 100vh;
+    &::before {
+        content: '';
+        width: 100%;
+        height: 49px;
+        display: block;
+    }
     // 修改vant中popup的关闭按钮
     .van-popup{
         .van-icon{
@@ -314,6 +321,7 @@ img{
 
 // 酒店列表
 #hotelList,#applylList{
+    flex: 1;
     align-items:flex-start;
     justify-content:flex-start;
     padding-top:106px;

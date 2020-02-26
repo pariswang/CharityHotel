@@ -1,6 +1,6 @@
 /*
- * @Author: kermit.yu 
- * @Date: 2020-02-22 22:51:09 
+ * @Author: kermit.yu
+ * @Date: 2020-02-22 22:51:09
  * @Last Modified by: kermit.yu
  * @Last Modified time: 2020-02-25 22:21:02
  */
@@ -100,11 +100,17 @@ body {
   color: #333;
 }
 #app {
-  padding-top: 49px;
   display: flex;
   flex-direction: column;
   overflow-y: scroll;
   -webkit-overflow-scrolling: touch;
+  min-height: 100vh;
+}
+#app::before {
+  content: '';
+  width: 100%;
+  height: 49px;
+  display: block;
 }
 #app .van-popup .van-icon {
   z-index: 3;
@@ -284,6 +290,7 @@ img {
 }
 #hotelList,
 #applylList {
+  flex: 1;
   align-items: flex-start;
   justify-content: flex-start;
   padding-top: 106px;
