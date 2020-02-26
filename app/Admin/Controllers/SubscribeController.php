@@ -62,6 +62,8 @@ class SubscribeController extends AdminController
                     break;
             }
         }
+        $grid->model()->orderBy('id', 'desc');
+        
         $grid->column('id', __('ID'));
 
         $grid->column('user.uname', __('用户'));

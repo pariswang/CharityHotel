@@ -26,7 +26,7 @@ class UserController extends AdminController
     protected function grid()
     {
         $grid = new Grid(new User());
-
+        $grid->model()->orderBy('id', 'desc');
         $grid->column('id', __('ID'))->sortable();
         $grid->column('phone', __('手机号'));
         $grid->column('uname', __('姓名'));

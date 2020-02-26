@@ -33,6 +33,8 @@ class HotelController extends AdminController
         if(!checkAdminRole(['administrator','volunteer'])){
             $grid->model()->where('user_id', '=', Admin::user()->id);
         }
+        $grid->model()->orderBy('id', 'desc');
+        
         $grid->column('id', __('ID'));
         $grid->column('region.region_name', __('区域'));
         $grid->column('附近医院')->display(function(){
