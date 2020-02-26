@@ -91,7 +91,7 @@ class HotelController extends AdminController
         
         // $grid->column('collocation_description', __('房间搭配说明'));
         // $grid->column('description', __('酒店说明'));
-        $grid->column('create_date', __('创建日期'));
+        $grid->column('create_date', __('创建日期'))->sortable();
         $grid->actions(function ($actions) {
             $actions->disableDelete();
         });

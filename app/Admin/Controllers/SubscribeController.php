@@ -129,7 +129,7 @@ class SubscribeController extends AdminController
                 
             });
         } 
-        $grid->column('createdate', __('创建日期'));
+        $grid->column('createdate', __('创建日期'))->sortable();
 
         // $grid->column('conn_person', __('联系人'));
         // $grid->column('conn_phone', __('联系电话'));
