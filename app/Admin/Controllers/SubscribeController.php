@@ -121,7 +121,7 @@ class SubscribeController extends AdminController
                     if($this->status == 1){
                         return '<a href="/admin/taking/'.$this->id.'" class="btn btn-sm btn-success"><i class="fa fa-plus"></i><span class="hidden-xs">'.(explode('/',request()->path())[1]=='my-apply'?'确认接单':'我要接单').'</span></a>';
                     }elseif ($this->status==5) {
-                        return '已接单 <br>'.(empty($this->hoteltaking_date)?'':('时间:'.$this->hoteltaking_date)).'<br/>酒店:'.$this->hotel->hotel_name;
+                        return '已接单 <br>'.(empty($this->hoteltaking_date)?'':('时间:'.$this->hoteltaking_date)).'<br/>酒店:'.$this->hotel->hotel_name.',酒店ID:'.$this->hotel->id;
                     }else{
                         return '未接单';
                     }
@@ -158,10 +158,11 @@ class SubscribeController extends AdminController
         $grid->disableActions();
         $grid->filter(function($filter){
             // 去掉默认的id过滤器
+            $filter->equal('region_id','地区')->select(\App\Model\Region::pluck('region_name', 'id')->all());
             if(explode('/',request()->path())[1] != 'my-taking'){
                 $filter->disableIdFilter();
+                $filter->equal('status','接单状态')->radio([''=>'全部','1' => '未接单','5'=>'已接单']);
             }
-            $filter->equal('region_id','地区')->select(\App\Model\Region::pluck('region_name', 'id')->all());
         });
         $grid->actions(function ($actions) {
 
@@ -169,6 +170,7 @@ class SubscribeController extends AdminController
             $actions->disableView();
             $actions->disableEdit();
         });
+
         return $grid;
     }
 
