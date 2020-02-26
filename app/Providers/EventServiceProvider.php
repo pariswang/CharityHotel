@@ -16,6 +16,9 @@ class EventServiceProvider extends ServiceProvider
         'App\Events\HotelSaving' => [
             'App\Listeners\HotelSavingListener',
         ],
+        'App\Events\SubscribeSaving' => [
+            'App\Listeners\SubscribeSavingListener',
+        ],
     ];
 
     /**

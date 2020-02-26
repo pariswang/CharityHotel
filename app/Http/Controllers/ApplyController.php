@@ -35,10 +35,10 @@ class ApplyController extends Controller
         $status = $request->input('status');
 
         $search = (new Subscribe())->newQuery();
-        if($status){
-            $search->where('status', $status);
-        }
-        if($regionId){
+        $search->where('status', '<>', 5);
+        if($hospitalId){
+            $search->where('hospital_ids', 'like', "%|$hospitalId|%");
+        }elseif($regionId){
             $search->where('region_id', $regionId);
         }
         if($keyword){

@@ -13,8 +13,8 @@
     <div class="list-hd">
         <div class="pickers">
             <van-button type="default" icon="arrow-down" round block size="small" plain :text="area !== '' ? area : '请选择区域'" @click="showAreas=true"></van-button>
-            <!-- <van-button type="default" icon="arrow-down" round block size="small" plain :text="hospital !== '' ? hospital : '请选择医院'" @click="showHospitals=true"></van-button> -->
-            <van-button type="default" icon="arrow-down" round block size="small" plain :text="statu !== '' ? statu : '请选择状态'" @click="showStatus=true"></van-button>
+            <van-button type="default" icon="arrow-down" round block size="small" plain :text="hospital !== '' ? hospital : '请选择医院'" @click="showHospitals=true"></van-button>
+            <!-- <van-button type="default" icon="arrow-down" round block size="small" plain :text="statu !== '' ? statu : '请选择状态'" @click="showStatus=true"></van-button> -->
         </div>
         <van-field v-model="keyword" placeholder="地址关键词">
             <van-button slot="button" color="#1d63cb" round size="small" @click="onSearch">查询</van-button>
@@ -37,7 +37,7 @@
         position="bottom"
         close-icon="{{asset('/imgs/confirm_btn.png')}}"
         :style="{ height: '30%' }">
-        <van-picker :columns="hospitals" @change="hospitalOnChange"/>
+        <van-picker :columns="hospitals" :default-index="hospitalIndex || 0" @change="hospitalOnChange"/>
     </van-popup>
     <van-popup
         v-model="showStatus"

@@ -9,6 +9,7 @@
 
 namespace App\Model;
 
+use App\Events\SubscribeSaving;
 use Illuminate\Database\Eloquent\Model;
 
 class Subscribe extends Model
@@ -20,6 +21,10 @@ class Subscribe extends Model
     ];
 
     public $timestamps = false;
+
+    protected $dispatchesEvents = [
+        'saving' => SubscribeSaving::class
+    ];
 
     public function hotel()
     {
@@ -39,5 +44,12 @@ class Subscribe extends Model
     public function nearbyHospitals()
     {
         return $this->belongsToMany(Hospital::class, 'wh_subscribe_hospital', 'subscribe_id', 'hospital_id')->withPivot('distance', 'region_id');
+    }
+
+    const DELIMITER = '|';
+
+    public function hospitalSearchString()
+    {
+        return self::DELIMITER . implode(self::DELIMITER, $this->nearbyHospitals()->pluck('hospital_id')->toArray()) . self::DELIMITER;
     }
 }
