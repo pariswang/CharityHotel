@@ -35,7 +35,7 @@ class HotelController extends AdminController
         }
         $grid->model()->orderBy('id', 'desc');
         
-        $grid->column('id', __('ID'));
+        $grid->column('id', __('ID'))->sortable();
         $grid->column('region.region_name', __('区域'));
         $grid->column('附近医院')->display(function(){
             $html = "";

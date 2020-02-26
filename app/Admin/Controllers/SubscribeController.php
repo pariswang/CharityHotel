@@ -64,7 +64,7 @@ class SubscribeController extends AdminController
         }
         $grid->model()->orderBy('id', 'desc');
         
-        $grid->column('id', __('ID'));
+        $grid->column('id', __('ID'))->sortable();
 
         $grid->column('user.uname', __('用户'));
         $grid->column('region.region_name', __('区域'));
