@@ -249,7 +249,7 @@ class HotelController extends AdminController
                 ]);
             }
             if(isset($error)){
-                return back()->with(['error'=>$error]);
+                return back()->withInput()->with(compact('error'));
             }
             if($form->isCreating()){
                 $form->user_id = Admin::user()->id;
