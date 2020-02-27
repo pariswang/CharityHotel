@@ -53,6 +53,8 @@
                 $('#menuCover').toggleClass('open');
             });
         });
+        console.info("项目开源地址：https://github.com/pariswang/CharityHotel");
+        console.info("欢迎更多研发人员加入！");
     </script>
     @section('js')
     @show

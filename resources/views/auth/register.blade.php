@@ -90,6 +90,7 @@
         <button class="text-btn" @click="tipOverlay = true">医护人员入住须知</button>
         @endif
     </p>
+    <van-checkbox value="checked" bind:change="null"><a href="/disclaimer">“日月同城”医护酒店公寓平台注册条款</a></van-checkbox>
     <van-button class="login-btn" color="#1d63cb" round block :loading="submitLoading" loading-text="注册中..." @click="onSubmit">注册</van-button>
     <div class="overlay" :class="{'overlay-show': tipOverlay}">
         <div class="overlay__wrapper">

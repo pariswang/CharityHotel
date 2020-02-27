@@ -32,7 +32,8 @@ new Vue({
         roleIndex: null,
         roles: _.pluck(ROLES, 'role_name'),
         showRoles: false,
-        submitLoading: false
+        submitLoading: false,
+        agree: true
     },
     created: function() {
         var ishotel = parseInt($('input[name="ishotel"]').val());
