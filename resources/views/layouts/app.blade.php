@@ -33,7 +33,7 @@
                 <a href="/admin/auth/login" class="menu__item">酒店人员入口</a>
                 <a href="/hotel_staff" class="menu__item">酒店支持说明</a>
                 <a href="/help_seeker_staff" class="menu__item">志愿者支持说明</a>
-                <a href="/it_staff" class="menu__item">IT志愿者支持</a>
+                <a href="/it_staff" class="menu__item">IT志愿者招募</a>
             </div>
         </header>
         @yield('content')
