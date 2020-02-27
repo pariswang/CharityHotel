@@ -26,8 +26,8 @@ class UserController extends AdminController
     protected function grid()
     {
         $grid = new Grid(new User());
-
-        $grid->column('id', __('ID'));
+        $grid->model()->orderBy('id', 'desc');
+        $grid->column('id', __('ID'))->sortable();
         $grid->column('phone', __('手机号'));
         $grid->column('uname', __('姓名'));
         $grid->column('wechat', __('微信号'));
@@ -36,7 +36,7 @@ class UserController extends AdminController
         $grid->column('company', __('公司'));
         $grid->column('role', __('角色'))->using(['1' => '管理人员', '2' => '求助者', '3'=>'酒店人员','4'=>'志愿者']);
         $grid->column('state', __('核实状态'));
-        $grid->column('create_date', __('创建时间'));
+        $grid->column('create_date', __('创建时间'))->sortable();
         $grid->column('附加信息')->display(function(){
             switch ($this->role) {
                 case '3':

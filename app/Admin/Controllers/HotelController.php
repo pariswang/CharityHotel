@@ -33,7 +33,9 @@ class HotelController extends AdminController
         if(!checkAdminRole(['administrator','volunteer'])){
             $grid->model()->where('user_id', '=', Admin::user()->id);
         }
-        $grid->column('id', __('ID'));
+        $grid->model()->orderBy('id', 'desc');
+        
+        $grid->column('id', __('ID'))->sortable();
         $grid->column('region.region_name', __('区域'));
         $grid->column('附近医院')->display(function(){
             $html = "";
@@ -91,7 +93,7 @@ class HotelController extends AdminController
         
         // $grid->column('collocation_description', __('房间搭配说明'));
         // $grid->column('description', __('酒店说明'));
-        $grid->column('create_date', __('创建日期'));
+        $grid->column('create_date', __('创建日期'))->sortable();
         $grid->actions(function ($actions) {
             $actions->disableDelete();
         });
