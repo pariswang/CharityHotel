@@ -56,7 +56,7 @@
             label="工作单位"
             placeholder="请输入工作单位"/>
     </van-cell-group>
-    <van-cell-group>
+<!--     <van-cell-group>
         <div class="van-cell van-cell--required van-field" @click="showRoles=true">
             <div class="van-cell__title van-field__label"><span>角色</span></div>
             <div class="van-cell__value">
@@ -66,7 +66,7 @@
                 </div>
             </div>
         </div>
-    </van-cell-group>
+    </van-cell-group> -->
     <van-cell-group>
         <van-field
                 v-model="position"
