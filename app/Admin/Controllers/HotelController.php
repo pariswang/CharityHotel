@@ -190,7 +190,7 @@ class HotelController extends AdminController
         $form->mobile('phone', __('手机号码'))->options(['mask' => '999 9999 9999'])->required();
         $form->text('wechat', __('微信号'))->required();
         $form->number('room_count', __('可提供房间数'))->min(1)->help('请设置数字')->required();
-        $form->decimal('discount_price', __('优惠价格（元/间）'));
+        $form->number('discount_price', __('优惠价格（元/间）'))->max(199)->help('建议优惠价格不超过150元/间,最大值不能超过199元/间');
         $form->switch('medical_staff_free', __('医务人员是否免费'))->states($states)->default(1);
         $form->switch('expropriation', __('是否愿意被征用'))->states($states);
         $form->radio('meal', __('是否提供餐食'))->options([
