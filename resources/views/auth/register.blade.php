@@ -56,7 +56,7 @@
             label="工作单位"
             placeholder="请输入工作单位"/>
     </van-cell-group>
-    <van-cell-group>
+<!--     <van-cell-group>
         <div class="van-cell van-cell--required van-field" @click="showRoles=true">
             <div class="van-cell__title van-field__label"><span>角色</span></div>
             <div class="van-cell__value">
@@ -66,7 +66,7 @@
                 </div>
             </div>
         </div>
-    </van-cell-group>
+    </van-cell-group> -->
     <van-cell-group>
         <van-field
                 v-model="position"
@@ -90,6 +90,7 @@
         <button class="text-btn" @click="tipOverlay = true">医护人员入住须知</button>
         @endif
     </p>
+    <van-checkbox value="checked" bind:change="null"><a href="/disclaimer">“日月同城”医护酒店公寓平台注册条款</a></van-checkbox>
     <van-button class="login-btn" color="#1d63cb" round block :loading="submitLoading" loading-text="注册中..." @click="onSubmit">注册</van-button>
     <div class="overlay" :class="{'overlay-show': tipOverlay}">
         <div class="overlay__wrapper">

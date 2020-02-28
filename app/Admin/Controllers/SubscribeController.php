@@ -62,7 +62,9 @@ class SubscribeController extends AdminController
                     break;
             }
         }
-        $grid->column('id', __('ID'));
+        $grid->model()->orderBy('id', 'desc');
+        
+        $grid->column('id', __('ID'))->sortable();
 
         $grid->column('user.uname', __('用户'));
         $grid->column('region.region_name', __('区域'));
@@ -129,7 +131,7 @@ class SubscribeController extends AdminController
                 
             });
         } 
-        $grid->column('createdate', __('创建日期'));
+        $grid->column('createdate', __('创建日期'))->sortable();
 
         // $grid->column('conn_person', __('联系人'));
         // $grid->column('conn_phone', __('联系电话'));

@@ -16,7 +16,7 @@
         <div class="van-cell van-field">
             <div class="van-cell__title van-field__label"><span>联系人电话</span></div>
             <div class="van-cell__value">
-                <div class="van-field__body --text-left">{{$apply->conn_phone}}</div>
+                <div class="van-field__body --text-left">{{isset($user) ? $apply->conn_phone : $apply->conn_phone}}</div>
             </div>
         </div>
     </van-cell-group>

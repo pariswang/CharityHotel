@@ -57,7 +57,10 @@
                         </li>
                     </ul>
                     @else
-                    <a href="{{ admin_url('auth/logout') }}" class="btn btn-default btn-flat" style="background-color: darkcyan;">{{ trans('admin.logout') }}</a>
+                        <div class="pull-right">
+                            <a href="{{ admin_url('auth/setting') }}" class="btn btn-default btn-info" style="color: white;border-color: white;">{{ trans('admin.setting') }}</a>
+                            <a href="{{ admin_url('auth/logout') }}" class="btn btn-default btn-danger" style="color: white;border-color: white;">{{ trans('admin.logout') }}</a>
+                        </div>
                     @endif
                 </li>
                 <!-- Control Sidebar Toggle Button -->

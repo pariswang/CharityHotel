@@ -20,5 +20,7 @@ Route::group([
     $router->any('my-taking', 'SubscribeController@myTaking');
     $router->resource('user', UserController::class);
 
+    $router->get('auth/setting', 'UserController@getSetting');
+    $router->put('auth/setting', 'UserController@putSetting');
 
 });

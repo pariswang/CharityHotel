@@ -7,6 +7,7 @@ use Encore\Admin\Controllers\AdminController;
 use Encore\Admin\Form;
 use Encore\Admin\Grid;
 use Encore\Admin\Show;
+use Encore\Admin\Layout\Content;
 
 class UserController extends AdminController
 {
@@ -25,8 +26,8 @@ class UserController extends AdminController
     protected function grid()
     {
         $grid = new Grid(new User());
-
-        $grid->column('id', __('ID'));
+        $grid->model()->orderBy('id', 'desc');
+        $grid->column('id', __('ID'))->sortable();
         $grid->column('phone', __('手机号'));
         $grid->column('uname', __('姓名'));
         $grid->column('wechat', __('微信号'));
@@ -35,7 +36,7 @@ class UserController extends AdminController
         $grid->column('company', __('公司'));
         $grid->column('role', __('角色'))->using(['1' => '管理人员', '2' => '求助者', '3'=>'酒店人员','4'=>'志愿者']);
         $grid->column('state', __('核实状态'));
-        $grid->column('create_date', __('创建时间'));
+        $grid->column('create_date', __('创建时间'))->sortable();
         $grid->column('附加信息')->display(function(){
             switch ($this->role) {
                 case '3':
@@ -107,6 +108,79 @@ class UserController extends AdminController
         $form->switch('state', __('核实状态'));
         $form->datetime('create_date', __('创建时间'))->default(date('Y-m-d H:i:s'));
         // $form->text('openid', __('Openid'));
+
+        return $form;
+    }
+
+
+    /**
+     * User setting page.
+     *
+     * @param Content $content
+     *
+     * @return Content
+     */
+    public function getSetting(Content $content)
+    {
+        $form = $this->settingForm();
+        $form->tools(
+            function (Form\Tools $tools) {
+                $tools->disableList();
+                $tools->disableDelete();
+                $tools->disableView();
+            }
+        );
+
+        return $content
+            ->title(trans('admin.user_setting'))
+            ->body($form->edit(\Encore\Admin\Facades\Admin::user()->id));
+    }
+
+    /**
+     * Update user setting.
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function putSetting()
+    {
+        return $this->settingForm()->update(\Encore\Admin\Facades\Admin::user()->id);
+    }
+
+    /**
+     * Model-form for user setting.
+     *
+     * @return Form
+     */
+    protected function settingForm()
+    {
+        $class = config('admin.database.users_model');
+
+        $form = new Form(new $class());
+
+        $form->display('username', trans('admin.username'));
+        $form->text('name', trans('admin.name'))->rules('required');
+        // $form->image('avatar', trans('admin.avatar'));
+        $form->password('password', trans('admin.password'))->rules('confirmed|required');
+        $form->password('password_confirmation', trans('admin.password_confirmation'))->rules('required')
+            ->default(function ($form) {
+                return $form->model()->password;
+            });
+
+        $form->setAction(admin_url('auth/setting'));
+
+        $form->ignore(['password_confirmation']);
+
+        $form->saving(function (Form $form) {
+            if ($form->password && $form->model()->password != $form->password) {
+                $form->password = bcrypt($form->password);
+            }
+        });
+
+        $form->saved(function () {
+            admin_toastr(trans('admin.update_succeeded'));
+
+            return redirect(admin_url('auth/setting'));
+        });
 
         return $form;
     }

@@ -38,7 +38,8 @@ var apply = {
         hospitalPicker: false,
         showDateBeginPicker: false,
         showDateEndPicker: false,
-        submitLoading: false
+        submitLoading: false,
+        showAddHospital: true
     },
     methods: {
         formatDate: function(date) {
@@ -69,10 +70,16 @@ var apply = {
                 region_id: hospital.region_id
             });
             this.hospitalPicker = false;
+            if(this.hospitals.length>=3){
+                this.showAddHospital = false;
+            }
         },
         // 删除医院
         deleteHospital: function (id) {
             this.hospitals = _.filter(this.hospitals, function (item) {return item.id !== id });
+            if(this.hospitals.length<3){
+                this.showAddHospital = true;
+            }
         },
         // 提交申请
         submitApply: function (data) {
