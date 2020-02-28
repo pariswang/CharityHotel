@@ -11,6 +11,8 @@ namespace App\Http\Controllers\Auth;
 
 use App\Model\User;
 use App\Http\Controllers\Controller;
+use \Admin;
+use Encore\Admin\Auth\Database\Administrator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -109,9 +111,15 @@ class RegisterController extends Controller
         // 默认去酒店列表，去申请
         $defaultUrl = '/hotel_list';
         if($user->role == 3){
+            // 退出前台
             $this->guard()->logout();
             // 如果是酒店人员，去申请列表
             $defaultUrl = '/apply_list';
+            // 自动登录后台
+            $adminUser = Administrator::where('username', $user->phone)->first();
+            if($adminUser){
+                Admin::guard()->login($adminUser);
+            }
         }
 
         // 如果之前有目的地
