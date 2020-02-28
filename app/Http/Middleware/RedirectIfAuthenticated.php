@@ -25,11 +25,6 @@ class RedirectIfAuthenticated
     public function handle($request, Closure $next, $guard = null)
     {
         if (Auth::guard($guard)->check()) {
-            $url = session('url.intended');
-            if($url) {
-                session()->forget('url.intended');
-                return redirect($url);
-            }
             return redirect('/hotel_list');
         }
 
