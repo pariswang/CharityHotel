@@ -81,6 +81,10 @@ var apply = {
                 this.showAddHospital = true;
             }
         },
+        showPicker: function(){
+            this.hospitalPicker = true;
+            setTimeout(function(){$('.van-picker-column:eq(1)').css('flex-grow',3);},1000);
+        },
         // 提交申请
         submitApply: function (data) {
             var _this = this;

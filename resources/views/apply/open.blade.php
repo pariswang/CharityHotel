@@ -145,7 +145,7 @@
                         <van-icon name="delete" color="#ee0a24" size="18" @click="deleteHospital(hospital.id)"/>
                         <!-- <van-button icon="delete" plain type="danger" size="mini"/> -->
                     </div>
-                    <div class="value___item" v-show="showAddHospital" @click="hospitalPicker = true">
+                    <div class="value___item" v-show="showAddHospital" @click="showPicker()">
                         <span>请增加医院</span>
                         <van-icon name="plus" size="18"/>
                     </div>
