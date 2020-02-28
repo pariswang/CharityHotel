@@ -16,7 +16,7 @@
         <div class="van-cell van-field">
             <div class="van-cell__title van-field__label"><span>联系人电话</span></div>
             <div class="van-cell__value">
-                <div class="van-field__body --text-left">{{isset($user) ? $apply->conn_phone : $apply->conn_phone}}</div>
+                <div class="van-field__body --text-left">{{$apply->conn_phone_show}}</div>
             </div>
         </div>
     </van-cell-group>
@@ -119,11 +119,12 @@
     </van-cell-group>
     @endif
 
-    @if (($apply->status == 1 && (isset($user) && $user->id != $apply->user_id)) || !isset($user))
-        <van-button class="submit-btn" color="#1d63cb" round block url="/admin/taking/{{$apply->id}}">我来接单</van-button>
-    @endif
-    @if ($apply->status == 1 && (isset($user) && $user->id == $apply->user_id))
-        <van-button class="submit-btn" color="#1d63cb" round block @click="cancelApply({{$apply->id}})">取消申请</van-button>
+    @if ($apply->status == 1)
+        @if (isset($user) && $user->id == $apply->user_id)
+            <van-button class="submit-btn" color="#1d63cb" round block @click="cancelApply({{$apply->id}})">取消申请</van-button>
+        @else
+            <van-button class="submit-btn" color="#1d63cb" round block url="/admin/taking/{{$apply->id}}">我来接单</van-button>
+        @endif
     @endif
 </div>
 @endsection
