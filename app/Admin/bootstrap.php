@@ -20,6 +20,8 @@
 
 use Encore\Admin\Form;
 use App\Admin\Extensions\RegionSelect;
+use App\Admin\Extensions\HotelHasManyHospitals;
 
 Form::forget(['map', 'editor']);
 Form::extend('region', RegionSelect::class);
+Form::extend('hotelHasManyHospitals', HotelHasManyHospitals::class);

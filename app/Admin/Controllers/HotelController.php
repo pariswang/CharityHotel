@@ -206,7 +206,7 @@ class HotelController extends AdminController
         $form->textarea('description', __('酒店介绍'))->help('如周边地标、地铁站、火车站等交通信息');
 
 
-        $form->hasMany('hospitals','周边医院，最多3家，至少一家', function (Form\NestedForm $form) {
+        $form->hotelHasManyHospitals('hospitals','周边医院', function (Form\NestedForm $form) {
             $form->region('region_id','地区')->options(Region::pluck('region_name', 'id')->all())->load('hospital_id', '/api/hospital_region')->required();
             $form->select('hospital_id','医院')->required()->help('请通过百度地图搜索自己的酒店，然后点击“周边”选择“更多”-“生活”-“医院”就可以看到附近医院列表');
             $form->number('distance','距离/公里')->required();
@@ -238,12 +238,7 @@ class HotelController extends AdminController
             if(!array_key_exists('user_id', request()->input()) ){
                 return $form;
             }
-            if($form->hospitals == null || (count($form->hospitals) - array_sum(array_column($form->hospitals, '_remove_')) == 0) ){
-                $error = new \Illuminate\Support\MessageBag([
-                    'title'   => '请录入周边医院',
-                    'message' => '至少录入一家',
-                ]);
-            }elseif (count($form->hospitals) - array_sum(array_column($form->hospitals, '_remove_'))>3) {
+            if (count($form->hospitals) - array_sum(array_column($form->hospitals, '_remove_'))>3) {
                 $error = new \Illuminate\Support\MessageBag([
                     'title'   => '请录入周边医院',
                     'message' => '至多输入三家',
