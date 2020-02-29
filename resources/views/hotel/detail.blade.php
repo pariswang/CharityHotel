@@ -124,6 +124,13 @@
             </div>
         </div>
     </van-cell-group>
+    <van-divider content-position="left">附近的医院：</van-divider>
+    <van-cell-group>
+        @foreach ($hotel->nearbyHospitals as $hospital)
+            <van-cell value="{{$hospital->region->region_name}} - {{$hospital->hospital_name}}" />
+        @endforeach
+
+    </van-cell-group>
     <van-button class="submit-btn" color="#1d63cb" round block url="/apply_hotel?id={{$hotel->id}}">申请</van-button>
 </div>
 @endsection
