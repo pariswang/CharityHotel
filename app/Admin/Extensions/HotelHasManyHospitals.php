@@ -4,7 +4,7 @@
  * @Author: Simon Zhao
  * @Date:   2020-02-29 21:05:16
  * @Last Modified by:   Simon Zhao
- * @Last Modified time: 2020-02-29 22:36:12
+ * @Last Modified time: 2020-02-29 22:47:51
  */
 namespace App\Admin\Extensions;
 
@@ -31,6 +31,9 @@ var index = 0;
 var max_hospitals_count = 3;
 var hospitals_notice = '<h4 class="pull-left">提交附近医院信息将有助于您的医院被展示,最多三家</h4>';
 $('#has-many-{$this->column}').prev().prev().find('div.col-sm-8').html(hospitals_notice);
+if($('.has-many-{$this->column}-form').find('.$removeClass'+'[value=0]').length >= max_hospitals_count){
+    $('#has-many-{$this->column} .add').hide();
+}
 
 $('#has-many-{$this->column}').off('click', '.add').on('click', '.add', function () {
 
