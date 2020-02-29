@@ -201,7 +201,7 @@ class HotelController extends AdminController
         $form->textarea('collocation_description', __('房间说明'))->help('请提供房型说明(单间,两室,三室等)<br>房间配置(如独立空凋,洗衣机,冰箱等)');
         $form->textarea('description', __('酒店介绍'))->help('如周边地标、地铁站、火车站等交通信息');
         $form->hasMany('hospitals','周边医院，最多3家，至少一家', function (Form\NestedForm $form) {
-            $form->select('region_id','地区')->options(Region::pluck('region_name', 'id')->all())->load('hospital_id', '/api/hospital_region')->required();
+            $form->region('region_id','地区')->options(Region::pluck('region_name', 'id')->all())->load('hospital_id', '/api/hospital_region')->required();
             $form->select('hospital_id','医院')->required();
             $form->number('distance','距离/公里')->required();
         });
