@@ -62,8 +62,10 @@ class HotelController extends AdminController
                 'meal'=>['早中晚餐饮'],
                 'room_count'=>['可安排房间数'],
                 // 'use_room_count'=>['已使用房间数'],
-                'discount_price'=>['优惠房价'],
-                'medical_staff_free'=>['医务人员是否免费','boolean'],
+                // 'medical_staff_free'=>['医务人员是否免费','boolean'],
+                'medical_price'=>['医护爱心价（元/间）'],
+                'discount_price'=>['非医护优惠价（元/间）'],
+                'receive_patient'=>['是否愿意接待隔离医护或病患','boolean'],
                 'expropriation'=>['是否愿意被征用','boolean'],
                 'reception'=>['是否有接待','boolean'],
                 'cleaning'=>['是否有清洁','boolean'],
@@ -190,8 +192,10 @@ class HotelController extends AdminController
         $form->mobile('phone', __('手机号码'))->options(['mask' => '999 9999 9999'])->required();
         $form->text('wechat', __('微信号'))->required();
         $form->number('room_count', __('可提供房间数'))->min(1)->help('请设置数字')->required();
-        $form->number('discount_price', __('优惠价格（元/间）'))->max(199)->help('建议优惠价格不超过<strong>150</strong>元/间，最大值不能超过<strong>199</strong>元/间。<br>如果您提供的是<strong>多个房间</strong>的公寓，请按照<strong>每个房间</strong>的价格提交。');
-        $form->switch('medical_staff_free', __('医务人员是否免费'))->states($states)->default(1);
+        $form->number('medical_price', __('医护爱心价（元/间）'))->max(100)->help('最高限价<strong>100</strong>元，请在医护人员入住时查验公函或证件。')->required();
+        $form->number('discount_price', __('非医护优惠价（元/间）'))->help('如果您提供的是<strong>多个房间</strong>的公寓，请按照<strong>每个房间</strong>的价格提交。')->required();
+        // $form->switch('medical_staff_free', __('医务人员是否免费'))->states($states)->default(1);
+        $form->switch('receive_patient', __('是否愿意接待隔离医护或病患'))->states($states);
         $form->switch('expropriation', __('是否愿意被征用'))->states($states);
         $form->radio('meal', __('是否提供餐食'))->options([
             '早餐' => '早餐', '午餐' => '午餐', '晚餐' => '晚餐', '三餐都提供' => '三餐都提供', '不提供餐食' => '不提供餐食'
@@ -200,9 +204,11 @@ class HotelController extends AdminController
         $form->switch('cleaning', __('是否提供客房清洁服务'))->states($states)->default(1);
         $form->textarea('collocation_description', __('房间说明'))->help('请提供房型说明(单间,两室,三室等)<br>房间配置(如独立空凋,洗衣机,冰箱等)');
         $form->textarea('description', __('酒店介绍'))->help('如周边地标、地铁站、火车站等交通信息');
+
+
         $form->hasMany('hospitals','周边医院，最多3家，至少一家', function (Form\NestedForm $form) {
             $form->region('region_id','地区')->options(Region::pluck('region_name', 'id')->all())->load('hospital_id', '/api/hospital_region')->required();
-            $form->select('hospital_id','医院')->required();
+            $form->select('hospital_id','医院')->required()->help('请通过百度地图搜索自己的酒店，然后点击“周边”选择“更多”-“生活”-“医院”就可以看到附近医院列表');
             $form->number('distance','距离/公里')->required();
         });
         $hotel_states = [
