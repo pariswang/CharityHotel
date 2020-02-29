@@ -48,17 +48,17 @@
         <div class="item">
             <a href="/hotel_detail?id={{$hotel->id}}" class="block__link">
                 <div class="item-hd">
-                    <span>{{$hotel->classify}}</span>
-                    <span class="item__value">{{$hotel->region->region_name}}</span>
+                    <span>{{$hotel->region->region_name}}</span>
+                    <span class="item__value">{{$hotel->classify}}</span>
                 </div>
                 <div class="item-bd">
                     {{$hotel->hotel_name}}可安排{{$hotel->room_count-$hotel->use_room_count}}间，
-                    @if ($hotel->medical_staff_free)
-                        医护人员免费，其他人员享受折扣<span class="text--green">{{$hotel->discount_price}}/晚</span>。
-                        @else
-                        <span class="text--green">享受折扣</span>。
+                    医护爱心价{{$hotel->medical_price}}元，非医护{{$hotel->discount_price}}元
+                    @if ($hotel->receive_patient)
+                        ，可提供隔离房。
+                    @else
+                        。
                     @endif
-                    联系人:{{$hotel->uname}}
                 </div>
             </a>
             <div class="item-ft">

@@ -70,17 +70,25 @@
     </van-cell-group>
     <van-cell-group>
         <div class="van-cell van-field">
-            <div class="van-cell__title van-field__label"><span>医护人员免费</span></div>
+            <div class="van-cell__title van-field__label"><span>医护爱心价</span></div>
             <div class="van-cell__value">
-                <div class="van-field__body --text-left">{{$hotel->medical_staff_free ? '免费' : '不免费'}}</div>
+                <div class="van-field__body --text-left">{{$hotel->medical_price}}</div>
             </div>
         </div>
     </van-cell-group>
     <van-cell-group>
         <div class="van-cell van-field">
-            <div class="van-cell__title van-field__label"><span>折扣价格</span></div>
+            <div class="van-cell__title van-field__label"><span>非医护价格</span></div>
             <div class="van-cell__value">
                 <div class="van-field__body --text-left">{{$hotel->discount_price}}</div>
+            </div>
+        </div>
+    </van-cell-group>
+    <van-cell-group>
+        <div class="van-cell van-field">
+            <div class="van-cell__title van-field__label"><span>隔离房</span></div>
+            <div class="van-cell__value">
+                <div class="van-field__body --text-left">{{$hotel->receive_patient ? '提供' : '不提供'}}</div>
             </div>
         </div>
     </van-cell-group>
