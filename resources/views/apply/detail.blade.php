@@ -24,7 +24,7 @@
         <div class="van-cell van-field">
             <div class="van-cell__title van-field__label"><span>职位</span></div>
             <div class="van-cell__value">
-                <div class="van-field__body --text-left">{{$apply->conn_company}}</div>
+                <div class="van-field__body --text-left">{{$apply->conn_position}}</div>
             </div>
         </div>
     </van-cell-group>
