@@ -36,6 +36,7 @@ class ApplyController extends Controller
 
         $search = (new Subscribe())->newQuery();
         $search->where('status', '<>', 5);
+        $search->where('hide_status', 0);
         if($hospitalId){
             $search->where('hospital_ids', 'like', "%|$hospitalId|%");
         }elseif($regionId){
