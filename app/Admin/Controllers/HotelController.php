@@ -193,7 +193,7 @@ class HotelController extends AdminController
         $form->text('wechat', __('微信号'))->required();
         $form->number('room_count', __('可提供房间数'))->min(1)->help('请设置数字')->required();
         $form->number('medical_price', __('医护爱心价（元/间）'))->max(100)->help('最高限价<strong>100</strong>元，请在医护人员入住时查验公函或证件。')->required();
-        $form->number('discount_price', __('非医护优惠价（元/间）'))->max(200)->help('最高限价<strong>100</strong>元<br>如果您提供的是<strong>多个房间</strong>的公寓，请按照<strong>每个房间</strong>的价格提交。')->required();
+        $form->number('discount_price', __('非医护优惠价（元/间）'))->max(200)->help('最高限价<strong>200</strong>元<br>如果您提供的是<strong>多个房间</strong>的公寓，请按照<strong>每个房间</strong>的价格提交。')->required();
         // $form->switch('medical_staff_free', __('医务人员是否免费'))->states($states)->default(1);
         $form->switch('receive_patient', __('是否愿意接待隔离医护或病患'))->states($states);
         $form->switch('expropriation', __('是否愿意被征用'))->states($states);
