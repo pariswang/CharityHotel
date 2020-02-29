@@ -4,7 +4,7 @@
  * @Author: Simon Zhao
  * @Date:   2020-02-29 21:05:16
  * @Last Modified by:   Simon Zhao
- * @Last Modified time: 2020-02-29 22:18:51
+ * @Last Modified time: 2020-02-29 22:36:12
  */
 namespace App\Admin\Extensions;
 
@@ -42,7 +42,7 @@ $('#has-many-{$this->column}').off('click', '.add').on('click', '.add', function
     $('.has-many-{$this->column}-forms').append(template);
     {$templateScript}
 
-	if($('.has-many-{$this->column}-form').find('.$removeClass'+'[value=0]').length >= max_hospital_count){
+	if($('.has-many-{$this->column}-form').find('.$removeClass'+'[value=0]').length >= max_hospitals_count){
 		$('#has-many-{$this->column} .add').hide();
 	}
     return false;
@@ -51,7 +51,7 @@ $('#has-many-{$this->column}').off('click', '.add').on('click', '.add', function
 $('#has-many-{$this->column}').off('click', '.remove').on('click', '.remove', function () {
     $(this).closest('.has-many-{$this->column}-form').hide();
     $(this).closest('.has-many-{$this->column}-form').find('.$removeClass').val(1);
-	if($('.has-many-{$this->column}-form').find('.$removeClass'+'[value=0]').length < max_hospital_count){
+	if($('.has-many-{$this->column}-form').find('.$removeClass'+'[value=0]').length < max_hospitals_count){
 		$('#has-many-{$this->column} .add').show();
 	}
     return false;
