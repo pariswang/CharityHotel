@@ -1,22 +1,17 @@
 @extends('layouts.app')
-@section('title', '志愿者支持')
+@section('title', '医护使用说明-')
 @section('css')
 <style>
 html,body,#app{ height:100%;}
 </style>
 @endsection
 @section('content')
-<div class="page page--start" id="detail">
-    <h1 class="page-title">&nbsp;</h1>
-    <h1 class="page-title">“日月同城”医护酒店公寓平台-志愿者支持</h1>
-    <p>当一场突如其来的疫情席卷中华大地时，武汉瞬间成为了旋涡中的焦点所在，牵动着亿万国人的心。</p>
-    <p>当看到那么多的医护人员奋不顾身地投入到救治病人的战斗中时，感动之余，几位酒店业主和旅游业内人士也在思考如何以自己的方式支持这场抗击疫情的战斗，武汉医护酒店公寓支援联盟（以下简称联盟）就应运而生了，我们的使命就是为战斗在一线的医护人员和志愿者提供安全的、方便的住宿环境，让他们在战斗之余得到最好的休息。</p>
-    <p>武汉医护酒店联盟领导开发了“日月同城”医护酒店公寓平台，其核心目的是协助参与酒店管理和更新酒店房态，方便医护及其他后勤保障类志愿者实时查询酒店房态，并提交住宿需求，最终实现需求和供应的高效匹配。</p>
-    <p>为帮助酒店和公寓管理者更好地使用此平台，请按照以下步骤操作：</p>
-    <h2 class="subtitle">第一：请扫描以下二维码加入医护酒店公寓平台微信群，参与在线培训，针对系统使用过程中遇到的问题也将通过此群反馈和解答</h2>
-    <p class="text-center"><img src="{{asset('/imgs/help_seeker_qrcode.png')}}" alt=""></p>
-    <h2 class="subtitle">第二：<a href="http://hotel_healthcare_support.dragongap.cn/download/%E5%8C%BB%E6%8A%A4%E4%BA%BA%E5%91%98%E4%BD%BF%E7%94%A8%E6%89%8B%E5%86%8C.docx" target="_blank">点击此处</a>下载酒店用户手册</h2>
-    <h2 class="subtitle">第三：参与在线培训后，扫描以下二维码进入系统开始注册和提交酒店资料</h2>
-    <p class="text-center"><img src="{{asset('/imgs/help_seeker_enterqrcode.png')}}" alt=""></p>
+<div class="page page--start" id="detail" style="margin-top:10px;">
+    <h1 class="page-title">医护使用说明</h1>
+    <h2 class="subtitle">为帮助医护人员及志愿者更好地使用此平台，请完整浏览此使用说明：</h2>
+    <h2 class="subtitle">第一：请通过本系统的“医护人员入口”进行注册，并开始搜索酒店和提交住宿需求，<font style="font-weight: bold;">本平台的医护爱心价均不超过每间夜100元，非医护优惠价均不超过每间夜200元</font>，包括水电费等杂费。</h2>
+    <h2 class="subtitle">第二：通过扫描以下二维码了解使用流程</h2>
+    <p class="text-center"><img src="{{asset('/imgs/worker_video_qrcode.png')}}" alt=""></p>
+    <h2 class="subtitle">第三：医护人士可以通过系统首页的“咨询客服”进行咨询或寻求服务。</h2>
 </div>
 @endsection
