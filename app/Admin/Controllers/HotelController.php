@@ -200,7 +200,7 @@ class HotelController extends AdminController
         $form->radio('meal', __('是否提供餐食'))->options([
             '早餐' => '早餐', '午餐' => '午餐', '晚餐' => '晚餐', '三餐都提供' => '三餐都提供', '不提供餐食' => '不提供餐食'
         ])->required()->default('不提供餐食');
-        $form->switch('reception', __('是否有前台接待'))->states($states);
+        $form->switch('reception', __('是否有前台接待'))->states($states)->default(1);
         $form->switch('cleaning', __('是否提供客房清洁服务'))->states($states)->default(1);
         $form->textarea('collocation_description', __('房间说明'))->help('请提供房型说明(单间,两室,三室等)<br>房间配置(如独立空凋,洗衣机,冰箱等)');
         $form->textarea('description', __('酒店介绍'))->help('如周边地标、地铁站、火车站等交通信息');
@@ -238,12 +238,12 @@ class HotelController extends AdminController
             if(!array_key_exists('user_id', request()->input()) ){
                 return $form;
             }
-            if (count($form->hospitals) - array_sum(array_column($form->hospitals, '_remove_'))>3) {
+            if (isset($form->hospitals) && count($form->hospitals) - array_sum(array_column($form->hospitals, '_remove_'))>3) {
                 $error = new \Illuminate\Support\MessageBag([
                     'title'   => '请录入周边医院',
                     'message' => '至多输入三家',
                 ]);
-            }elseif (count($form->hospitals) > count(array_unique(array_column($form->hospitals, 'hospital_id'))) ) {
+            }elseif (isset($form->hospitals) && count($form->hospitals) > count(array_unique(array_column($form->hospitals, 'hospital_id'))) ) {
                 $error = new \Illuminate\Support\MessageBag([
                     'title'   => '请录入周边医院',
                     'message' => '请勿录入相同医院',
