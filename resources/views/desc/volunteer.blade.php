@@ -42,6 +42,6 @@ html,body,#app{ height:100%;}
 
     <p class="sub_title">备注：以上志愿者职位均为远程参与。</p>
 
-    <p>如有意参与，请进行<a href="https://www.wenjuan.com/s/Rje2yar/">在线申请</a>，请在申请前确认是否可以满足以上的工作时间要求。我们将在接收申请的24小时内通过微信或电话沟通。</p>
+    <p>如有意参与，请进行<a href="https://www.wenjuan.in/s/bAfEB3c/">在线申请</a>，请在申请前确认是否可以满足以上的工作时间要求。我们将在接收申请的24小时内通过微信或电话沟通。</p>
 </div>
 @endsection
