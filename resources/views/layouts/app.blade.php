@@ -31,9 +31,10 @@
                 <a href="/hotel_list" class="menu__item">查找房源</a>
                 <a href="/login" class="menu__item">医护人员入口</a>
                 <a href="/admin/auth/login" class="menu__item">酒店人员入口</a>
-                <a href="/hotel_staff" class="menu__item">酒店支持说明</a>
-                <a href="/help_seeker_staff" class="menu__item">志愿者支持说明</a>
-                <a href="/it_staff" class="menu__item">IT志愿者招募</a>
+                <a href="/hotel_staff" class="menu__item">酒店使用说明</a>
+                <a href="/help_seeker_staff" class="menu__item">医护使用说明</a>
+                <a href="/it_staff" class="menu__item">关于本平台</a>
+                <a href="/volunteer" class="menu__item">志愿者招募</a>
             </div>
         </header>
         @yield('content')
