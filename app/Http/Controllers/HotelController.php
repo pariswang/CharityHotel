@@ -68,7 +68,9 @@ class HotelController extends Controller
         if($keywords){
             $search->where('search_keywords', 'like', "%$keywords%");
         }
-        return $search->get()->shuffle();
+        $search->orderBy('medical_price', 'asc')
+            ->orderBy('discount_price', 'asc');
+        return $search->get();
     }
 
     public function detail(Request $request)
