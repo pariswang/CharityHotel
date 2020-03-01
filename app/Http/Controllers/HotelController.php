@@ -73,7 +73,7 @@ class HotelController extends Controller
         $list = $search->get();
         // 有医护爱心价的
         $hasMedicalPrice = $list->filter(function ($hotel){
-            return $hotel->medical_price > 0;
+            return $hotel->medical_price !== null;
         });
         $list = $list->diff($hasMedicalPrice);
         // 没有非医护价格的

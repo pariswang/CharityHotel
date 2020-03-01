@@ -54,7 +54,7 @@
                 <div class="item-bd">
                     {{$hotel->hotel_name}}可安排{{$hotel->room_count-$hotel->use_room_count}}间
                     {{$hotel->medical_price !== null?($hotel->medical_price?('，医护爱心价'.$hotel->medical_price.'元'):'，医护人员免费'):''}}
-                    {{$hotel->discount_price !== null?('，非医护'.$hotel->discount_price.'元'):''}}
+                    {{$hotel->discount_price !== null?($hotel->discount_price>0?'，非医护'.$hotel->discount_price.'元':''):''}}
                     @if ($hotel->receive_patient)
                         ，可提供隔离房。
                     @else
