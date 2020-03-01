@@ -70,7 +70,18 @@ class HotelController extends Controller
         }
         $search->orderBy('medical_price', 'asc')
             ->orderBy('discount_price', 'asc');
-        return $search->get();
+        $list = $search->get();
+        // 有医护爱心价的
+        $hasMedicalPrice = $list->filter(function ($hotel){
+            return $hotel->medical_price > 0;
+        });
+        $list = $list->diff($hasMedicalPrice);
+        // 没有非医护价格的
+        $noDiscountPrice = $list->filter(function ($hotel){
+            return $hotel->discount_price <= 0;
+        });
+        $list = $list->diff($noDiscountPrice)->sortBy('discount_price');
+        return $hasMedicalPrice->merge($list)->merge($noDiscountPrice);
     }
 
     public function detail(Request $request)
