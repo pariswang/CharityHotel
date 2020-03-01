@@ -73,7 +73,7 @@
         <div class="van-cell van-field">
             <div class="van-cell__title van-field__label"><span>医护爱心价</span></div>
             <div class="van-cell__value">
-                <div class="van-field__body --text-left">{{$hotel->medical_price?:'免费'}}</div>
+                <div class="van-field__body --text-left">{{$hotel->medical_price?:'免费'}}（此价格均已包括水电费等杂费）</div>
             </div>
         </div>
     </van-cell-group>
@@ -83,7 +83,7 @@
         <div class="van-cell van-field">
             <div class="van-cell__title van-field__label"><span>非医护价格</span></div>
             <div class="van-cell__value">
-                <div class="van-field__body --text-left">{{$hotel->discount_price}}</div>
+                <div class="van-field__body --text-left">{{$hotel->discount_price}}（此价格均已包括水电费等杂费）</div>
             </div>
         </div>
     </van-cell-group>
