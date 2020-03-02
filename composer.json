@@ -9,6 +9,7 @@
         "alibabacloud/client": "^1.5",
         "encore/laravel-admin": "^1.7",
         "fideloper/proxy": "^4.0",
+        "guzzlehttp/guzzle": "^6.5",
         "laravel/framework": "5.6.*",
         "laravel/tinker": "^1.0"
     },
