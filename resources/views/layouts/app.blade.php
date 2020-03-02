@@ -35,6 +35,7 @@
                 <a href="/help_seeker_staff" class="menu__item">医护使用说明</a>
                 <a href="/it_staff" class="menu__item">关于本平台</a>
                 <a href="/volunteer" class="menu__item">志愿者招募</a>
+                <a href="/notice" class="menu__item">公告</a>
             </div>
         </header>
         @yield('content')
