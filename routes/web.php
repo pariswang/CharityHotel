@@ -28,6 +28,7 @@ Route::view('advisory', 'desc.advisory');
 Route::view('disclaimer', 'desc.disclaimer');
 Route::view('it_staff', 'desc.it_staff');
 Route::view('volunteer', 'desc.volunteer');
+Route::view('notice', 'desc.notice');
 
 // 查找房源（酒店列表）
 Route::get('hotel_list', 'HotelController@list');
