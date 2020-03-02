@@ -169,3 +169,51 @@ function mdate($time = NULL) {
 
     return $text;
 }
+
+if (!function_exists('sendSms')) 
+{
+    /**
+     * 发送短信(采用阿里云短信)
+     * @param string $mobile    手机号码
+     * @param string $smsCode   短信内容编号
+     * @param string $paramStr  短信内容参数替换(默认为空) {"code":"'.$code.'"}
+     */
+    function sendSms($mobile, $smsCode, $paramStr = '')
+    {
+        // 获取短信配置
+        $sms_config = config('sms.sms_config');
+
+        // 发送短信
+        \AlibabaCloud\Client\AlibabaCloud::accessKeyClient($sms_config['access_key_id'], $sms_config['access_key_secret'])
+            ->regionId('cn-hangzhou') // replace regionId as you need
+            ->asDefaultClient();
+
+        try {
+            $result = \AlibabaCloud\Client\AlibabaCloud::rpc()
+                ->product('Dysmsapi')
+                // ->scheme('https') // https | http
+                ->version('2017-05-25')
+                ->action('SendSms')
+                ->method('POST')
+                ->options([
+                    'query' => [
+                        'PhoneNumbers' => $mobile,
+                        'SignName' => $sms_config['sign_name'],
+                        'TemplateCode' => $smsCode,
+                        'TemplateParam' => $paramStr,	// '{"code":"'.$code.'"}',
+                    ],
+                ])
+                ->request();
+            $result = $result->toArray();
+            if($result['Code'] != "OK")
+            {
+                return $result['Message'];
+            }
+        } catch (ClientException $e) {
+            return $e->getErrorMessage() . PHP_EOL;
+        } catch (ServerException $e) {
+            return $e->getErrorMessage() . PHP_EOL;
+        }
+        return true;
+    }
+}
