@@ -279,12 +279,22 @@ class SubscribeController extends AdminController
         }
         $form = $this->takingForm($id);
         if (Request::capture()->isMethod("put")){
-            
-            return $form->update($id);
+            $response = $form->update($id);
+            $this->sendSms($id);
+            return $response;
         }
         return $content
             ->header('接单提交')
             ->body($form->edit($id));
+    }
+
+    protected function sendSms($id)
+    {
+        $subs = Subscribe::find($id);
+        $date = explode('-', $subs->date_begin);
+        $date = $date[1] . '月' . $date[2] . '日';
+        $r = sendSms($subs->conn_phone, config('sms.sms_config.order_code'), json_encode(['hotel'=>$subs->hotel->hotel_name,'date'=>$date]));
+        \Log::info("[sms][order_code] {$subs->conn_phone}: " . $r);
     }
 
     protected function takingForm($id)
