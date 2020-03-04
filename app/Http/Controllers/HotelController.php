@@ -57,6 +57,9 @@ class HotelController extends Controller
         $regionId = $request->input('distinct');
         $keywords = $request->input('s');
         $hospitalId = $request->input('hospital');
+        $freeId = $request->input('free_id');
+        $isolationId = $request->input('isolation_id');
+        $sortId = $request->input('sort_id');
 
         $search = (new Hotel())->newQuery();
         $search->where('status', '<>', 5);
@@ -68,8 +71,38 @@ class HotelController extends Controller
         if($keywords){
             $search->where('search_keywords', 'like', "%$keywords%");
         }
-        $search->orderBy('medical_price', 'asc')
+
+        // 医护是否免费
+        if($freeId){
+            if ($freeId == 1) {
+                $search->where('medical_price', '=', 0);
+            } else {
+                $search->where('medical_price', '>', 0);
+            }
+        }
+
+        // 是否有隔离房
+        if($isolationId){
+            if ($isolationId == 1) {
+                $search->where('receive_patient', '=', 1);
+            } else {
+                $search->where('receive_patient', '=', 0);
+            }
+        }
+
+        // 排序方式
+        if ($sortId) {
+            if ($sortId == 1) { 
+                // 按照价格升序
+                $search->orderBy('medical_price', 'asc');
+            } else {
+                // 按照发布时间升序(由近到远)
+                $search->orderBy('create_date', 'desc');
+            }
+        } else {
+            $search->orderBy('medical_price', 'asc')
             ->orderBy('discount_price', 'asc');
+        }
         $list = $search->get();
         // 有医护爱心价的
         $hasMedicalPrice = $list->filter(function ($hotel){
