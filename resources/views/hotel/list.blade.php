@@ -8,6 +8,11 @@
             <van-button type="default" icon="arrow-down" round block size="small" plain :text="hospital !== '' ? hospital : '请选择医院'" @click="showHospitals=true"></van-button>
             <!-- <van-button type="default" icon="arrow-down" round block size="small" plain :text="statu !== '' ? statu : '请选择状态'" @click="showStatus=true"></van-button> -->
         </div>
+        <div class="pickers" style="padding-top: 5px;">
+            <van-button type="default" icon="arrow-down" round block size="small" plain :text="free !== '' ? free : '医护是否免费'" @click="showFrees=true"></van-button>
+            <van-button type="default" icon="arrow-down" round block size="small" plain :text="isolation !== '' ? isolation : '是否有隔离房'" @click="showIsolations=true"></van-button>
+            <van-button type="default" icon="arrow-down" round block size="small" plain :text="sort !== '' ? sort : '排序方式'" @click="showSorts=true"></van-button>
+        </div>
         <van-field v-model="keyword" placeholder="地址关键词">
             <van-button slot="button" color="#1d63cb" round size="small" @click="onSearch">查询</van-button>
         </van-field>
@@ -31,6 +36,37 @@
         :style="{ height: '30%' }">
         <van-picker :columns="hospitals" :default-index="hospitalIndex || 0" @change="hospitalOnChange"/>
     </van-popup>
+    <!-- 医护是否免费 -->
+    <van-popup
+        v-model="showFrees"
+        closeable
+        round
+        position="bottom"
+        close-icon="{{asset('/imgs/confirm_btn.png')}}"
+        :style="{ height: '30%' }">
+        <van-picker :columns="frees" :default-index="freeIndex || 0" @change="freeOnChange"/>
+    </van-popup>
+    <!-- 是否有隔离房 -->
+    <van-popup
+        v-model="showIsolations"
+        closeable
+        round
+        position="bottom"
+        close-icon="{{asset('/imgs/confirm_btn.png')}}"
+        :style="{ height: '30%' }">
+        <van-picker :columns="isolations" :default-index="isolationIndex || 0" @change="isolationOnChange"/>
+    </van-popup>
+    <!-- 排序方式 -->
+    <van-popup
+        v-model="showSorts"
+        closeable
+        round
+        position="bottom"
+        close-icon="{{asset('/imgs/confirm_btn.png')}}"
+        :style="{ height: '30%' }">
+        <van-picker :columns="sorts" :default-index="sortIndex || 0" @change="sortOnChange"/>
+    </van-popup>
+    <!--
     <van-popup
         v-model="showStatus"
         closeable
@@ -40,10 +76,12 @@
         :style="{ height: '30%' }">
         <van-picker :columns="status" @change="statuOnChange"/>
     </van-popup>
+    -->
     <!--
     参数说明
     ?distinct={distinct_id}&hospital={hospital_id}&s={addr_str}
     -->
+    <div style="height: 20px; border: 0px solid red;"></div>
     @forelse ($hotels as $hotel)
         <div class="item">
             <a href="/hotel_detail?id={{$hotel->id}}" class="block__link">
