@@ -33,7 +33,7 @@ class HotelController extends AdminController
         if(!checkAdminRole(['administrator','volunteer'])){
             $grid->model()->where('user_id', '=', Admin::user()->id);
         }
-        $grid->model()->orderBy('id', 'desc');
+        // $grid->model()->orderBy('id', 'desc');
         
         $grid->column('id', __('ID'))->sortable();
         $grid->column('region.region_name', __('区域'));
@@ -108,8 +108,26 @@ class HotelController extends AdminController
         $grid->filter(function($filter){
             // 去掉默认的id过滤器
             $filter->disableIdFilter();
-            $filter->equal('region_id','地区')->select(Region::pluck('region_name', 'id')->all());
-            $filter->like('hotel_name', '酒店名称');
+            $filter->column(1/2, function ($filter) {
+                $filter->equal('region_id','地区')->select(Region::pluck('region_name', 'id')->all());
+                $filter->equal('receive_patient', '接待隔离')->select(['1' => '是', '0' => '否']);
+            });
+
+            $filter->column(1/2, function ($filter) {
+                $filter->like('hotel_name', '酒店名称');
+                $filter->where(function ($query) {
+                    switch ($this->input) {
+                        case '0':
+                            $query->where('medical_price', '=', 0);
+                            break;
+                        case '1':
+                            $query->where('medical_price', '>', 0);
+                            break;
+                    }
+
+                }, '医护免费')->select(['0' => '是', '1' => '否']);
+            });
+            $filter->orderBy('id', 'desc');
         });
         return $grid;
     }
