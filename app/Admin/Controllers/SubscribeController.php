@@ -91,6 +91,12 @@ class SubscribeController extends AdminController
                 'has_letter'=>['是否有介绍信','boolean'],
             ],$this);
         });
+        $grid->column('医院信息')->display(function(){
+            if($this->nearbyHospitals){
+                return implode('<br>', array_column($this->nearbyHospitals->toArray(), 'hospital_name'));
+            }
+        });
+        $grid->column('date_begin','入住日期')->sortable();
         if(checkAdminRole(['administrator','volunteer'])){
             $checked_states = [
                 'on'  => ['value' => 1, 'text' => '已核实', 'color' => 'primary'],
@@ -157,20 +163,32 @@ class SubscribeController extends AdminController
         }
         $grid->disableColumnSelector();
         $grid->disableCreateButton();
-        $grid->disableActions();
+        if(!checkAdminRole(['administrator','volunteer'])){
+            $grid->disableActions();
+        }
         $grid->filter(function($filter){
             // 去掉默认的id过滤器
             $filter->equal('region_id','地区')->select(\App\Model\Region::pluck('region_name', 'id')->all());
+            $filter->where(function ($query) {
+                $query->where('conn_person', 'like', "%{$this->input}%")
+                    ->orWhere('conn_phone', 'like', "%{$this->input}%");
+            }, '姓名或手机');
+            $filter->where(function ($query) {
+                $query->whereHas('nearbyHospitals', function ($query) {
+                    $query->where('hospital_name', 'like', "%{$this->input}%");
+                });
+            }, '医院名称');
             if(explode('/',request()->path())[1] != 'my-taking'){
                 $filter->disableIdFilter();
                 $filter->equal('status','接单状态')->radio([''=>'全部','1' => '未接单','5'=>'已接单']);
             }
         });
         $grid->actions(function ($actions) {
-
-            $actions->disableDelete();
             $actions->disableView();
-            $actions->disableEdit();
+            if(!checkAdminRole(['administrator','volunteer'])){
+                $actions->disableDelete();
+                $actions->disableEdit();
+            }
         });
 
         return $grid;
@@ -213,10 +231,9 @@ class SubscribeController extends AdminController
     {
         $form = new Form(new Subscribe());
         if(checkAdminRole(['administrator','volunteer'])){
-            $form->number('user_id', __('用户'));
+            $form->text('user_id', __('用户ID'))->readonly();
             $form->text('conn_person', __('联系人'));
             $form->text('conn_phone', __('联系电话'))->required();
-            $form->number('conn_type', __('身份信息'));
             $form->number('checkin_num', __('入住人数'));
             $checked_states = [
                 'on'  => ['value' => 1, 'text' => '已核实', 'color' => 'primary'],
@@ -229,15 +246,16 @@ class SubscribeController extends AdminController
                 'off' => ['value' => 1, 'text' => '未接', 'color' => 'default']
             ];
             $form->switch('status', __('接单状态'))->states($taking_status);
-            $form->date('date_begin', __('开始日期'))->default(date('Y-m-d'));
-            $form->date('date_end', __('结束日期'))->default(date('Y-m-d'));
-            $form->number('region_id', __('区域'));
+            $form->date('date_begin', __('开始日期'))->default(date('Y-m-d'))->required();
+            $form->date('date_end', __('结束日期'))->default(date('Y-m-d'))->required();
+            $form->radio('region_id', __('所在区域'))->options(\App\Model\Region::pluck('region_name', 'id')->all())->required();
             $form->text('hope_addr', __('希望地点'));
             $form->text('checkin_reson', __('入住原因'));
             $form->text('remark', __('其他说明'));
-            $form->datetime('createdate', __('创建日期'))->default(date('Y-m-d H:i:s'));
             $form->number('hotel_id', __('酒店'));
-
+            if(checkAdminRole(['administrator','volunteer'])){
+                $form->textarea('admin_remark','管理员备注')->rows(5)->required();
+            }
             $form->saving(function (Form $form) {
                 if(!array_key_exists('conn_phone', request()->input()) ){
                     if(request()->input('status') == 'on'){
@@ -247,7 +265,7 @@ class SubscribeController extends AdminController
                 }
                 if($form->isCreating()){
                     $form->user_id = Admin::user()->id;
-                    $form->create_date = date('Y-m-d H:i:s');
+                    $form->createdate = date('Y-m-d H:i:s');
                 }
                 return $form;
             });
@@ -319,7 +337,9 @@ class SubscribeController extends AdminController
         }
         $form->hidden('admin_id');
         $form->hidden('hoteltaking_date');
-
+        if(checkAdminRole(['administrator','volunteer'])){
+            $form->textarea('admin_remark','管理员备注')->rows(5)->required();
+        }
         $form->setAction($form->resource().'/taking/'.$id);
 
         $form->hidden(Builder::PREVIOUS_URL_KEY)->value($form->resource());
