@@ -31,6 +31,7 @@ class Kernel extends ConsoleKernel
         $schedule->command('queue:work --once')->everyMinute();
         $schedule->command('queue:work --once')->everyMinute();
         $schedule->command('queue:work --once')->everyMinute();
+        $schedule->command('apply:expired')->daily();
     }
 
     /**
