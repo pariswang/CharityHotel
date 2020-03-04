@@ -63,6 +63,7 @@ class HotelController extends Controller
 
         $search = (new Hotel())->newQuery();
         $search->where('status', '<>', 5);
+        $search->where('ban_status', '=', 0);
         if($hospitalId){
             $search->where('hospital_ids', 'like', "%|$hospitalId|%");
         }elseif($regionId){

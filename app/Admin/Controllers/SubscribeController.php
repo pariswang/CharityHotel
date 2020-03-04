@@ -119,6 +119,7 @@ class SubscribeController extends AdminController
             });
             $grid->column('hotel.hotel_name', __('目标酒店'));
         }else{
+
             $grid->column('checked', __('是否核实'))->display(function () {
                 return $this->checked?'已核实':'未核实';
             });
@@ -246,8 +247,7 @@ class SubscribeController extends AdminController
                 'off' => ['value' => 1, 'text' => '未接', 'color' => 'default']
             ];
             $form->switch('status', __('接单状态'))->states($taking_status);
-            $form->date('date_begin', __('开始日期'))->default(date('Y-m-d'))->required();
-            $form->date('date_end', __('结束日期'))->default(date('Y-m-d'))->required();
+            $form->dateRange('date_begin','date_end', __('入住日期-离店日期'));
             $form->radio('region_id', __('所在区域'))->options(\App\Model\Region::pluck('region_name', 'id')->all())->required();
             $form->text('hope_addr', __('希望地点'));
             $form->text('checkin_reson', __('入住原因'));
