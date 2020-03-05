@@ -22,6 +22,14 @@
     </van-cell-group>
     <van-cell-group>
         <div class="van-cell van-field">
+            <div class="van-cell__title van-field__label"><span>备用电话</span></div>
+            <div class="van-cell__value">
+                <div class="van-field__body --text-left">{{$apply->spare_phone_show}}</div>
+            </div>
+        </div>
+    </van-cell-group>
+    <van-cell-group>
+        <div class="van-cell van-field">
             <div class="van-cell__title van-field__label"><span>职位</span></div>
             <div class="van-cell__value">
                 <div class="van-field__body --text-left">{{$apply->conn_position}}</div>

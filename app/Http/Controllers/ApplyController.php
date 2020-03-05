@@ -76,7 +76,7 @@ class ApplyController extends Controller
         $user = $request->user();
         $this->checkApplyFrequency($user);
 
-        $data = $request->only(['conn_person', 'conn_phone', 'conn_position', 'conn_company', 'checkin_num', 'room_count', 'date_begin', 'date_end', 'can_pay', 'has_letter', 'hotel_id','region_id', 'hope_addr', 'remark']);
+        $data = $request->only(['conn_person', 'conn_phone', 'spare_phone', 'conn_position', 'conn_company', 'checkin_num', 'room_count', 'date_begin', 'date_end', 'can_pay', 'has_letter', 'hotel_id','region_id', 'hope_addr', 'remark']);
         $data['can_pay'] = $data['can_pay'] == 'true' ? 1 : 0;
         $data['has_letter'] = $data['has_letter'] == 'true' ? 1 : 0;
         $data['user_id'] = $user->id;
