@@ -26,7 +26,7 @@ class AddSparePhoneToWhSubscribeTable extends Migration
     public function down()
     {
         Schema::table('wh_subscribe', function (Blueprint $table) {
-            //
+            $table->dropColumn('spare_phone');
         });
     }
 }
