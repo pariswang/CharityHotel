@@ -28,7 +28,6 @@ class HotelController extends AdminController
      */
     protected function grid()
     {
-        ;
         $grid = new Grid(new Hotel());
         if(!checkAdminRole(['administrator','volunteer'])){
             $grid->model()->where('user_id', '=', Admin::user()->id);
@@ -80,10 +79,22 @@ class HotelController extends AdminController
             return htmlInOneField($fieldArr,$this);
         })->width(350);
         $hotel_states = [
-            'on'  => ['value' => 0, 'text' => '启用', 'color' => 'primary'],
-            'off' => ['value' => 5, 'text' => '禁用', 'color' => 'default']
+            'on'  => ['value' => 0, 'text' => '是', 'color' => 'primary'],
+            'off' => ['value' => 5, 'text' => '否', 'color' => 'default']
         ];
-        $grid->column('status','状态')->switch($hotel_states);
+        $grid->column('status','是否显示')->switch($hotel_states);
+
+        if(checkAdminRole(['administrator','volunteer'])){
+            $ban_status = [
+                'on'  => ['value' => 1, 'text' => '是', 'color' => 'primary'],
+                'off' => ['value' => 0, 'text' => '否', 'color' => 'default']
+            ];
+            $grid->column('ban_status', __('是否禁用'))->switch($ban_status);
+        }else{
+            $grid->column('ban_status', __('是否禁用'))->display(function () {
+                return $this->ban_status?'禁用':'启用';
+            });
+        }
         // $grid->column('meal', __('早中晚餐饮'));
         // $grid->column('room_count', __('可安排房间数'));
         // $grid->column('use_room_count', __('已使用房间数'));
@@ -205,7 +216,7 @@ class HotelController extends AdminController
         $form->radio('region_id', __('所在区域'))->options(Region::pluck('region_name', 'id')->all())->required()->help('酒店所属行政区');
      
         $form->text('address', __('地址'))->required()->help('详细填写路名+门牌号，请勿填写武汉市及所属行政区');
-        $form->mobile('linephone', __('固定电话'))->options(['mask' => '999 9999 9999'])->required();
+        $form->mobile('linephone', __('固定电话'))->options(['mask' => '999 9999 9999']);
         $form->text('uname', __('联系人'))->required();
         $form->mobile('phone', __('手机号码'))->options(['mask' => '999 9999 9999'])->required();
         $form->text('wechat', __('微信号'))->required();
@@ -230,11 +241,17 @@ class HotelController extends AdminController
             $form->number('distance','距离/公里')->required();
         });
         $hotel_states = [
-            'on'  => ['value' => 0, 'text' => '启用', 'color' => 'primary'],
-            'off' => ['value' => 5, 'text' => '禁用', 'color' => 'default'],
+            'on'  => ['value' => 0, 'text' => '是', 'color' => 'primary'],
+            'off' => ['value' => 5, 'text' => '否', 'color' => 'default'],
         ];
-        $form->switch('status','状态')->states($hotel_states);
-
+        $form->switch('status','是否显示')->states($hotel_states);
+        if(checkAdminRole(['administrator','volunteer'])){
+            $ban_status = [
+                'on'  => ['value' => 1, 'text' => '是', 'color' => 'primary'],
+                'off' => ['value' => 0, 'text' => '否', 'color' => 'default']
+            ];
+            $form->switch('ban_status', __('是否禁用'))->states($ban_status);
+        }
         $form->hidden('create_date');
         $form->hidden('user_id');
 
@@ -255,6 +272,13 @@ class HotelController extends AdminController
         $form->saving(function (Form $form) {
             if(!array_key_exists('user_id', request()->input()) ){
                 return $form;
+            }
+            $count_address = $form->model()->where(['user_id'=>Admin::user()->id,'address'=>$form->address])->count();
+            if($form->isCreating() && $count_address>0){
+                $error = new \Illuminate\Support\MessageBag([
+                    'title'   => '您已创建该地址的酒店',
+                    'message' => '请核查您的酒店列表，已有该地址的酒店'
+                ]);
             }
             if (isset($form->hospitals) && count($form->hospitals) - array_sum(array_column($form->hospitals, '_remove_'))>3) {
                 $error = new \Illuminate\Support\MessageBag([

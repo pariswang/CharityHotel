@@ -9,6 +9,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Jobs\SendRegionSms;
 use App\Model\Hotel;
 use App\Model\Subscribe;
 use App\Model\Region;
@@ -98,7 +99,8 @@ class ApplyController extends Controller
             if(!empty($hospitals)){
                 $sub->nearbyHospitals()->attach($this->savePivot($hospitals));
             }
-
+            // 发短信
+            $this->sendSms($sub);
             return [
                 'success' => 1,
                 'data' => [],
@@ -138,6 +140,25 @@ class ApplyController extends Controller
                 'success' => 1,
                 'data' => [],
             ];
+        }
+    }
+
+    private function sendSms($sub)
+    {
+        if(strpos($sub->date_begin, '-') > 0){
+            $date = explode('-', $sub->date_begin);
+        }elseif(strpos($sub->date_begin, '/') > 0){
+            $date = explode('/', $sub->date_begin);
+        }
+        $date = $date[1] . '月' . $date[2] . '日';
+
+        if($sub->hotel_id){
+            $phone = str_replace(' ', '', $sub->hotel->phone);
+            $r = sendSms($phone, config('sms.sms_config.request_hotel_code'), json_encode(['name'=>$sub->conn_person,'date'=>$date]));
+            \Log::info($r);
+            \Log::info("[sms][request_hotel_code] $phone: " . $r);
+        }else{
+            SendRegionSms::dispatch($sub);
         }
     }
 
