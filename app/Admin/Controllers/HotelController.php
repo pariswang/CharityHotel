@@ -80,15 +80,15 @@ class HotelController extends AdminController
             return htmlInOneField($fieldArr,$this);
         })->width(350);
         $hotel_states = [
-            'on'  => ['value' => 0, 'text' => '显示', 'color' => 'primary'],
-            'off' => ['value' => 5, 'text' => '隐藏', 'color' => 'default']
+            'on'  => ['value' => 0, 'text' => '是', 'color' => 'primary'],
+            'off' => ['value' => 5, 'text' => '否', 'color' => 'default']
         ];
-        $grid->column('status','显示状态')->switch($hotel_states);
+        $grid->column('status','是否显示')->switch($hotel_states);
 
         if(checkAdminRole(['administrator','volunteer'])){
             $ban_status = [
-                'on'  => ['value' => 1, 'text' => '禁用', 'color' => 'primary'],
-                'off' => ['value' => 0, 'text' => '启用', 'color' => 'default']
+                'on'  => ['value' => 1, 'text' => '是', 'color' => 'primary'],
+                'off' => ['value' => 0, 'text' => '否', 'color' => 'default']
             ];
             $grid->column('ban_status', __('是否禁用'))->switch($ban_status);
         }else{
@@ -242,14 +242,14 @@ class HotelController extends AdminController
             $form->number('distance','距离/公里')->required();
         });
         $hotel_states = [
-            'on'  => ['value' => 0, 'text' => '显示', 'color' => 'primary'],
-            'off' => ['value' => 5, 'text' => '隐藏', 'color' => 'default'],
+            'on'  => ['value' => 0, 'text' => '是', 'color' => 'primary'],
+            'off' => ['value' => 5, 'text' => '否', 'color' => 'default'],
         ];
-        $form->switch('status','显示状态')->states($hotel_states);
+        $form->switch('status','是否显示')->states($hotel_states);
         if(checkAdminRole(['administrator','volunteer'])){
             $ban_status = [
-                'on'  => ['value' => 1, 'text' => '禁用', 'color' => 'primary'],
-                'off' => ['value' => 0, 'text' => '启用', 'color' => 'default']
+                'on'  => ['value' => 1, 'text' => '是', 'color' => 'primary'],
+                'off' => ['value' => 0, 'text' => '否', 'color' => 'default']
             ];
             $form->switch('ban_status', __('是否禁用'))->states($ban_status);
         }
