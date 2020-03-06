@@ -58,6 +58,7 @@ Route::group(['middleware' => 'auth'], function (){
     Route::post('apply', 'ApplyController@apply_hotel_submit');
 
     Route::post('apply/cancel', 'ApplyController@cancel');
+    Route::post('apply/edit_end_date', 'ApplyController@edit_end_date');
     // 医护人员个人中心
     Route::get('profile', 'ProfileController@index');
 });

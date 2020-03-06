@@ -106,6 +106,41 @@ class ApplyController extends Controller
         }
     }
 
+    // 编辑离店时间
+    public function edit_end_date(Request $request)
+    {
+        $user = $request->user();
+        $this->checkApplyFrequency($user);
+
+        $data = $request->only(['id','date_end']);
+
+        if ($data['id'] == '') {
+            throw ValidationException::withMessages([
+                'remark' => ['数据异常'],
+            ]);
+        }
+
+        if ($data['date_end'] == '') {
+            throw ValidationException::withMessages([
+                'remark' => ['离店时间不可为空'],
+            ]);
+        }
+
+        $old = Subscribe::find($data['id']);
+        if($old->status != 1){
+            throw ValidationException::withMessages([
+                'remark' => ['申请单状态变更，无法修改信息'],
+            ]);
+        }
+        $sub = Subscribe::where('id', $data['id'])->update(['date_end' => $data['date_end']]);
+        if($sub){
+            return [
+                'success' => 1,
+                'data' => [],
+            ];
+        }
+    }
+
     private function checkApplyFrequency($user)
     {
         $last = Subscribe::where('user_id', $user->id)->orderBy('createdate', 'desc')->first();
