@@ -29,6 +29,7 @@ Route::view('disclaimer', 'desc.disclaimer');
 Route::view('it_staff', 'desc.it_staff');
 Route::view('volunteer', 'desc.volunteer');
 Route::view('notice', 'desc.notice');
+Route::view('10_question_and_answer', 'desc.10_question_and_answer');
 
 // 查找房源（酒店列表）
 Route::get('hotel_list', 'HotelController@list');

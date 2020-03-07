@@ -36,6 +36,7 @@
                 <a href="/it_staff" class="menu__item">关于本平台</a>
                 <a href="/volunteer" class="menu__item">志愿者招募</a>
                 <a href="/notice" class="menu__item">公告</a>
+                <a href="/10_question_and_answer" class="menu__item">关于联盟的十个问答</a>
             </div>
         </header>
         @yield('content')
