@@ -72,6 +72,7 @@ class SubscribeController extends AdminController
             return htmlInOneField([
                 'conn_person'=>['联系人'],
                 'conn_phone'=>['联系电话'],
+                'spare_phone'=>['备用电话'],
                 'conn_type'=>['身份信息'],
                 'checkin_num'=>['入住人数'],
                 'date_begin'=>['开始日期'],
