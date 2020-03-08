@@ -248,7 +248,7 @@ class SubscribeController extends AdminController
                 'off' => ['value' => 1, 'text' => '未接', 'color' => 'default']
             ];
             $form->switch('status', __('接单状态'))->states($taking_status);
-            $form->dateRange('date_begin','date_end', __('入住日期-离店日期'));
+            $form->dateRange('date_begin','date_end', __('入住日期-离店日期'))->help('入离店时间不能早于今日');
             $form->radio('region_id', __('所在区域'))->options(\App\Model\Region::pluck('region_name', 'id')->all())->required();
             $form->text('hope_addr', __('希望地点'));
             $form->text('checkin_reson', __('入住原因'));
@@ -258,6 +258,13 @@ class SubscribeController extends AdminController
                 $form->textarea('admin_remark','管理员备注')->rows(5)->required();
             }
             $form->saving(function (Form $form) {
+                if(strtotime(request()->input('date_begin')) < strtotime(date('Y-m-d')) || strtotime(request()->input('date_end')) < strtotime(date('Y-m-d'))){
+                    $error = new \Illuminate\Support\MessageBag([
+                        'title'   => '提交失败',
+                        'message' => '入离店时间不能早于今日'
+                    ]);
+                    return back()->withInput()->with(compact('error'));
+                }
                 if(!array_key_exists('conn_phone', request()->input()) ){
                     if(request()->input('status') == 'on'){
                         return response(['status'=>false,'message'=>'更新失败']);
