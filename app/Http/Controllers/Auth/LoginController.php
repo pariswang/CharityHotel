@@ -73,6 +73,12 @@ class LoginController extends Controller
             ]);
         }
 
+        if($tmpUser && $tmpUser->state == 2){
+            throw ValidationException::withMessages([
+                $this->username() => ['此账号已被禁用，请联系管理员！'],
+            ]);
+        }
+
         $this->validate($request, [
             $this->username() => 'required|string',
             'password' => 'required|string',

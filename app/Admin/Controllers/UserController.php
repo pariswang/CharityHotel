@@ -35,7 +35,7 @@ class UserController extends AdminController
         $grid->column('position', __('岗位'));
         $grid->column('company', __('公司'));
         $grid->column('role', __('角色'))->using(['1' => '管理人员', '2' => '求助者', '3'=>'酒店人员','4'=>'志愿者']);
-        $grid->column('state', __('核实状态'));
+        $grid->column('state', __('状态'))->using([0 => '', 1 => '', 2 => '禁用']);
         $grid->column('create_date', __('创建时间'))->sortable();
         $grid->column('附加信息')->display(function(){
             switch ($this->role) {
@@ -105,7 +105,7 @@ class UserController extends AdminController
         $form->text('position', __('岗位'));
         $form->text('company', __('公司'));
         $form->switch('role', __('角色'));
-        $form->switch('state', __('核实状态'));
+        $form->radio('state', __('状态'))->options([0 => '未知', 1 => '已核实', 2 => '禁用']);
         $form->datetime('create_date', __('创建时间'))->default(date('Y-m-d H:i:s'));
         // $form->text('openid', __('Openid'));
 

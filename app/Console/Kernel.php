@@ -28,6 +28,10 @@ class Kernel extends ConsoleKernel
         //          ->hourly();
         $schedule->command('apply:index')->everyFiveMinutes();
         $schedule->command('hotel:index')->everyFiveMinutes();
+        $schedule->command('queue:work --once')->everyMinute();
+        $schedule->command('queue:work --once')->everyMinute();
+        $schedule->command('queue:work --once')->everyMinute();
+        $schedule->command('apply:expired')->daily();
     }
 
     /**
