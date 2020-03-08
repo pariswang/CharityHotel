@@ -34,6 +34,7 @@
                 <a href="/hotel_staff" class="menu__item">酒店使用说明</a>
                 <a href="/help_seeker_staff" class="menu__item">医护使用说明</a>
                 <a href="/it_staff" class="menu__item">关于本平台</a>
+                <a href="/10_question_and_answer" class="menu__item">关于联盟的十个问答</a>
                 <a href="/volunteer" class="menu__item">志愿者招募</a>
                 <a href="/notice" class="menu__item">公告</a>
             </div>
