@@ -24,6 +24,15 @@
     </van-cell-group>
     <van-cell-group>
         <van-field
+            v-model="spare_phone"
+            required
+            type="tel"
+            maxlength="11"
+            label="备用电话"
+            placeholder="请输入备用电话"/>
+    </van-cell-group>
+    <van-cell-group>
+        <van-field
             v-model="conn_position"
             required
             label="职位"
