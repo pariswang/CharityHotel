@@ -180,6 +180,10 @@ if (!function_exists('sendSms'))
      */
     function sendSms($mobile, $smsCode, $paramStr = '')
     {
+        /**
+         * 暂时屏蔽发短信
+         */
+        return;
         // 获取短信配置
         $sms_config = config('sms.sms_config');
 
