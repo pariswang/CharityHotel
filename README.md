@@ -5,6 +5,7 @@
 ### 项目核心开发人员
 https://github.com/we2notnull  
 https://github.com/piexl  
+https://github.com/honghuabin  
 https://github.com/pariswang  
 希望更多开发者能够加入 
 
